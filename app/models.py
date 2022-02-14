@@ -5,8 +5,7 @@ from marshmallow import fields
 from sqlalchemy import true
 from . import app, db
 
-# 1º
-# Declaras el modelo como normal
+
 class Estudiante(db.Model):
     '''
     Clase: Student
@@ -70,6 +69,63 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         curso = fields.Int(required=True)
         grado = fields.String(required=True)
         titulo = fields.String(required=True)
+
+
+
+class Seleccion(db.Model):
+    '''
+    Clase: Seleccion
+
+    Atributos:
+        ID_universidad: Int
+        ID_estudiante: Int
+        plazas: Str(30)
+        confirmaciones: Str(50)
+        cuatri: Int (1-2)
+        año: Int() ---- podria ponerse formato datetime
+        vuelta: Int (1-2)
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Seleccion"
+    id_universidad = db.Column(db.Integer)
+    id_estudiante = db.Column(db.Integer)
+    plazas = db.Column(db.String(30))
+    confirmaciones = db.Column(db.String(50))
+    cuatri = db.Column(db.Integer)
+    año = db.Column(db.Integer)
+    vuelta = db.Column(db.Integer))
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,id_universidad, id_estudiante, plazas, confirmaciones, cuatri, año, vuelta):
+        self.id_universidad = id_universidad
+        self.id_estudiante = id_estudiante
+        self.plazas = plazas
+        self.confirmaciones = confirmaciones
+        self.cuatri = cuatri
+        self.año = año
+        self.vuelta = vuelta
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        #return f"{self.id_estudiante}:{self.id}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"ID Universidad Destino":self.id_universidad, "ID Estudiante":self.id_estudiante, "Año":self.año, "Cuatrimestre":self.cuatri, "Vuelta":self.vuelta, "Confirmaciones":self.confirmaciones, "Plazas":self.plazas}
+
 
 
 db.create_all()
