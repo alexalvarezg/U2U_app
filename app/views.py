@@ -95,5 +95,22 @@ def whatever():
 @app.route('/postendpoint', methods = ['POST'])
 def other():
     request_data = request.get_json()
+    print(request_data)
+    
     value1 = request_data['attr1']
     value2 = request_data['attr2']
+    print(value1)
+    print(value2)
+
+    return make_response(jsonify({"Status" : "student added"}))
+
+'''
+import requests
+r = requests.post('127.0.0.1:5000/postendpoint', json={
+"Id": 78912,
+"Customer": "Jason Sweet",
+"Quantity": 1,
+"Price": 18.00
+})
+print(f"Status Code: {r.status_code}, Response: {r.json()}")
+'''
