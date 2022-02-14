@@ -98,7 +98,7 @@ class Seleccion(db.Model):
     confirmaciones = db.Column(db.String(50))
     cuatri = db.Column(db.Integer)
     año = db.Column(db.Integer)
-    vuelta = db.Column(db.Integer))
+    vuelta = db.Column(db.Integer)
 
     def create(self):
       db.session.add(self)
