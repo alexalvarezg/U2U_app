@@ -1,8 +1,8 @@
 from flask import Flask, redirect, request, jsonify, make_response
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, relationship
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
-from sqlalchemy import true
+from sqlalchemy import ForeignKey, true
 from . import app, db
 
 
@@ -56,8 +56,6 @@ class Estudiante(db.Model):
         '''
         return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo}
 
-# 2º
-# Despues generate masrshmallow schemas from your model using SQLAlchemyAutoSchema
 class EstudianteSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Estudiante
@@ -70,13 +68,15 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         titulo = fields.String(required=True)
 
 
+
 class Seleccion(db.Model):
     '''
     Clase: Seleccion
 
     Atributos:
-        ID_universidad: Int
-        ID_estudiante: Int
+        ID_universidad: Int, clave foránea que se refiere al atributo id de la clase Universidad
+        ID_estudiante: Int, clave foránea que se refiere al atributo id de la clase Estudiante
+            ID_universidad + ID_estudiante consitituyen la clave primaria de Selección
         plazas: Str(30)
         confirmaciones: Str(50)
         cuatri: Int (1-2)
@@ -90,8 +90,12 @@ class Seleccion(db.Model):
         def json(self)
     '''
     __tablename__ = "Seleccion"
-    id_universidad = db.Column(db.Integer)
-    id_estudiante = db.Column(db.Integer)
+    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id"), primary_key=True)
+    universidad = relationship("Universidad", foreign_keys=[id_universidad], primary_key=True)
+
+    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id"))
+    estudiante = relationship("Estudiante", foreign_keys=[id_estudiante])
+
     plazas = db.Column(db.String(30))
     confirmaciones = db.Column(db.String(50))
     cuatri = db.Column(db.Integer)
@@ -122,6 +126,8 @@ class Seleccion(db.Model):
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
         return {"ID Universidad Destino":self.id_universidad, "ID Estudiante":self.id_estudiante, "Año":self.año, "Cuatrimestre":self.cuatri, "Vuelta":self.vuelta, "Confirmaciones":self.confirmaciones, "Plazas":self.plazas}
+
+
 
 class Universidad(db.Model):
     '''
@@ -163,6 +169,8 @@ class Universidad(db.Model):
         '''
         return {"Nombre":self.nombre, "Ubicación":self.ubicacion}
 
+
+
 class Asignatura_Origen(db.Model):
     '''
     Clase: ASignatura Origen
@@ -178,6 +186,7 @@ class Asignatura_Origen(db.Model):
     '''
     __tablename__ = "Asignatura_Origen"
     id = db.Column(db.Integer, primary_key=True)
+    
 
     def create(self):
       db.session.add(self)
@@ -198,6 +207,8 @@ class Asignatura_Origen(db.Model):
         '''
         return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo}
 
+
+
 class Asignatura_Destino(db.Model):
     '''
     Clase: Asignatura_Destino
@@ -215,8 +226,11 @@ class Asignatura_Destino(db.Model):
     '''
     __tablename__ = "Asignatura_Destino"
     id = db.Column(db.Integer, primary_key=True)
-    universidad = db.Column(db.String(30))
-    id_universidad = (db.Integer)
+    nombre_uni = db.Column(db.String(30), ForeignKey("Universidad.nombre"))
+    universidad_nombre = relationship("Universidad", foreign_keys=[nombre_uni])
+    
+    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id"), primary_key=True)
+    universidad = relationship("Universidad", foreign_keys=[id_universidad], primary_key=True)
     
 
     def create(self):
@@ -224,8 +238,8 @@ class Asignatura_Destino(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,universidad,id_universidad):
-        self.universidad = universidad
+    def __init__(self,nombre_uni,id_universidad):
+        self.nombre_uni = nombre_uni
         self.id_universidad = id_universidad
    
 
@@ -241,15 +255,17 @@ class Asignatura_Destino(db.Model):
         '''
         return {"Universidad Destino":self.universidad, "ID Universidad":self.id_universidad}
 
+
+
 class LA(db.Model):
     '''
     Clase: Learning Agreement
 
     Atributos:
         ID: Int, clave primaria
-        ID_estudiante: Int
-        ID_asignatura_destino: Int
-        ID_asignatura_origen: Int
+        ID_estudiante: Int, clave foránea que se refiere al atributo id de la clase Estudiante
+        ID_asignatura_destino: Int, clave foránea que se refiere al atributo id de la clase Asignatura_Destino
+        ID_asignatura_origen: Int, clave foránea que se refiere al atributo id de la clase Asignatura_Origen
         aceptado_RRII: bool
         aceptado_Coord: bool
         fdo_RRII: bool
@@ -263,9 +279,15 @@ class LA(db.Model):
     '''
     __tablename__ = "LA"
     id = db.Column(db.Integer, primary_key=True)
-    id_estudiante = db.Column(db.Integer)
-    id_asignatura_d = db.Column(db.Integer)
-    id_asignatura_o = db.Column(db.Integer)
+    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id"))
+    estudiante = relationship("Estudiante", foreign_keys=[id_estudiante])
+
+    id_asignatura_d = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id"))
+    asignatura_destino = relationship("Asignatura_Destino", foreign_keys=[id_asignatura_d])
+
+    id_asignatura_o = db.Column(db.Integer, ForeignKey("Asignatura_Origen.id"))
+    asignatura_origen = relationship("Asignatura_Origen", foreign_keys=[id_asignatura_o])
+
     aceptado_RRII = db.Column(db.Bool)
     aceptado_Coord = db.Column(db.Bool)
     fdo_RRII = db.Column(db.Bool)
