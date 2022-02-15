@@ -127,6 +127,18 @@ class Seleccion(db.Model):
         '''
         return {"ID Universidad Destino":self.id_universidad, "ID Estudiante":self.id_estudiante, "Año":self.año, "Cuatrimestre":self.cuatri, "Vuelta":self.vuelta, "Confirmaciones":self.confirmaciones, "Plazas":self.plazas}
 
+class SeleccionSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Seleccion
+        sqla_session = db.session
+        id_universidad = fields.Number(dump_only=True)
+        id_estudiante = fields.String(dump_only=True)
+        plazas = fields.String(required=True)
+        confirmaciones = fields.String(required=True)
+        año = fields.Integer(required=True)
+        cuatri = fields.Integer(required=True)
+        vuelta = fields.Integer(required=True)
+
 
 
 class Universidad(db.Model):
@@ -169,6 +181,14 @@ class Universidad(db.Model):
         '''
         return {"Nombre":self.nombre, "Ubicación":self.ubicacion}
 
+class UniversidadSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Universidad
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        ubicacion = fields.String(required=True)
+        
 
 
 class Asignatura_Origen(db.Model):
@@ -186,7 +206,7 @@ class Asignatura_Origen(db.Model):
     '''
     __tablename__ = "Asignatura_Origen"
     id = db.Column(db.Integer, primary_key=True)
-    
+
 
     def create(self):
       db.session.add(self)
@@ -207,6 +227,13 @@ class Asignatura_Origen(db.Model):
         '''
         return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo}
 
+class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Asignatura_Origen
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        
+
 
 
 class Asignatura_Destino(db.Model):
@@ -226,6 +253,7 @@ class Asignatura_Destino(db.Model):
     '''
     __tablename__ = "Asignatura_Destino"
     id = db.Column(db.Integer, primary_key=True)
+    
     nombre_uni = db.Column(db.String(30), ForeignKey("Universidad.nombre"))
     universidad_nombre = relationship("Universidad", foreign_keys=[nombre_uni])
     
@@ -254,6 +282,15 @@ class Asignatura_Destino(db.Model):
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
         return {"Universidad Destino":self.universidad, "ID Universidad":self.id_universidad}
+
+class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Asignatura_Destino
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_universidad = fields.Numer(dump_only=True)
+        nombre_uni = fields.String(required=True)
+        
 
 
 
@@ -317,5 +354,19 @@ class LA(db.Model):
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
         return {"ID_Estudiante":self.id_estudiante, "ID_Asignatura_Origen":self.id_asignatura_o, "ID_Asignatura_Destino":self.id_asignatura_d, "Aceptado RRII":self.aceptado_RRII,  "Aceptado Coord":self.aceptado_Coord, "Firmado RRII":self.fdo_RRII, "Firmado Coord":self.fdo_Coord,}
+
+class LASchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = LA
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_estudiante = fields.Number(dump_only=True)
+        id_asignatura_d = fields.Number(dump_only=True)
+        id_asignatura_o = fields.Number(dump_only=True)
+        aceptado_RRII = fields.Boolean(required=True)
+        aceptado_Coord = fields.Boolean(required=True)
+        fdo_RRII = fields.Boolean(required=True)
+        fdo_Coord = fields.Boolean(required=True)
+
 
 db.create_all()
