@@ -1,9 +1,9 @@
-from flask import Flask, redirect, request, jsonify, make_response
-from flask_sqlalchemy import SQLAlchemy, relationship
+
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
-from sqlalchemy import ForeignKey, true
-from . import app, db
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from . import db
 
 
 class Estudiante(db.Model):

@@ -6,4 +6,5 @@ app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:TFG_Alexa1!@localhos
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 db = SQLAlchemy(app)
 
+
 from app import views
