@@ -442,7 +442,7 @@ class Estudiante_Seleccion(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.apellidos}:{self.id}"
+        return f"{self.id_estudiante}:{self.id_seleccion}"
 
     def json(self):
         '''
@@ -487,8 +487,8 @@ class Seleccion_Universidad(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,id_estudiante,id_seleccion):
-        self.id_estudiante = id_estudiante
+    def __init__(self,id_universidad,id_seleccion):
+        self.id_universidad = id_universidad
         self.id_seleccion = id_seleccion
 
 

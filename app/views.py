@@ -548,3 +548,97 @@ def add_selection_university():
     db.session.commit()
 
     return make_response(jsonify({"Status" : "Selection-University added"}))
+
+# B.2) POST: INCORPORAR VARIAS SELECCIONES-UNIVERSIDADES
+@app.route('/postendpoint/selecciones-universidades', methods = ['POST'])
+def add_selections_universities():
+    request_data = request.get_json()
+    print(request_data)
+    for i in range(1, len(request_data)):
+        university_id = request_data[i]['id_universidad']
+        selection_id = request_data[i]["id_seleccion"]
+        nuevas_seleccion_universidad = Seleccion_Universidad(id_universidad=university_id, id_seleccion=selection_id) 
+        print("nuevas selecciones-universidades añadida \n")
+        print(nuevas_seleccion_universidad)
+        db.session.add(nuevas_seleccion_universidad)
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones-Universidades Añadidas"}))
+
+# C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES  
+@app.route('/deleteAllSelecciones_Universidades', methods=["DELETE"])
+def erase_all_selections_universities():
+    get_selections_universities = Seleccion_Universidad.query.all()
+    print("\n Las Selecciones_Universidad disponibles son: \n")
+    print(get_selections_universities)
+    print("\n")
+    for i in get_selections_universities:
+        print("Selecciones_Universidades que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All Selections_Universidades erased"}))
+
+
+'''
+SELECCION - ELECCION
+'''
+
+# A) GET: MOSTRAR TODAS LAS SELECCIONES-ESTUDIANTES
+@app.route('/Seleccion-Estudiante', methods = ['GET'])
+def Selection_Student():
+    get_selection_student = Estudiante_Seleccion.query.all()
+    selection_student_schema = Estudiante_SeleccionSchema(many=True)
+    selection_student = selection_student_schema.dump(get_selection_student)
+    return make_response(jsonify({"Seleccion(es)-Universidad(es)": selection_student}))
+
+
+# B.1) POST: INCORPORAR UNA SELECCION-ESTUDIANTE
+@app.route('/postendpoint/seleccion-estudiante', methods = ['POST'])
+def add_selection_student():
+    request_data = request.get_json()
+    student_id = request_data['id_estudiante']
+    selection_id = request_data["id_seleccion"]
+    spots = request_data["plaza"]
+    accept = request_data["aceptar"]
+
+    
+    nueva_seleccion_estudiante = Estudiante_Seleccion(id_estudiante=student_id, id_seleccion=selection_id, plaza=spots, aceptar=accept)  
+    print("nueva seleccion-estudiante añadida \n")
+    print(nueva_seleccion_estudiante)
+    db.session.add(nueva_seleccion_estudiante)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "Selection-Student added"}))
+
+# B.2) POST: INCORPORAR VARIAS SELECCIONES-ESTUDIANTES
+@app.route('/postendpoint/selecciones-estudiantes', methods = ['POST'])
+def add_selections_students():
+    request_data = request.get_json()
+    print(request_data)
+    for i in range(1, len(request_data)):
+        student_id = request_data[i]['id_estudiante']
+        selection_id = request_data[i]["id_seleccion"]
+        spots = request_data[i]["plaza"]
+        accept = request_data[i]["aceptar"]
+        nuevas_seleccion_estudiante = Estudiante_Seleccion(id_estudiante=student_id, id_seleccion=selection_id, plaza=spots, aceptar=accept) 
+        print("nuevas selecciones-universidades añadida \n")
+        print(nuevas_seleccion_estudiante)
+        db.session.add(nuevas_seleccion_estudiante)
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
+
+# C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES-ESTUDIANTES  
+@app.route('/deleteAllSelecciones_Estudiantes', methods=["DELETE"])
+def erase_all_selections_students():
+    get_selections_students = Estudiante_Seleccion.query.all()
+    print("\n Las Selecciones_Estudiantes disponibles son: \n")
+    print(get_selections_students)
+    print("\n")
+    for i in get_selections_students:
+        print("Selecciones_Estudiantess que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All Selections_Estudiantes erased"}))
