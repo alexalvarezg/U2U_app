@@ -31,11 +31,11 @@ class Estudiante(db.Model):
     '''
     __tablename__ = "Estudiantes"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30))
-    apellidos = db.Column(db.String(50))
-    curso = db.Column(db.Integer)
-    grado = db.Column(db.String(30))
-    titulo = db.Column(db.String(30))
+    nombre = db.Column(db.String(30), nullable=False)
+    apellidos = db.Column(db.String(50),nullable=False)
+    curso = db.Column(db.Integer, nullable=False)
+    grado = db.Column(db.String(30), nullable=False)
+    titulo = db.Column(db.String(30), nullable=False)
 
     def create(self):
       db.session.add(self)
@@ -93,10 +93,10 @@ class Seleccion(db.Model):
     '''
     __tablename__ = "Seleccion"
     id = db.Column(db.Integer, primary_key=True)
-    cuatri = db.Column(db.Integer)
-    año = db.Column(db.Integer)
-    vuelta = db.Column(db.Integer)
-    confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id")) 
+    cuatri = db.Column(db.Integer, nullable=False)
+    año = db.Column(db.Integer, nullable=False)
+    vuelta = db.Column(db.Integer, nullable=False)
+    confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 
     def create(self):
       db.session.add(self)
@@ -152,9 +152,9 @@ class Universidad(db.Model):
     '''
     __tablename__ = "Universidad"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30))
-    ubicacion = db.Column(db.String(50))
-    plazas = db.Column(db.Integer)
+    nombre = db.Column(db.String(30), nullable=False)
+    ubicacion = db.Column(db.String(50), nullable=False)
+    plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
     id_asignatura_d = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id"))
     #asignatura_destino = relationship("Asignatura_Destino", foreign_keys=[id_asignatura_d])
     #children = relationship("Child")
@@ -208,7 +208,7 @@ class Asignatura_Origen(db.Model):
     '''
     __tablename__ = "Asignatura_Origen"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(255))
+    nombre = db.Column(db.String(255), nullable=False)
 
 
     def create(self):
@@ -257,7 +257,7 @@ class Asignatura_Destino(db.Model):
     '''
     __tablename__ = "Asignatura_Destino"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(255))
+    nombre = db.Column(db.String(255), nullable=False)
 
     def create(self):
       db.session.add(self)
@@ -361,10 +361,10 @@ class LA(db.Model):
     __tablename__ = "LA"
     id = db.Column(db.Integer, primary_key=True)
     id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id"))
-    aceptado_RRII = db.Column(db.Boolean)
-    aceptado_Coord = db.Column(db.Boolean)
-    fdo_RRII = db.Column(db.Boolean)
-    fdo_Coord = db.Column(db.Boolean)
+    aceptado_RRII = db.Column(db.Boolean, default=False)
+    aceptado_Coord = db.Column(db.Boolean, default=False)
+    fdo_RRII = db.Column(db.Boolean, default=False)
+    fdo_Coord = db.Column(db.Boolean, default=False)
 
     def create(self):
       db.session.add(self)
@@ -423,8 +423,8 @@ class Estudiante_Seleccion(db.Model):
     __tablename__ = "Estudiantes-Seleccion"
     id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id"), primary_key=True)
     id_seleccion = db.Column(db.Integer, ForeignKey("Seleccion.id"), primary_key=True)
-    plaza = db.Column(db.String(30))
-    aceptar = db.Column(db.Boolean(50))
+    plaza = db.Column(db.String(30), nullable=False)
+    aceptar = db.Column(db.Boolean(50), nullable=False)
     
 
     def create(self):

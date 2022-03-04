@@ -463,7 +463,6 @@ def add_origin_and_destiny_subject():
 '''
 SELECCION 
 '''
-
 # A) GET: MOSTRAR TODAS LAS SELECCIONES
 @app.route('/Seleccion', methods = ['GET'])
 def Selection():
