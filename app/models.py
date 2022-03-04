@@ -113,7 +113,8 @@ class Seleccion(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.id_estudiante}:{self.id}"
+        return f"{self.id}:{self.año}"
+
     def json(self):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
@@ -312,8 +313,7 @@ class Asignatura_Destino_Asignatura_Origen(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,id,id_asignatura_destino, id_asignatura_origen):
-        self.id = id
+    def __init__(self, id_asignatura_destino, id_asignatura_origen):
         self.id_asignatura_destino = id_asignatura_destino
         self.id_asignatura_origen = id_asignatura_origen
    
@@ -322,7 +322,7 @@ class Asignatura_Destino_Asignatura_Origen(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.universidad}:{self.id}"
+        return f"{self.id_asignatura_destino}:{self.id_asignatura_origen}"
 
     def json(self):
         '''
@@ -382,12 +382,13 @@ class LA(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.apellidos}:{self.id}"
+        return f"{self.id_estudiante}:{self.id}"
+
     def json(self):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"ID_Estudiante":self.id_estudiante, "Aceptado RRII":self.aceptado_RRII,  "Aceptado Coord":self.aceptado_Coord, "Firmado RRII":self.fdo_RRII, "Firmado Coord":self.fdo_Coord,}
+        return {"ID_Estudiante":self.id_estudiante, "Aceptado RRII":self.aceptado_RRII,  "Aceptado Coord":self.aceptado_Coord, "Firmado RRII":self.fdo_RRII, "Firmado Coord":self.fdo_Coord, "id":self.id}
 
 class LASchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -495,13 +496,13 @@ class Seleccion_Universidad(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.apellidos}:{self.id}"
+        return f"{self.id_universidad}:{self.id_seleccion}"
 
     def json(self):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Id_Estudiante":self.id_estudiante, "ID_Seleccion":self.id_seleccion, "Plaza":self.plaza, "Aceptado":self.aceptar}
+        return {"Id":self.id, "Id_Seleccion":self.id_seleccion, "Id_Universidad":self.id_universidad}
 
 class Seleccion_UniversidadSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):

@@ -1,3 +1,4 @@
+from tkinter import E
 from . import app, db
 from .models import *
 from flask import redirect, jsonify, make_response, request
@@ -24,8 +25,6 @@ def index():
     estudiantes = estudiante_schema.dump(get_estudiantes)
     return make_response(jsonify({"Estudiantes": estudiantes}))
 
-
-
 # B.1) POST: INCORPORAR UN ESTUDIANTE
 @app.route('/postendpoint/estudiante', methods = ['POST'])
 def add_student():
@@ -46,7 +45,6 @@ def add_student():
     db.session.commit()
 
     return make_response(jsonify({"Status" : "Sudent added"}))
-
 
 # B.2) POST: INCORPORAR VARIOS ESTUDIANTES
 @app.route('/postendpoint/estudiantes', methods = ['POST'])
@@ -71,8 +69,6 @@ def add_students():
 
     return make_response(jsonify({"Status" : "Various Students added"}))
 
-
-
 # C.1) DELETE: ELIMINAR UN ESTUDIANTE EN CONCRETO DESDE POSTMAN
 @app.route('/deleteendpoint', methods=['DELETE'])
 def erase_student():
@@ -84,7 +80,6 @@ def erase_student():
     db.session.query(Estudiante).filter(Estudiante.apellidos == surname_to_erase).delete(synchronize_session=False)
     db.session.commit()
     return redirect('/estudiantes')
-
 
 # C.2) DELETE: ELIMINAR UN ESTUDIANTE EN CONCRETO DESDE NAVEGADOR INDICANDO ID
 @app.route('/estudiantes/delete/<id>', methods=["DELETE"])
@@ -155,7 +150,6 @@ def update_product_by_id(id):
     '''
 
 
-
 # e) RUTA ALTERNATIVA PARA MOSTRAR TEXTO
 @app.route('/rndm', methods = ['GET'])
 def whatever():
@@ -182,7 +176,6 @@ def create_product():
     result = student_schema.dump(estudiante.create())
     return make_response(jsonify({"Estudiante": result}),200)
 '''
-
 
 ''' funcion que tenian ellos para incorporar un nuevo prod
 @app.route('/products', methods = ['POST'])
@@ -378,3 +371,180 @@ def erase_all_universities():
         db.session.commit()
     
     return make_response(jsonify({"Status" : "All Universities erased"}))
+
+
+
+'''
+LEARNING AGREEMENT
+'''
+# A) GET: MOSTRAR TODOS LOS LA 
+@app.route('/LA', methods = ['GET'])
+def learnignAgreement():
+    get_LA = LA.query.all()
+    LA_schema = LASchema(many=True)
+    Learning_agreement = LA_schema.dump(get_LA)
+    return make_response(jsonify({"Learning Agreement": Learning_agreement}))
+
+# B.1) POST: INCORPORAR UN LA
+@app.route('/postendpoint/LA', methods = ['POST'])
+def add_LA():
+    request_data = request.get_json()
+    student_id = request_data['id_estudiante']
+    RRII_accept = request_data["aceptado_RRII"]
+    coord_accept = request_data["aceptado_Coord"]
+    RRII_sign = request_data["fdo_RRII"]
+    coord_sign = request_data["fdo_Coord"]
+
+    nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
+    print("nuevo LA añadido \n")
+    print(nuevo_LA)
+    db.session.add(nuevo_LA)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "LA added"}))
+
+# B.2) POST: INCORPORAR VARIOS LA
+@app.route('/postendpoint/LAs', methods = ['POST'])
+def add_LAs():
+    request_data = request.get_json()
+    print(request_data)
+    for i in range(1, len(request_data)):
+        student_id = request_data[i]['id_estudiante']
+        RRII_accept = request_data[i]["aceptado_RRII"]
+        coord_accept = request_data[i]["aceptado_Coord"]
+        RRII_sign = request_data[i]["fdo_RRII"]
+        coord_sign = request_data[i]["fdo_Coord"]
+
+        nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
+        print("nuevos LA añadidos \n")
+        print(nuevo_LA)
+        db.session.add(nuevo_LA)
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varios LA Añadidos"}))
+
+# C.3) DELETE: ELIMINAR TODOS LOS LA 
+@app.route('/deleteAllLAs', methods=["DELETE"])
+def erase_all_LAs():
+    get_LAs = LA.query.all()
+    print("\n Los LA disponibles son: \n")
+    print(get_LAs)
+    print("\n")
+    for i in get_LAs:
+        print("LAs que se va a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All LAs erased"}))
+
+
+
+'''
+        ASIGNATURA_DESTINO_ASIGNATURA_ORIGEN - no consigo que funcione
+'''
+
+# B.1) POST: INCORPORAR UN CONJUNTO DE ASIGNATURA DESTINO Y ORIGEN
+@app.route('/postendpoint/Asignaturas_destino_origen', methods = ['POST'])
+def add_origin_and_destiny_subject():
+    request_data = request.get_json()
+    origin_subject_id = request_data["id_asignatura_origen"]
+    destiny_subject_id = request_data["id_asignatura_destino"]
+
+    nuevas_asignaturas = Asignatura_Destino_Asignatura_Origen(id_asignatura_destino=destiny_subject_id, id_asignatura_origen=origin_subject_id,)
+    print("nuevo AOD añadido \n")
+    print(nuevas_asignaturas)
+    db.session.add(nuevas_asignaturas)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "AOD added"}))
+
+
+
+'''
+SELECCION 
+'''
+
+# A) GET: MOSTRAR TODAS LAS SELECCIONES
+@app.route('/Seleccion', methods = ['GET'])
+def Selection():
+    get_Seleccion = Seleccion.query.all()
+    Selection_schema = SeleccionSchema(many=True)
+    seleccion = Selection_schema.dump(get_Seleccion)
+    return make_response(jsonify({"Seleccion(es)": seleccion}))
+
+
+# B.1) POST: INCORPORAR UNA SELECCION
+@app.route('/postendpoint/seleccion', methods = ['POST'])
+def add_selection():
+    request_data = request.get_json()
+    term = request_data['cuatri']
+    year = request_data["año"]
+    round = request_data["vuelta"]
+    confirmation = request_data["confirmacion"]
+    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation) 
+    print("nueva seleccion añadida \n")
+    print(nueva_seleccion)
+    db.session.add(nueva_seleccion)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "Selection added"}))
+
+# B.2) POST: INCORPORAR VARIAS SELECCIONES
+@app.route('/postendpoint/selecciones', methods = ['POST'])
+def add_selecciones():
+    request_data = request.get_json()
+    print(request_data)
+    for i in range(1, len(request_data)):
+        term = request_data[i]['cuatri']
+        year = request_data[i]["año"]
+        round = request_data[i]["vuelta"]
+        confirmation = request_data[i]["confirmacion"]
+        nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation) 
+        print("nueva seleccion añadida \n")
+        print(nueva_seleccion)
+        db.session.add(nueva_seleccion)
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones Añadidas"}))
+
+# C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES  
+@app.route('/deleteAllSelecciones', methods=["DELETE"])
+def erase_all_selections():
+    get_selections = Seleccion.query.all()
+    print("\n Las Selecciones disponibles son: \n")
+    print(get_selections)
+    print("\n")
+    for i in get_selections:
+        print("Selecciones que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All Selections erased"}))
+
+
+'''
+SELECCION - UNIVERSIDAD
+'''
+
+# A) GET: MOSTRAR TODAS LAS SELECCIONES-UNIVERSIDAD
+@app.route('/Seleccion-Universidad', methods = ['GET'])
+def Selection_University():
+    get_selection_university = Seleccion_Universidad.query.all()
+    selection_university_schema = Seleccion_UniversidadSchema(many=True)
+    selection_university = selection_university_schema.dump(get_selection_university)
+    return make_response(jsonify({"Seleccion(es)-Universidad(es)": selection_university}))
+
+# B.1) POST: INCORPORAR UNA SELECCION
+@app.route('/postendpoint/seleccion-universidad', methods = ['POST'])
+def add_selection_university():
+    request_data = request.get_json()
+    university_id = request_data['id_universidad']
+    selection_id = request_data["id_seleccion"]
+    
+    nueva_seleccion_uni = Seleccion_Universidad(id_universidad=university_id, id_seleccion=selection_id)  
+    print("nueva seleccion-universidad añadida \n")
+    print(nueva_seleccion_uni)
+    db.session.add(nueva_seleccion_uni)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "Selection-University added"}))
