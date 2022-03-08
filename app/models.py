@@ -1,14 +1,18 @@
 
+from ast import dump
+from tkinter.tix import Tree
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
-from sqlalchemy import ForeignKey, true
-from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey, Table, Column
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from . import db
+#from app import db
+
 
 
 #db.drop_all()
-Base = declarative_base()
+#Base = declarative_base()
 
 
 class Estudiante(db.Model):
@@ -37,6 +41,7 @@ class Estudiante(db.Model):
     grado = db.Column(db.String(30), nullable=False)
     titulo = db.Column(db.String(30), nullable=False)
     # Representar la relacion del LA
+    #learning_agreemts = db.relationship('LA', backref='Estudiantes', lazy=True)
     # Representar la relacion de las selecciones
 
     def create(self):
@@ -309,6 +314,8 @@ class Asignatura_Destino_Asignatura_Origen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_asignatura_origen = db.Column(db.Integer, ForeignKey("Asignatura_Origen.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     id_asignatura_destino = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    #la = relationship('LA', secondary='AOD_LA') #en este caso LA va entre '' porque no esta aun creada la clase LA
+
 
     def create(self):
       db.session.add(self)
@@ -362,11 +369,15 @@ class LA(db.Model):
     '''
     __tablename__ = "LA"
     id = db.Column(db.Integer, primary_key=True)
-    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    id_estudiante = db.Column(db.Integer, db.ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     aceptado_RRII = db.Column(db.Boolean, default=False)
     aceptado_Coord = db.Column(db.Boolean, default=False)
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
+    estudiante = relationship("Estudiante", backref=backref("LA"))
+    #student = relationship("Estudiante", backref='children')
+    #estudiante = relationship("Estudiante", backref="LA")
+    #subjects = relationship('Asignatura_Destino_Asignatura_Origen', secondary='AOD_LA')
 
     def create(self):
       db.session.add(self)
@@ -384,7 +395,7 @@ class LA(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        return f"{self.id_estudiante}:{self.id}"
+        return f"{self.id}:{self.id_estudiante}"
 
     def json(self):
         '''
@@ -392,9 +403,13 @@ class LA(db.Model):
         '''
         return {"ID_Estudiante":self.id_estudiante, "Aceptado RRII":self.aceptado_RRII,  "Aceptado Coord":self.aceptado_Coord, "Firmado RRII":self.fdo_RRII, "Firmado Coord":self.fdo_Coord, "id":self.id}
 
+
+
 class LASchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = LA
+        #print(model.id_estudiante)
+        include_relationships= True
         sqla_session = db.session
         id = fields.Number(dump_only=True)
         id_estudiante = fields.Number(dump_only=True)
@@ -402,6 +417,9 @@ class LASchema(SQLAlchemyAutoSchema):
         aceptado_Coord = fields.Boolean(required=True)
         fdo_RRII = fields.Boolean(required=True)
         fdo_Coord = fields.Boolean(required=True)
+
+
+#Estudiante.LA = relationship("LA", order_by = LA.id, back_populates = "estudiante")
 
 
 # AUXILIAR ESTUDIANTE - SELECCION
@@ -531,7 +549,7 @@ class AsignaturaOD_LA(db.Model):
         def __repr__
         def json(self)
     '''
-    __tablename__ = "AOD-LA"
+    __tablename__ = "AOD_LA"
     id_AOD = db.Column(db.Integer, ForeignKey("Asignatura_Destino_Asignatura_Origen.id"), primary_key=True)
     id_LA = db.Column(db.Integer, ForeignKey("LA.id"), primary_key=True)
 
@@ -565,6 +583,6 @@ class AsignaturaOD_LASchema(SQLAlchemyAutoSchema):
         id_LA = fields.Number(dump_only=True)
 
 
-
+#Estudiante.learning_agreemts = db.relationship('LA', backref='Estudiantes', lazy=True)
 
 db.create_all()

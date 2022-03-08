@@ -271,55 +271,6 @@ def subjects_aborad():
     asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
     return make_response(jsonify({"Asingaturas de Destino": asignaturas}))
 
-'''
-Incorporado por alberto 
-'''
-# A) GET: MOSTRAR TODAS LAS ASIGNATURAS DE DESTINO 
-@app.route('/asignatura_destino/<id>', methods = ['GET'])
-def subjects_aborad():
-    '''
-    get_asignaturas = Asignatura_Destino.query.all()
-    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
-    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
-    return make_response(jsonify({"Asingaturas de Destino": asignaturas}))
-    '''
-
-
-@app.route('/estudiante/<id>', methods = ['GET'])
-def subjects_aborad():
-    '''
-    get_asignaturas = Asignatura_Destino.query.all()
-    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
-    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
-    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
-    '''
-
-@app.route('/estudiante/<id>/las', methods = ['GET'])
-def subjects_aborad():
-    '''
-    get_asignaturas = Asignatura_Destino.query.all()
-    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
-    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
-    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
-    '''
-
-@app.route('/seleccion/<id>/estudiante/<id>', methods = ['GET'])
-def subjects_aborad():
-    '''
-    get_asignaturas = Asignatura_Destino.query.all()
-    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
-    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
-    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
-    '''
-
-@app.route('/seleccion/<id>/estudiantes', methods = ['GET'])
-def subjects_aborad():
-    '''
-    get_asignaturas = Asignatura_Destino.query.all()
-    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
-    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
-    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
-    '''
 
 # B.1) POST: INCORPORAR UNA ASIGNATURA DE DESTINO
 @app.route('/postendpoint/asignatura_destino', methods = ['POST'])
@@ -431,8 +382,10 @@ LEARNING AGREEMENT
 @app.route('/LA', methods = ['GET'])
 def learnignAgreement():
     get_LA = LA.query.all()
+    print(get_LA) #shows __repr__ de LA
     LA_schema = LASchema(many=True)
     Learning_agreement = LA_schema.dump(get_LA)
+    print(LA_schema.dump_fields)
     return make_response(jsonify({"Learning Agreement": Learning_agreement}))
 
 # B.1) POST: INCORPORAR UN LA
@@ -517,6 +470,7 @@ SELECCION
 @app.route('/Seleccion', methods = ['GET'])
 def Selection():
     get_Seleccion = Seleccion.query.all()
+    print(get_Seleccion)
     Selection_schema = SeleccionSchema(many=True)
     seleccion = Selection_schema.dump(get_Seleccion)
     return make_response(jsonify({"Seleccion(es)": seleccion}))
