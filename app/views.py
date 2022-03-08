@@ -271,6 +271,56 @@ def subjects_aborad():
     asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
     return make_response(jsonify({"Asingaturas de Destino": asignaturas}))
 
+'''
+Incorporado por alberto 
+'''
+# A) GET: MOSTRAR TODAS LAS ASIGNATURAS DE DESTINO 
+@app.route('/asignatura_destino/<id>', methods = ['GET'])
+def subjects_aborad():
+    '''
+    get_asignaturas = Asignatura_Destino.query.all()
+    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
+    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
+    return make_response(jsonify({"Asingaturas de Destino": asignaturas}))
+    '''
+
+
+@app.route('/estudiante/<id>', methods = ['GET'])
+def subjects_aborad():
+    '''
+    get_asignaturas = Asignatura_Destino.query.all()
+    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
+    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
+    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
+    '''
+
+@app.route('/estudiante/<id>/las', methods = ['GET'])
+def subjects_aborad():
+    '''
+    get_asignaturas = Asignatura_Destino.query.all()
+    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
+    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
+    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
+    '''
+
+@app.route('/seleccion/<id>/estudiante/<id>', methods = ['GET'])
+def subjects_aborad():
+    '''
+    get_asignaturas = Asignatura_Destino.query.all()
+    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
+    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
+    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
+    '''
+
+@app.route('/seleccion/<id>/estudiantes', methods = ['GET'])
+def subjects_aborad():
+    '''
+    get_asignaturas = Asignatura_Destino.query.all()
+    AsignaturaDestino_schema = Asignatura_DestinoSchema(many=True)
+    asignaturas = AsignaturaDestino_schema.dump(get_asignaturas)
+    return make_response(jsonify({"Asingaturas de Destino": asignaturas, "Otro objeto": 1}))
+    '''
+
 # B.1) POST: INCORPORAR UNA ASIGNATURA DE DESTINO
 @app.route('/postendpoint/asignatura_destino', methods = ['POST'])
 def add_subject_abroad():

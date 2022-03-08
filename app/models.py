@@ -36,6 +36,8 @@ class Estudiante(db.Model):
     curso = db.Column(db.Integer, nullable=False)
     grado = db.Column(db.String(30), nullable=False)
     titulo = db.Column(db.String(30), nullable=False)
+    # Representar la relacion del LA
+    # Representar la relacion de las selecciones
 
     def create(self):
       db.session.add(self)
@@ -189,7 +191,7 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
         ubicacion = fields.String(required=True)
-        id_asignatura_destino = fields.Integer(requiered=True)
+        id_asignatura_destino = fields.Integer(required=True)
         
 
 
