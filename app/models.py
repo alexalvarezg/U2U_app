@@ -304,11 +304,6 @@ class SeleccionSchema(SQLAlchemyAutoSchema):
         cuatri = fields.Integer(required=True)
         vuelta = fields.Integer(required=True)
 
-      
-
-
-#Seleccion.universidad = relationship("Universidad", backref=backref("Seleccion"))
-
 
 
 class Asignatura_Destino_Asignatura_Origen(db.Model):
@@ -434,7 +429,6 @@ class LASchema(SQLAlchemyAutoSchema):
         fdo_Coord = fields.Boolean(required=True)
 
 
-#Estudiante.LA = relationship("LA", order_by = LA.id, back_populates = "estudiante")
 
 
 # AUXILIAR ESTUDIANTE - SELECCION
@@ -496,7 +490,6 @@ class Estudiante_SeleccionSchema(SQLAlchemyAutoSchema):
         plaza = fields.Str(required=True)
         aceptar = fields.Boolean(required=True)
        
-
 
 # AUXILIAR SELECCION - UNIVERSIDAD DE DESTINO
 class Seleccion_Universidad(db.Model):
@@ -606,6 +599,5 @@ class AsignaturaOD_LASchema(SQLAlchemyAutoSchema):
         id_LA = fields.Number(dump_only=True)
 
 
-#Estudiante.learning_agreemts = db.relationship('LA', backref='Estudiantes', lazy=True)
 
 db.create_all()
