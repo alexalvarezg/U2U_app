@@ -446,6 +446,16 @@ def erase_all_LAs():
         ASIGNATURA_DESTINO_ASIGNATURA_ORIGEN - no consigo que funcione
 '''
 
+# A) GET: MOSTRAR TODAS LAS AOD
+@app.route('/aods', methods = ['GET'])
+def Aods():
+    get_aod_subjects = Asignatura_Destino_Asignatura_Origen.query.all()
+    print(get_aod_subjects)
+    AOD_schema = Asignatura_Destino_Asignatura_OrigenSchema(many=True)
+    aod = AOD_schema.dump(get_aod_subjects)
+    return make_response(jsonify({"Relacion(es) Asignaturas Origen y Destino": aod}))
+
+
 # B.1) POST: INCORPORAR UN CONJUNTO DE ASIGNATURA DESTINO Y ORIGEN
 @app.route('/postendpoint/Asignaturas_destino_origen', methods = ['POST'])
 def add_origin_and_destiny_subject():
