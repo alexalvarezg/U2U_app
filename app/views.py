@@ -443,7 +443,7 @@ def erase_all_LAs():
 
 
 '''
-        ASIGNATURA_DESTINO_ASIGNATURA_ORIGEN - no consigo que funcione
+ASIGNATURA_DESTINO_ASIGNATURA_ORIGEN
 '''
 
 # A) GET: MOSTRAR TODAS LAS AOD
@@ -470,6 +470,21 @@ def add_origin_and_destiny_subject():
     db.session.commit()
 
     return make_response(jsonify({"Status" : "AOD added"}))
+
+# C.3) DELETE: ELIMINAR TODOS LAS AOD  
+@app.route('/deleteAllAODs', methods=["DELETE"])
+def erase_all_AODS():
+    get_AODS = Asignatura_Destino_Asignatura_Origen.query.all()
+    print("\n Las Selecciones disponibles son: \n")
+    print(get_AODS)
+    print("\n")
+    for i in get_AODS:
+        print("AODs que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All AODS erased"}))
+
 
 
 
