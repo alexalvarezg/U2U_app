@@ -582,7 +582,7 @@ class AsignaturaOD_LA(db.Model):
         '''
         repr method represents how one onject will look like
         '''
-        #return f"{self.apellidos}:{self.id}"
+        return f"{self.id_AOD}:{self.id_LA}"
 
     def json(self):
         '''

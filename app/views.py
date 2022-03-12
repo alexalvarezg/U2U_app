@@ -670,3 +670,65 @@ def erase_all_selections_students():
         db.session.commit()
     
     return make_response(jsonify({"Status" : "All Selections_Estudiantes erased"}))
+
+
+
+    
+'''
+AOD - LA
+'''
+
+# A) GET: MOSTRAR TODAS LAS SELECCIONES-ESTUDIANTES
+@app.route('/AOD_LAs', methods = ['GET'])
+def get_AOD_LAs():
+    get_AODS_LAs = AsignaturaOD_LA.query.all()
+    AODs_LAs_Schema = AsignaturaOD_LASchema(many=True)
+    selection_AODs_LAs = AODs_LAs_Schema.dump(get_AODS_LAs)
+    return make_response(jsonify({"AOD(s) and LA(s)": selection_AODs_LAs}))
+
+
+# B.1) POST: INCORPORAR UNA SELECCION-ESTUDIANTE
+@app.route('/postendpoint/aod_La', methods = ['POST'])
+def add_AOD_LA():
+    request_data = request.get_json()
+    AOD_id = request_data['id_AOD']
+    LA_id = request_data["id_LA"]
+    
+    nueva_AOD_LA = AsignaturaOD_LA(id_AOD=AOD_id, id_LA=LA_id)  
+    print(nueva_AOD_LA)
+    db.session.add(nueva_AOD_LA)
+    db.session.commit()
+
+    return make_response(jsonify({"Status" : "Selection-Student added"}))
+
+# B.2) POST: INCORPORAR VARIAS SELECCIONES-ESTUDIANTES
+@app.route('/postendpoint/aods_Las', methods = ['POST'])
+def add_AOD_LAs():
+    request_data = request.get_json()
+    print(request_data)
+    for i in range(1, len(request_data)):
+        AOD_id = request_data[i]['id_AOD']
+        LA_id = request_data[i]["id_LA"]
+        
+        nueva_AOD_LA = AsignaturaOD_LA(id_AOD=AOD_id, id_LA=LA_id)  
+        print(nueva_AOD_LA)
+        db.session.add(nueva_AOD_LA)
+        db.session.commit()
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias AOD-LA Añadidas"}))
+
+
+# C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES-ESTUDIANTES  
+@app.route('/deleteAllAODsLAs', methods=["DELETE"])
+def erase_all_AOD_LAs():
+    get_AODS_LAs = AsignaturaOD_LA.query.all()
+    print("\n Las AOD - LA disponibles son: \n")
+    print(get_AODS_LAs)
+    print("\n")
+    for i in get_AODS_LAs:
+        print("AOD - LA  que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    
+    return make_response(jsonify({"Status" : "All AOD-LA erased"}))
