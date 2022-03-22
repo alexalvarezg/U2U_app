@@ -234,7 +234,7 @@ class Universidad(db.Model):
     plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
     id_asignatura_d = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     asignatura_destino = relationship("Asignatura_Destino", backref=backref("Universidad"))
-    selecciones = db.relationship("Seleccion", secondary=auxiliar_universidad_seleccion)
+    
 
 
     def create(self):
@@ -297,6 +297,7 @@ class Seleccion(db.Model):
     confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     universidad = relationship("Universidad", backref=backref("Seleccion"))
     estudiantes = db.relationship("Estudiante", secondary=auxiliar_estudiante_seleccion)
+    universidades = db.relationship("Universidad", secondary=auxiliar_universidad_seleccion)
 
     def create(self):
       db.session.add(self)

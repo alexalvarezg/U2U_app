@@ -4,7 +4,7 @@
         "PORT" : "3306",
         "MYSQL_USER" : "root", 
         "MYSQL_PASSWORD" : "TFG_Alexa1!",
-        "MYSQL_DB" : "prueba9"
+        "MYSQL_DB" : "prueba10"
     }    
 }
 
