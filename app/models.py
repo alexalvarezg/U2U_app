@@ -462,4 +462,4 @@ class LASchema(SQLAlchemyAutoSchema):
 
 #las auxiliares estan en prueba.py
 
-db.create_all()
+#db.create_all()
