@@ -15,10 +15,33 @@ from . import db
 #db.drop_all()
 #Base = declarative_base()
 
+#Establecemos las tablas auxiliares
+
+## ESTUDIANTE - SELECCION 
+auxiliar_estudiante_seleccion = db.Table('aux_estudiante_seleccion', 
+    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+    db.Column('id_seleccion', db.Integer, db.ForeignKey('Seleccion.id'), primary_key = True), 
+    db.Column('plazas', db.Integer, nullable=False), 
+    db.Column('aceptar', db.Boolean, nullable=False)
+)
+
+## UNIVERSIDAD - SELECCION
+auxiliar_universidad_seleccion = db.Table('aux_universidad_seleccion', 
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+    db.Column('id_seleccion', db.Integer, db.ForeignKey('Seleccion.id'), primary_key = True)
+)
+
+
+## LA - ASIGNATURA_DESTINO_ORIGEN
+auxiliar_LA_asignaturasOD = db.Table('aux_LA_asignaturasOD', 
+    db.Column('id_AOD', db.Integer, db.ForeignKey('Asignatura_Destino_Asignatura_Origen.id'), primary_key=True), 
+    db.Column('id_LA', db.Integer, db.ForeignKey('LA.id'), primary_key = True)
+)
 
 class Estudiante(db.Model):
     '''
     Clase: Estudiante
+    Representa a cada uno de los estudiantes 
 
     Atributos:
         ID: Int, clave primaria
@@ -72,6 +95,7 @@ class Estudiante(db.Model):
 class EstudianteSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Estudiante
+        include_relationships = True
         sqla_session = db.session
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
@@ -129,6 +153,7 @@ class Asignatura_Origen(db.Model):
 class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Asignatura_Origen
+        include_relationships = True
         sqla_session = db.session
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
@@ -179,10 +204,10 @@ class Asignatura_Destino(db.Model):
 class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Asignatura_Destino
+        include_relationships = True
         sqla_session = db.session
         id = fields.Number(dump_only=True)
         
-
 
 
 class Universidad(db.Model):
@@ -209,6 +234,8 @@ class Universidad(db.Model):
     plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
     id_asignatura_d = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     asignatura_destino = relationship("Asignatura_Destino", backref=backref("Universidad"))
+    selecciones = db.relationship("Seleccion", secondary=auxiliar_universidad_seleccion)
+
 
     def create(self):
       db.session.add(self)
@@ -269,6 +296,7 @@ class Seleccion(db.Model):
     vuelta = db.Column(db.Integer, nullable=False)
     confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     universidad = relationship("Universidad", backref=backref("Seleccion"))
+    estudiantes = db.relationship("Estudiante", secondary=auxiliar_estudiante_seleccion)
 
     def create(self):
       db.session.add(self)
@@ -389,6 +417,8 @@ class LA(db.Model):
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
     estudiante = relationship("Estudiante", backref=backref("LA"))
+    asignaturasOD = db.relationship("Asignatura_Destino_Asignatura_Origen", secondary=auxiliar_LA_asignaturasOD)
+
     
 
     def create(self):
@@ -415,7 +445,6 @@ class LA(db.Model):
         '''
         return {"ID_Estudiante":self.id_estudiante, "Aceptado RRII":self.aceptado_RRII,  "Aceptado Coord":self.aceptado_Coord, "Firmado RRII":self.fdo_RRII, "Firmado Coord":self.fdo_Coord, "id":self.id}
 
-
 class LASchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = LA
@@ -430,174 +459,6 @@ class LASchema(SQLAlchemyAutoSchema):
 
 
 
-
-# AUXILIAR ESTUDIANTE - SELECCION
-class Estudiante_Seleccion(db.Model):
-    '''
-    Clase: Estudiante_Seleccion
-    Tabla auxiliar que se debe generar debido a la relacion N:M entre las entidades de Estudiante y Seleccion
-
-    Atributos:
-        ID_estudiante: Int, clave foranea que hace referencia al id de la clase estudiante
-        ID_seleccion: Int, clave foranea que hace referencia al id de la clase seleccion
-        Plaza: Str(30)
-        Aceptar: Bool
-        
-    Funciones
-        def create(self)
-        def __init__
-        def __repr__
-        def json(self)
-    '''
-    __tablename__ = "Estudiantes-Seleccion"
-    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id"), primary_key=True)
-    id_seleccion = db.Column(db.Integer, ForeignKey("Seleccion.id"), primary_key=True)
-    plaza = db.Column(db.String(30), nullable=False)
-    aceptar = db.Column(db.Boolean(50), nullable=False)
-    estudiante = relationship("Estudiante", backref=backref("Estudiantes-Seleccion"))
-    seleccion = relationship("Seleccion", backref=backref("Estudiantes-Seleccion"))
-
-    def create(self):
-      db.session.add(self)
-      db.session.commit()
-      return self
-
-    def __init__(self,id_estudiante,id_seleccion, plaza,aceptar):
-        self.id_estudiante = id_estudiante
-        self.id_seleccion = id_seleccion
-        self.plaza = plaza
-        self.aceptar = aceptar
-
-    def __repr__(self):
-        '''
-        repr method represents how one onject will look like
-        '''
-        return f"{self.id_estudiante}:{self.id_seleccion}"
-
-    def json(self):
-        '''
-        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
-        '''
-        return {"Id_Estudiante":self.id_estudiante, "ID_Seleccion":self.id_seleccion, "Plaza":self.plaza, "Aceptado":self.aceptar}
-
-class Estudiante_SeleccionSchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
-        model = Estudiante_Seleccion
-        include_relationships = True
-        sqla_session = db.session
-        id_seleccion = fields.Number(dump_only=True)
-        id_estudiante = fields.Number(dump_only=True)
-        plaza = fields.Str(required=True)
-        aceptar = fields.Boolean(required=True)
-       
-
-# AUXILIAR SELECCION - UNIVERSIDAD DE DESTINO
-class Seleccion_Universidad(db.Model):
-    '''
-    Clase: Estudiante_Universidad
-    Tabla auxiliar que se debe generar debido a la relacion N:M entre las entidades de Seleccion y Universidad de Destino
-
-    Atributos:
-        ID_universidad: Int, clave foranea que hace referencia al id de la clase universidad, junto con id_seleccion configuran la clave primaria
-        ID_seleccion: Int, clave foranea que hace referencia al id de la clase seleccion, junto con id_universidad configuran la clave primaria
-
-        
-    Funciones
-        def create(self)
-        def __init__
-        def __repr__
-        def json(self)
-    '''
-    __tablename__ = "Seleccion-Universidad"
-    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id"), primary_key=True)
-    id_seleccion = db.Column(db.Integer, ForeignKey("Seleccion.id"), primary_key=True)
-    universidad_id = relationship("Universidad", backref=backref("Seleccion-Universidad"))
-    seleccion_id = relationship("Seleccion", backref=backref("Seleccion-Universidad"))
-
-    def create(self):
-      db.session.add(self)
-      db.session.commit()
-      return self
-
-    def __init__(self,id_universidad,id_seleccion):
-        self.id_universidad = id_universidad
-        self.id_seleccion = id_seleccion
-
-
-    def __repr__(self):
-        '''
-        repr method represents how one onject will look like
-        '''
-        return f"{self.id_universidad}:{self.id_seleccion}"
-
-    def json(self):
-        '''
-        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
-        '''
-        return {"Id":self.id, "Id_Seleccion":self.id_seleccion, "Id_Universidad":self.id_universidad}
-
-class Seleccion_UniversidadSchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
-        model = Seleccion_Universidad
-        include_relationships = True
-        sqla_session = db.session
-        id_seleccion = fields.Number(dump_only=True)
-        id_universidad = fields.Number(dump_only=True)
-       
-
-# AUXILIAR LA - ASIGNATURA_DESTINO_ASIGNATURA_ORIGEN
-class AsignaturaOD_LA(db.Model):
-    '''
-    Clase: AsignaturaOD_LA
-    Tabla auxiliar que se debe generar debido a la relacion N:M entre las entidades de Asignatura_Origen_Asignatura_Destino y LA
-
-    Atributos:
-        ID_AOD: Int, clave foranea que hace referencia al id de la clase Asignatura_Destino_asignatura_Origen, junto con id_LA configuran la clave primaria
-        ID_LA: Int, clave foranea que hace referencia al id de la clase LA, junto con id_AOD configuran la clave primaria
-
-        
-    Funciones
-        def create(self)
-        def __init__
-        def __repr__
-        def json(self)
-    '''
-    __tablename__ = "AOD_LA"
-    id_AOD = db.Column(db.Integer, ForeignKey("Asignatura_Destino_Asignatura_Origen.id"), primary_key=True)
-    id_LA = db.Column(db.Integer, ForeignKey("LA.id"), primary_key=True)
-    asingaturas_relacion = relationship("Asignatura_Destino_Asignatura_Origen", backref=backref("AOD_LA"))
-    Learning_Agreement_id = relationship("LA", backref=backref("AOD_LA"))
-
-    def create(self):
-      db.session.add(self)
-      db.session.commit()
-      return self
-
-    def __init__(self,id_AOD,id_LA):
-        self.id_AOD = id_AOD
-        self.id_LA = id_LA
-
-
-    def __repr__(self):
-        '''
-        repr method represents how one onject will look like
-        '''
-        return f"{self.id_AOD}:{self.id_LA}"
-
-    def json(self):
-        '''
-        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
-        '''
-        return {"ID_LA":self.id_LA, "ID_AOD":self.id_AOD}
-
-class AsignaturaOD_LASchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
-        model = AsignaturaOD_LA
-        include_relationships = True
-        sqla_session = db.session
-        id_AOD = fields.Number(dump_only=True)
-        id_LA = fields.Number(dump_only=True)
-
-
+#las auxiliares estan en prueba.py
 
 db.create_all()
