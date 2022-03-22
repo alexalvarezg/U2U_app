@@ -457,7 +457,7 @@ def Aods():
 
 
 # B.1) POST: INCORPORAR UN CONJUNTO DE ASIGNATURA DESTINO Y ORIGEN
-@app.route('/postendpoint/Asignaturas_destino_origen', methods = ['POST'])
+@app.route('/postendpoint/Asignatura_destino_origen', methods = ['POST'])
 def add_origin_and_destiny_subject():
     request_data = request.get_json()
     origin_subject_id = request_data["id_asignatura_origen"]
@@ -470,6 +470,28 @@ def add_origin_and_destiny_subject():
     db.session.commit()
 
     return make_response(jsonify({"Status" : "AOD added"}))
+
+
+
+# B.2) POST: INCORPORAR VARIOS LA
+@app.route('/postendpoint/various_Asignatura_destino_origen', methods = ['POST'])
+def add_origin_and_destiny_subjects():
+    request_data = request.get_json()
+    
+    for i in range(1, len(request_data)):
+        origin_subject_id = request_data[i]["id_asignatura_origen"]
+        destiny_subject_id = request_data[i]["id_asignatura_destino"]
+        
+
+        nuevas_asignaturas = Asignatura_Destino_Asignatura_Origen(id_asignatura_destino=destiny_subject_id, id_asignatura_origen=origin_subject_id,)
+        print("nuevo AOD añadido \n")
+        print(nuevas_asignaturas)
+        db.session.add(nuevas_asignaturas)
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Multiple AODs relations added"}))
+
+
 
 # C.3) DELETE: ELIMINAR TODOS LAS AOD  
 @app.route('/deleteAllAODs', methods=["DELETE"])
@@ -509,7 +531,8 @@ def add_selection():
     year = request_data["año"]
     round = request_data["vuelta"]
     confirmation = request_data["confirmacion"]
-    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation) 
+    students = request_data["estudiantes"]
+    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
     print("nueva seleccion añadida \n")
     print(nueva_seleccion)
     db.session.add(nueva_seleccion)
@@ -527,7 +550,8 @@ def add_selecciones():
         year = request_data[i]["año"]
         round = request_data[i]["vuelta"]
         confirmation = request_data[i]["confirmacion"]
-        nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation) 
+        students = request_data[i]["estudiantes"]
+        nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students) 
         print("nueva seleccion añadida \n")
         print(nueva_seleccion)
         db.session.add(nueva_seleccion)
@@ -550,6 +574,20 @@ def erase_all_selections():
     return make_response(jsonify({"Status" : "All Selections erased"}))
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+################### AUXILIARES EMPIEZAN AQUI #############################
 '''
 SELECCION - UNIVERSIDAD
 '''
@@ -732,3 +770,6 @@ def erase_all_AOD_LAs():
         db.session.commit()
     
     return make_response(jsonify({"Status" : "All AOD-LA erased"}))
+
+
+
