@@ -12,7 +12,7 @@ from . import db
 
 
 
-#db.drop_all()
+db.drop_all()
 #Base = declarative_base()
 
 #Establecemos las tablas auxiliares
@@ -110,6 +110,65 @@ asignaturas_origen_destino = db.Table('asignaturas_origen_destino',
     db.Column('asignatura_destino_id', db.Integer, db.ForeignKey('Asignatura_Destino.id'))
 )
 '''
+
+
+class Universidad(db.Model):
+    '''
+    Clase: Universidad
+
+    Atributos:
+        ID: Int, clave primaria
+        Nombre: Str(30) Nombre de la universidad de destino
+        Ubicación: Str(50) País y ciudad
+        plazas: numero de plazas disponibles en la universidad
+        id_asignatura_destino: clave foranea que hace referencia al id de la asignatura de destino
+        
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Universidad"
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(30), nullable=False)
+    ubicacion = db.Column(db.String(50), nullable=False)
+    plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
+    
+    
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,nombre,ubicacion, plazas, id_asignatura_d):
+        self.nombre = nombre
+        self.ubicacion = ubicacion
+        self.plazas = plazas
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.nombre}:{self.id}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Asignatura Destino":self.id_asignatura_d}
+
+class UniversidadSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Universidad
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        ubicacion = fields.String(required=True)
+        id_asignatura_destino = fields.Integer(required=True)
+  
+
 
 
 class Asignatura_Origen(db.Model):
@@ -211,63 +270,6 @@ class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         
 
-
-class Universidad(db.Model):
-    '''
-    Clase: Universidad
-
-    Atributos:
-        ID: Int, clave primaria
-        Nombre: Str(30) Nombre de la universidad de destino
-        Ubicación: Str(50) País y ciudad
-        plazas: numero de plazas disponibles en la universidad
-        id_asignatura_destino: clave foranea que hace referencia al id de la asignatura de destino
-        
-    Funciones
-        def create(self)
-        def __init__
-        def __repr__
-        def json(self)
-    '''
-    __tablename__ = "Universidad"
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30), nullable=False)
-    ubicacion = db.Column(db.String(50), nullable=False)
-    plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
-    
-    
-    def create(self):
-      db.session.add(self)
-      db.session.commit()
-      return self
-
-    def __init__(self,nombre,ubicacion, plazas, id_asignatura_d):
-        self.nombre = nombre
-        self.ubicacion = ubicacion
-        self.plazas = plazas
-
-    def __repr__(self):
-        '''
-        repr method represents how one onject will look like
-        '''
-        return f"{self.nombre}:{self.id}"
-
-    def json(self):
-        '''
-        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
-        '''
-        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Asignatura Destino":self.id_asignatura_d}
-
-class UniversidadSchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
-        model = Universidad
-        include_relationships = True
-        sqla_session = db.session
-        id = fields.Number(dump_only=True)
-        nombre = fields.String(required=True)
-        ubicacion = fields.String(required=True)
-        id_asignatura_destino = fields.Integer(required=True)
-  
 
 
 class Seleccion(db.Model):
@@ -460,4 +462,4 @@ class LASchema(SQLAlchemyAutoSchema):
 
 #las auxiliares estan en prueba.py
 
-#db.create_all()
+db.create_all()
