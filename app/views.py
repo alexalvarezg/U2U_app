@@ -533,7 +533,7 @@ def add_selection():
     confirmation = request_data["confirmacion"]
     students = request_data["estudiantes"]
     nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
-    print("nueva seleccion añadida \n")
+    #print("nueva seleccion añadida \n")
     print(nueva_seleccion)
     db.session.add(nueva_seleccion)
     db.session.commit()

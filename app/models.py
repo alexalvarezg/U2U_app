@@ -295,20 +295,21 @@ class Seleccion(db.Model):
     año = db.Column(db.Integer, nullable=False)
     vuelta = db.Column(db.Integer, nullable=False)
     confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    universidad = relationship("Universidad", backref=backref("Seleccion"))
-    estudiantes = db.relationship("Estudiante", secondary=auxiliar_estudiante_seleccion)
-    universidades = db.relationship("Universidad", secondary=auxiliar_universidad_seleccion)
+    universidad_confirmada = relationship("Universidad", backref=backref("Seleccion"))
+    estudiantes = db.relationship("Estudiante", secondary=auxiliar_estudiante_seleccion, backref=backref('Seleccion', lazy='dynamic'), lazy='dynamic')
+    listado_universidades = db.relationship("Universidad", secondary=auxiliar_universidad_seleccion)
 
     def create(self):
       db.session.add(self)
       db.session.commit()
       return self
 
-    def __init__(self,confirmacion, cuatri, año, vuelta):
+    def __init__(self,confirmacion, cuatri, año, vuelta, estudiantes):
         self.cuatri = cuatri
         self.año = año
         self.vuelta = vuelta
         self.confirmacion = confirmacion
+        self.estudiantes = estudiantes
 
     def __repr__(self):
         '''
@@ -332,6 +333,7 @@ class SeleccionSchema(SQLAlchemyAutoSchema):
         año = fields.Integer(required=True)
         cuatri = fields.Integer(required=True)
         vuelta = fields.Integer(required=True)
+        estudiantes = fields.Integer
 
 
 
@@ -354,8 +356,8 @@ class Asignatura_Destino_Asignatura_Origen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_asignatura_origen = db.Column(db.Integer, ForeignKey("Asignatura_Origen.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     id_asignatura_destino = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    origen = relationship("Asignatura_Origen", backref=backref("Asignatura_Destino_Asignatura_Origen"))
-    destino = relationship("Asignatura_Destino", backref=backref("Asignatura_Destino_Asignatura_Origen"))
+    asignatura_origen = relationship("Asignatura_Origen", backref=backref("Asignatura_Destino_Asignatura_Origen"))
+    asignatura_destino = relationship("Asignatura_Destino", backref=backref("Asignatura_Destino_Asignatura_Origen"))
     #la = relationship('LA', secondary='AOD_LA') #en este caso LA va entre '' porque no esta aun creada la clase LA
 
 
@@ -418,7 +420,7 @@ class LA(db.Model):
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
     estudiante = relationship("Estudiante", backref=backref("LA"))
-    asignaturasOD = db.relationship("Asignatura_Destino_Asignatura_Origen", secondary=auxiliar_LA_asignaturasOD)
+    listado_asignaturasOD = db.relationship("Asignatura_Destino_Asignatura_Origen", secondary=auxiliar_LA_asignaturasOD)
 
     
 
