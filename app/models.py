@@ -12,7 +12,6 @@ from . import db
 
 
 
-db.drop_all()
 #Base = declarative_base()
 
 #Establecemos las tablas auxiliares
@@ -121,7 +120,6 @@ class Universidad(db.Model):
         Nombre: Str(30) Nombre de la universidad de destino
         Ubicación: Str(50) País y ciudad
         plazas: numero de plazas disponibles en la universidad
-        id_asignatura_destino: clave foranea que hace referencia al id de la asignatura de destino
         
     Funciones
         def create(self)
@@ -461,5 +459,5 @@ class LASchema(SQLAlchemyAutoSchema):
 
 
 #las auxiliares estan en prueba.py
-
+db.drop_all()
 db.create_all()
