@@ -1,7 +1,7 @@
 from tkinter import E
 from . import app, db
 from .models import *
-from flask import redirect, jsonify, make_response, request
+from flask import redirect, jsonify, make_response, request, session
 
 
 @app.route("/")
@@ -653,8 +653,8 @@ SELECCION - ELECCION
 # A) GET: MOSTRAR TODAS LAS SELECCIONES-ESTUDIANTES
 @app.route('/Seleccion-Estudiante', methods = ['GET'])
 def Selection_Student():
-    get_selection_student = Estudiante_Seleccion.query.all()
-    selection_student_schema = Estudiante_SeleccionSchema(many=True)
+    get_selection_student = auxiliar_estudiante_seleccion.query.all()
+    selection_student_schema = auxiliar_estudiante_seleccion(many=True)
     selection_student = selection_student_schema.dump(get_selection_student)
     return make_response(jsonify({"Seleccion(es)-Universidad(es)": selection_student}))
 
@@ -665,11 +665,8 @@ def add_selection_student():
     request_data = request.get_json()
     student_id = request_data['id_estudiante']
     selection_id = request_data["id_seleccion"]
-    spots = request_data["plaza"]
-    accept = request_data["aceptar"]
-
-    
-    nueva_seleccion_estudiante = Estudiante_Seleccion(id_estudiante=student_id, id_seleccion=selection_id, plaza=spots, aceptar=accept)  
+       
+    nueva_seleccion_estudiante = auxiliar_estudiante_seleccion(id_estudiante=student_id, id_seleccion=selection_id)  
     print("nueva seleccion-estudiante añadida \n")
     print(nueva_seleccion_estudiante)
     db.session.add(nueva_seleccion_estudiante)
@@ -708,6 +705,35 @@ def erase_all_selections_students():
         db.session.commit()
     
     return make_response(jsonify({"Status" : "All Selections_Estudiantes erased"}))
+
+''' from sqlalchemy import select, engine
+# prueba acceso a tabla aux 
+@app.route('/prueba/Seleccion-Estudiante', methods = ['GET'])
+def prueba_Selection_Student():
+    get_selection_student = select(auxiliar_estudiante_seleccion)
+   
+    result = fetchall(get_selection_student)
+    #selection_student_schema = auxiliar_estudiante_seleccion(many=True)
+    #selection_student = selection_student_schema.dump(get_selection_student)
+    return make_response(jsonify({"Seleccion(es)-Universidad(es)": result}))
+'''
+
+
+# prueba de insert en una tabla
+@app.route('/postendpoint/prueba_seleccion_estudiante', methods = ['POST'])
+def prueba_add_selections_students():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(1, len(request_data)):
+        student_id = request_data[i]['id_estudiante']
+        selection_id = request_data[i]["id_seleccion"]
+        
+        db.session.execute(auxiliar_estudiante_seleccion.insert().values(id_estudiante=student_id, id_seleccion=selection_id))
+        print("nuevas selecciones-universidades añadida \n")
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
+
 
 
 
