@@ -8,6 +8,8 @@ from sqlalchemy import ForeignKey, Table, Column
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from . import db
+
+from sqlalchemy import insert
 #from app import db
 
 
@@ -459,6 +461,9 @@ class LASchema(SQLAlchemyAutoSchema):
         aceptado_Coord = fields.Boolean(required=True)
         fdo_RRII = fields.Boolean(required=True)
         fdo_Coord = fields.Boolean(required=True)
+
+
+
 
 
 
