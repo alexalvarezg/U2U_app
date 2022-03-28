@@ -469,4 +469,6 @@ class LASchema(SQLAlchemyAutoSchema):
 
 #las auxiliares estan en prueba.py
 db.drop_all()
+#aqui estaria bien meter algo de codigo para que se ejecutase el workflow de pruebas de postman
+# y despues los inserts a cada una de las tablas auxiliares
 db.create_all()
