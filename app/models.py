@@ -178,7 +178,9 @@ class Asignatura_Destino(db.Model):
     __tablename__ = "Asignatura_Destino"
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
-    #asignatura_origen = db.relationship("Asignatura_Origen", secondary=asignaturas_origen_destino)
+    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    universidad_id = relationship("Universidad", backref=backref("Asignatura_Destino"))
+    
 
     def create(self):
       db.session.add(self)
@@ -232,11 +234,8 @@ class Universidad(db.Model):
     nombre = db.Column(db.String(30), nullable=False)
     ubicacion = db.Column(db.String(50), nullable=False)
     plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
-    id_asignatura_d = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    asignatura_destino = relationship("Asignatura_Destino", backref=backref("Universidad"))
     
-
-
+    
     def create(self):
       db.session.add(self)
       db.session.commit()
@@ -246,7 +245,6 @@ class Universidad(db.Model):
         self.nombre = nombre
         self.ubicacion = ubicacion
         self.plazas = plazas
-        self.id_asignatura_d = id_asignatura_d
 
     def __repr__(self):
         '''
