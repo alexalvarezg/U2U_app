@@ -257,7 +257,7 @@ class Asignatura_Destino(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Id Asignatura Destino":self.id, "Nombre":self.nombre}
+        return {"Id Asignatura Destino":self.id, "Nombre":self.nombre, "Id_universidad":self.id_universidad}
 
 class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -265,6 +265,8 @@ class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
         include_relationships = True
         sqla_session = db.session
         id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        id_universidad = fields.Integer(required=True)
         
 
 
