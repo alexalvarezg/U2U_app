@@ -277,7 +277,8 @@ def subjects_aborad():
 def add_subject_abroad():
     request_data = request.get_json()
     name = request_data['nombre']
-    nueva_asignatura = Asignatura_Destino(nombre=name)
+    university_id = request_data['id_universidad']
+    nueva_asignatura = Asignatura_Destino(nombre=name, id_universidad=university_id)
     db.session.add(nueva_asignatura)
     db.session.commit()
 
@@ -290,8 +291,9 @@ def add_subjects_abroad():
     print(request_data)
     for i in range(1, len(request_data)):
         name = request_data[i]['nombre']
+        university_id = request_data[i]['id_universidad']
         #print(name)
-        nueva_asignatura = Asignatura_Destino(nombre=name)
+        nueva_asignatura = Asignatura_Destino(nombre=name, id_universidad=university_id)
         db.session.add(nueva_asignatura)
         db.session.commit()
 

@@ -243,8 +243,9 @@ class Asignatura_Destino(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre):
+    def __init__(self,nombre, id_universidad):
         self.nombre = nombre
+        self.id_universidad = id_universidad
     
 
     def __repr__(self):
