@@ -719,24 +719,6 @@ def prueba_Selection_Student():
 '''
 
 
-# prueba de insert en una tabla
-@app.route('/postendpoint/prueba_seleccion_estudiante', methods = ['POST'])
-def prueba_add_selections_students():
-    request_data = request.get_json()
-    #print(request_data)
-    for i in range(1, len(request_data)):
-        student_id = request_data[i]['id_estudiante']
-        selection_id = request_data[i]["id_seleccion"]
-        
-        db.session.execute(auxiliar_estudiante_seleccion.insert().values(id_estudiante=student_id, id_seleccion=selection_id))
-        print("nuevas selecciones-universidades añadida \n")
-        db.session.commit()
-
-    return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
-
-
-
-
     
 '''
 AOD - LA
@@ -798,4 +780,61 @@ def erase_all_AOD_LAs():
     return make_response(jsonify({"Status" : "All AOD-LA erased"}))
 
 
+
+
+
+
+#################### PRUEBAS
+
+
+# prueba de insert en una tabla aux seleccion - estudiantes
+@app.route('/postendpoint/prueba_seleccion_estudiante', methods = ['POST'])
+def prueba_add_selections_students():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(1, len(request_data)):
+        student_id = request_data[i]['id_estudiante']
+        selection_id = request_data[i]["id_seleccion"]
+        
+        db.session.execute(auxiliar_estudiante_seleccion.insert().values(id_estudiante=student_id, id_seleccion=selection_id))
+        print("nuevas selecciones-estudiantes añadida \n")
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
+
+
+
+
+# prueba de insert en una tabla seleccion - universidad
+@app.route('/postendpoint/prueba_seleccion_universidad', methods = ['POST'])
+def prueba_add_selections_universities():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(1, len(request_data)):
+        university_id = request_data[i]['id_universidad']
+        selection_id = request_data[i]["id_seleccion"]
+        order = request_data[i]["orden"]
+        accept = request_data[i]["aceptar"]
+        
+        db.session.execute(auxiliar_universidad_seleccion.insert().values(id_universidad=university_id, id_seleccion=selection_id, aceptar=accept, orden=order))
+        print("nuevas selecciones-universidades añadida \n")
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias Selecciones-Universidades Añadidas"}))
+
+
+# prueba de insert en una tabla la - ASIGNATURA_DES_OR
+@app.route('/postendpoint/prueba_la_asignaturas', methods = ['POST'])
+def prueba_add_subjects_las():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(1, len(request_data)):
+        la_id = request_data[i]['id_LA']
+        subjects_id = request_data[i]["id_AOD"]
+        
+        db.session.execute(auxiliar_LA_asignaturasOD.insert().values(id_LA=la_id, id_AOD=subjects_id))
+        print("nuevas las-AODs añadida \n")
+        db.session.commit()
+
+    return make_response(jsonify({"Status" : "Varias LAs-AODs Añadidas"}))
 
