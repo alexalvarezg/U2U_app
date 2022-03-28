@@ -139,7 +139,7 @@ class Universidad(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre,ubicacion, plazas, id_asignatura_d):
+    def __init__(self,nombre,ubicacion, plazas):
         self.nombre = nombre
         self.ubicacion = ubicacion
         self.plazas = plazas
@@ -154,7 +154,7 @@ class Universidad(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Asignatura Destino":self.id_asignatura_d}
+        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas}
 
 class UniversidadSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -164,7 +164,6 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
         ubicacion = fields.String(required=True)
-        id_asignatura_destino = fields.Integer(required=True)
   
 
 

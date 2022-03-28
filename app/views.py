@@ -331,8 +331,7 @@ def add_university():
     name = request_data['nombre']
     place = request_data["ubicacion"]
     spots = request_data["plazas"]
-    subject_id = request_data["id_asignatura_d"]
-    nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, id_asignatura_d=subject_id)
+    nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
     print("nueva universidad añadida \n")
     print(nueva_universidad)
     db.session.add(nueva_universidad)
@@ -349,8 +348,7 @@ def add_universities():
         name = request_data[i]['nombre']
         place = request_data[i]["ubicacion"]
         spots = request_data[i]["plazas"]
-        subject_id = request_data[i]["id_asignatura_d"]
-        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, id_asignatura_d=subject_id)
+        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
         print("nueva universidad añadida \n")
         print(nueva_universidad)
         db.session.add(nueva_universidad)
