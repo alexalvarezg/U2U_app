@@ -21,8 +21,6 @@ from . import db
 auxiliar_estudiante_seleccion = db.Table('aux_estudiante_seleccion', 
     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
     db.Column('id_seleccion', db.Integer, db.ForeignKey('Seleccion.id'), primary_key = True), 
-    db.Column('plazas', db.Integer, nullable=False), 
-    db.Column('aceptar', db.Boolean, nullable=False)
 )
 
 ## UNIVERSIDAD - SELECCION
