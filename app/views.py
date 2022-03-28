@@ -838,3 +838,13 @@ def prueba_add_subjects_las():
 
     return make_response(jsonify({"Status" : "Varias LAs-AODs Añadidas"}))
 
+
+
+#prueba de un caso de uso - estudiantes de un proceso de seleccion
+@app.route('/seleccion/<yy>/<term>', methods = ['GET'])
+def get_students_selecctionprocess(year, term):
+    year = Seleccion.query.get("año")
+    term = Seleccion.query.get("cuatri")
+    
+    db.session.commit()
+    return redirect('/estudiantes')
