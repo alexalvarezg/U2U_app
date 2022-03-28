@@ -27,8 +27,10 @@ auxiliar_estudiante_seleccion = db.Table('aux_estudiante_seleccion',
 
 ## UNIVERSIDAD - SELECCION
 auxiliar_universidad_seleccion = db.Table('aux_universidad_seleccion', 
-    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-    db.Column('id_seleccion', db.Integer, db.ForeignKey('Seleccion.id'), primary_key = True)
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), #esto no seria aceptar?, la univerisdad que finalmente se ha escogido
+    db.Column('id_seleccion', db.Integer, db.ForeignKey('Seleccion.id'), primary_key = True),
+    db.Column('orden', db.Integer, nullable=False), #its values can only be 1,2,3,4
+    db.Column('aceptar', db.Integer, nullable=False)
 )
 
 
