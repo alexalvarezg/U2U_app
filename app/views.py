@@ -545,12 +545,13 @@ def add_selection():
 def add_selecciones():
     request_data = request.get_json()
     print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         term = request_data[i]['cuatri']
         year = request_data[i]["año"]
         round = request_data[i]["vuelta"]
         confirmation = request_data[i]["confirmacion"]
         students = request_data[i]["estudiantes"]
+        #GETTER DE STUDENTS
         nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students) 
         print("nueva seleccion añadida \n")
         print(nueva_seleccion)
