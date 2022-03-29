@@ -509,7 +509,7 @@ def add_selection():
 @app.route('/postendpoint/selecciones', methods = ['POST'])
 def add_selecciones():
     request_data = request.get_json()
-    print(request_data)
+    #print(request_data)
     for i in range(0, len(request_data)):
         term = request_data[i]['cuatri']
         year = request_data[i]["año"]
@@ -760,7 +760,7 @@ def prueba_add_selections_students():
         student_id = request_data[i]['id_estudiante']
         selection_id = request_data[i]["id_seleccion"]
         db.session.execute(auxiliar_estudiante_seleccion.insert().values(id_estudiante=student_id, id_seleccion=selection_id))
-        print("nuevas selecciones-estudiantes añadida \n")
+        #print("nuevas selecciones-estudiantes añadida \n")
         db.session.commit()
     return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
 
@@ -778,7 +778,7 @@ def prueba_add_selections_universities():
         order = request_data[i]["orden"]
         accept = request_data[i]["aceptar"]
         db.session.execute(auxiliar_universidad_seleccion.insert().values(id_universidad=university_id, id_seleccion=selection_id, aceptar=accept, orden=order))
-        print("nuevas selecciones-universidades añadida \n")
+        #print("nuevas selecciones-universidades añadida \n")
         db.session.commit()
     return make_response(jsonify({"Status" : "Varias Selecciones-Universidades Añadidas"}))
 
@@ -792,7 +792,7 @@ def prueba_add_subjects_las():
         la_id = request_data[i]['id_LA']
         subjects_id = request_data[i]["id_AOD"]
         db.session.execute(auxiliar_LA_asignaturasOD.insert().values(id_LA=la_id, id_AOD=subjects_id))
-        print("nuevas las-AODs añadida \n")
+        #print("nuevas las-AODs añadida \n")
         db.session.commit()
 
     return make_response(jsonify({"Status" : "Varias LAs-AODs Añadidas"}))
