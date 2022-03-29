@@ -335,7 +335,7 @@ class SeleccionSchema(SQLAlchemyAutoSchema):
         año = fields.Integer(required=True)
         cuatri = fields.Integer(required=True)
         vuelta = fields.Integer(required=True)
-        estudiantes = fields.Integer
+        estudiantes = fields.List 
 
 
 

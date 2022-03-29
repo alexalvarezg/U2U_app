@@ -497,8 +497,15 @@ def add_selection():
     year = request_data["año"]
     round = request_data["vuelta"]
     confirmation = request_data["confirmacion"]
-    students = request_data["estudiantes"]
-    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
+    students_id = request_data["estudiantes"][0] #coge su id
+    ### aqui iria el getter de estudiante en base a su id
+    print(students_id)
+    student = Estudiante.query.get(students_id)
+    print(student) #este es el student
+    print(type(student))
+    print(student.nombre)
+    nuevo_estudiante = Estudiante(nombre=student.nombre , apellidos=student.apellidos, curso=student.curso, grado=student.grado, titulo=student.titulo)
+    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=nuevo_estudiante)
     #print("nueva seleccion añadida \n")
     #print(nueva_seleccion)
     db.session.add(nueva_seleccion)
