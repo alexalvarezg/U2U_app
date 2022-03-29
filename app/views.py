@@ -34,49 +34,36 @@ def add_student():
     grade = request_data['curso']
     degree = request_data['grado']
     level = request_data['titulo']
-    #print(name)
-    #print(surname)
-    #print(grade)
-    #print(degree)
-    #print(level)
     nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=level)
-    print(nuevo_estudiante)
+    #print(nuevo_estudiante)
     db.session.add(nuevo_estudiante)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "Sudent added"}))
 
 # B.2) POST: INCORPORAR VARIOS ESTUDIANTES
 @app.route('/postendpoint/estudiantes', methods = ['POST'])
 def add_students():
     request_data = request.get_json()
-    print(request_data)
-    for i in range(1, len(request_data)):
+    #print(request_data)
+    for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         surname = request_data[i]['apellidos']
         grade = request_data[i]['curso']
         degree = request_data[i]['grado']
         level = request_data[i]['titulo']
-        #print(name)
-        #print(surname)
-        #print(grade)
-        #print(degree)
-        #print(level)
         nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=level)
-        print(nuevo_estudiante)
+        #print(nuevo_estudiante)
         db.session.add(nuevo_estudiante)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Various Students added"}))
 
 # C.1) DELETE: ELIMINAR UN ESTUDIANTE EN CONCRETO DESDE POSTMAN
 @app.route('/deleteendpoint', methods=['DELETE'])
 def erase_student():
     request_data = request.get_json()
-    print(request_data)
+    #print(request_data)
     surname_to_erase = request_data["apellidos"]
-    print(surname_to_erase)
-    
+    #print(surname_to_erase) 
     db.session.query(Estudiante).filter(Estudiante.apellidos == surname_to_erase).delete(synchronize_session=False)
     db.session.commit()
     return redirect('/estudiantes')
@@ -91,7 +78,7 @@ def erase_student_id(id):
     data = Estudiante.query.get(id)
     db.session.delete(data)
     db.session.commit()
-    return "Estdudiante eliminado"
+    return "Estudiante eliminado"
 
 
 # C.3) DELETE: ELIMINAR TODOS LOS CUANTOS ESTUDIANTES 
@@ -99,14 +86,13 @@ def erase_student_id(id):
 def erase_all_students():
     get_estudiantes = Estudiante.query.all()
     print("\n Los estudiantes actuales son: \n")
-    print(get_estudiantes)
-    print("\n")
+    #print(get_estudiantes)
+    #print("\n")
     for i in get_estudiantes:
-        print("Estudiante que se va a eliminar: " + str(i))
+        #print("Estudiante que se va a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-        print(get_estudiantes)
-    
+        #print(get_estudiantes)
     return make_response(jsonify({"Status" : "All students erased"}))
 
 
@@ -225,21 +211,19 @@ def add_subject():
     nueva_asignatura = Asignatura_Origen(nombre=name)
     db.session.add(nueva_asignatura)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "Asignatura de origen added"}))
 
 # B.2) POST: INCORPORAR VARIAS ASIGNATURAS DE ORIGEN
 @app.route('/postendpoint/asignaturas_origen', methods = ['POST'])
 def add_subjects():
     request_data = request.get_json()
-    print(request_data)
-    for i in range(1, len(request_data)):
+    #print(request_data)
+    for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         #print(name)
         nueva_asignatura = Asignatura_Origen(nombre=name)
         db.session.add(nueva_asignatura)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Various Subjects added"}))
 
 
@@ -247,14 +231,13 @@ def add_subjects():
 @app.route('/deleteAllAsignaturasOrigen', methods=["DELETE"])
 def erase_all_originsubjects():
     get_asignaturas = Asignatura_Origen.query.all()
-    print("\n Las asignaturas de origen actuales son: \n")
-    print(get_asignaturas)
-    print("\n")
+    #print("\n Las asignaturas de origen actuales son: \n")
+    #print(get_asignaturas)
+    #print("\n")
     for i in get_asignaturas:
-        print("Asignaturas que se va a eliminar: " + str(i))
+        #print("Asignaturas que se va a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All Subjects erased"}))
 
 
@@ -281,36 +264,33 @@ def add_subject_abroad():
     nueva_asignatura = Asignatura_Destino(nombre=name, id_universidad=university_id)
     db.session.add(nueva_asignatura)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "Asignatura de destino added"}))
 
 # B.2) POST: INCORPORAR VARIAS ASIGNATURAS DE DESTINO
 @app.route('/postendpoint/asignaturas_destino', methods = ['POST'])
 def add_subjects_abroad():
     request_data = request.get_json()
-    print(request_data)
-    for i in range(1, len(request_data)):
+    #print(request_data)
+    for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         university_id = request_data[i]['id_universidad']
         #print(name)
         nueva_asignatura = Asignatura_Destino(nombre=name, id_universidad=university_id)
         db.session.add(nueva_asignatura)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Various Subjects added"}))
 
 # C.3) DELETE: ELIMINAR TODAS LAS ASIGNATURAS DE DESTINO 
 @app.route('/deleteAllAsignaturasDestino', methods=["DELETE"])
 def erase_all_aboradsubjects():
     get_asignaturas = Asignatura_Destino.query.all()
-    print("\n Las asignaturas de destino actuales son: \n")
-    print(get_asignaturas)
-    print("\n")
+    #print("\n Las asignaturas de destino actuales son: \n")
+    #print(get_asignaturas)
+    #print("\n")
     for i in get_asignaturas:
-        print("Asignaturas que se va a eliminar: " + str(i))
+        #print("Asignaturas que se va a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All Subjects erased"}))
 
 
@@ -334,8 +314,8 @@ def add_university():
     place = request_data["ubicacion"]
     spots = request_data["plazas"]
     nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
-    print("nueva universidad añadida \n")
-    print(nueva_universidad)
+    #print("nueva universidad añadida \n")
+    #print(nueva_universidad)
     db.session.add(nueva_universidad)
     db.session.commit()
 
@@ -345,17 +325,16 @@ def add_university():
 @app.route('/postendpoint/universidades', methods = ['POST'])
 def add_universities():
     request_data = request.get_json()
-    print(request_data)
-    for i in range(1, len(request_data)):
+    #print(request_data)
+    for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         place = request_data[i]["ubicacion"]
         spots = request_data[i]["plazas"]
         nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
-        print("nueva universidad añadida \n")
-        print(nueva_universidad)
+        #print("nueva universidad añadida \n")
+        #print(nueva_universidad)
         db.session.add(nueva_universidad)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Varias Universidades Añadidas"}))
 
 
@@ -363,14 +342,13 @@ def add_universities():
 @app.route('/deleteAllUniversidades', methods=["DELETE"])
 def erase_all_universities():
     get_universidades = Universidad.query.all()
-    print("\n Las Universsidades actuales son: \n")
-    print(get_universidades)
-    print("\n")
+    #print("\n Las Universsidades actuales son: \n")
+    #print(get_universidades)
+    #print("\n")
     for i in get_universidades:
-        print("Universidades que se va a eliminar: " + str(i))
+        #print("Universidades que se va a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All Universities erased"}))
 
 
@@ -382,10 +360,10 @@ LEARNING AGREEMENT
 @app.route('/LA', methods = ['GET'])
 def learnignAgreement():
     get_LA = LA.query.all()
-    print(get_LA) #shows __repr__ de LA
+    #print(get_LA) #shows __repr__ de LA
     LA_schema = LASchema(many=True)
     Learning_agreement = LA_schema.dump(get_LA)
-    print(LA_schema.dump_fields)
+    #print(LA_schema.dump_fields)
     return make_response(jsonify({"Learning Agreement": Learning_agreement}))
 
 # B.1) POST: INCORPORAR UN LA
@@ -397,47 +375,42 @@ def add_LA():
     coord_accept = request_data["aceptado_Coord"]
     RRII_sign = request_data["fdo_RRII"]
     coord_sign = request_data["fdo_Coord"]
-
     nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
-    print("nuevo LA añadido \n")
-    print(nuevo_LA)
+    #print("nuevo LA añadido \n")
+    #print(nuevo_LA)
     db.session.add(nuevo_LA)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "LA added"}))
 
 # B.2) POST: INCORPORAR VARIOS LA
 @app.route('/postendpoint/LAs', methods = ['POST'])
 def add_LAs():
     request_data = request.get_json()
-    print(request_data)
-    for i in range(1, len(request_data)):
+    #print(request_data)
+    for i in range(0, len(request_data)):
         student_id = request_data[i]['id_estudiante']
         RRII_accept = request_data[i]["aceptado_RRII"]
         coord_accept = request_data[i]["aceptado_Coord"]
         RRII_sign = request_data[i]["fdo_RRII"]
         coord_sign = request_data[i]["fdo_Coord"]
-
         nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
-        print("nuevos LA añadidos \n")
-        print(nuevo_LA)
+        #print("nuevos LA añadidos \n")
+        #print(nuevo_LA)
         db.session.add(nuevo_LA)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Varios LA Añadidos"}))
 
 # C.3) DELETE: ELIMINAR TODOS LOS LA 
 @app.route('/deleteAllLAs', methods=["DELETE"])
 def erase_all_LAs():
     get_LAs = LA.query.all()
-    print("\n Los LA disponibles son: \n")
-    print(get_LAs)
-    print("\n")
+    #print("\n Los LA disponibles son: \n")
+    #print(get_LAs)
+    #print("\n")
     for i in get_LAs:
-        print("LAs que se va a eliminar: " + str(i))
+        #print("LAs que se va a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All LAs erased"}))
 
 
@@ -462,13 +435,11 @@ def add_origin_and_destiny_subject():
     request_data = request.get_json()
     origin_subject_id = request_data["id_asignatura_origen"]
     destiny_subject_id = request_data["id_asignatura_destino"]
-
     nuevas_asignaturas = Asignatura_Destino_Asignatura_Origen(id_asignatura_destino=destiny_subject_id, id_asignatura_origen=origin_subject_id,)
-    print("nuevo AOD añadido \n")
-    print(nuevas_asignaturas)
+    #print("nuevo AOD añadido \n")
+    #print(nuevas_asignaturas)
     db.session.add(nuevas_asignaturas)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "AOD added"}))
 
 
@@ -477,18 +448,14 @@ def add_origin_and_destiny_subject():
 @app.route('/postendpoint/various_Asignatura_destino_origen', methods = ['POST'])
 def add_origin_and_destiny_subjects():
     request_data = request.get_json()
-    
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         origin_subject_id = request_data[i]["id_asignatura_origen"]
         destiny_subject_id = request_data[i]["id_asignatura_destino"]
-        
-
         nuevas_asignaturas = Asignatura_Destino_Asignatura_Origen(id_asignatura_destino=destiny_subject_id, id_asignatura_origen=origin_subject_id,)
-        print("nuevo AOD añadido \n")
-        print(nuevas_asignaturas)
+        #print("nuevo AOD añadido \n")
+        #print(nuevas_asignaturas)
         db.session.add(nuevas_asignaturas)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Multiple AODs relations added"}))
 
 
@@ -497,14 +464,13 @@ def add_origin_and_destiny_subjects():
 @app.route('/deleteAllAODs', methods=["DELETE"])
 def erase_all_AODS():
     get_AODS = Asignatura_Destino_Asignatura_Origen.query.all()
-    print("\n Las Selecciones disponibles son: \n")
-    print(get_AODS)
-    print("\n")
+    #print("\n Las Selecciones disponibles son: \n")
+    #print(get_AODS)
+    #print("\n")
     for i in get_AODS:
-        print("AODs que se van a eliminar: " + str(i))
+        #print("AODs que se van a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All AODS erased"}))
 
 
@@ -517,7 +483,7 @@ SELECCION
 @app.route('/Seleccion', methods = ['GET'])
 def Selection():
     get_Seleccion = Seleccion.query.all()
-    print(get_Seleccion)
+    #print(get_Seleccion)
     Selection_schema = SeleccionSchema(many=True)
     seleccion = Selection_schema.dump(get_Seleccion)
     return make_response(jsonify({"Seleccion(es)": seleccion}))
@@ -534,10 +500,9 @@ def add_selection():
     students = request_data["estudiantes"]
     nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
     #print("nueva seleccion añadida \n")
-    print(nueva_seleccion)
+    #print(nueva_seleccion)
     db.session.add(nueva_seleccion)
     db.session.commit()
-
     return make_response(jsonify({"Status" : "Selection added"}))
 
 # B.2) POST: INCORPORAR VARIAS SELECCIONES
@@ -553,25 +518,23 @@ def add_selecciones():
         students = request_data[i]["estudiantes"]
         #GETTER DE STUDENTS
         nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students) 
-        print("nueva seleccion añadida \n")
-        print(nueva_seleccion)
+        #print("nueva seleccion añadida \n")
+        #print(nueva_seleccion)
         db.session.add(nueva_seleccion)
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Varias Selecciones Añadidas"}))
 
 # C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES  
 @app.route('/deleteAllSelecciones', methods=["DELETE"])
 def erase_all_selections():
     get_selections = Seleccion.query.all()
-    print("\n Las Selecciones disponibles son: \n")
-    print(get_selections)
-    print("\n")
+    #print("\n Las Selecciones disponibles son: \n")
+    #print(get_selections)
+    #print("\n")
     for i in get_selections:
-        print("Selecciones que se van a eliminar: " + str(i))
+        #print("Selecciones que se van a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
-    
     return make_response(jsonify({"Status" : "All Selections erased"}))
 
 
@@ -621,7 +584,7 @@ def add_selection_university():
 def add_selections_universities():
     request_data = request.get_json()
     print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         university_id = request_data[i]['id_universidad']
         selection_id = request_data[i]["id_seleccion"]
         nuevas_seleccion_universidad = Seleccion_Universidad(id_universidad=university_id, id_seleccion=selection_id) 
@@ -680,7 +643,7 @@ def add_selection_student():
 def add_selections_students():
     request_data = request.get_json()
     print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         student_id = request_data[i]['id_estudiante']
         selection_id = request_data[i]["id_seleccion"]
         spots = request_data[i]["plaza"]
@@ -753,7 +716,7 @@ def add_AOD_LA():
 def add_AOD_LAs():
     request_data = request.get_json()
     print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         AOD_id = request_data[i]['id_AOD']
         LA_id = request_data[i]["id_LA"]
         
@@ -793,14 +756,12 @@ def erase_all_AOD_LAs():
 def prueba_add_selections_students():
     request_data = request.get_json()
     #print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         student_id = request_data[i]['id_estudiante']
         selection_id = request_data[i]["id_seleccion"]
-        
         db.session.execute(auxiliar_estudiante_seleccion.insert().values(id_estudiante=student_id, id_seleccion=selection_id))
         print("nuevas selecciones-estudiantes añadida \n")
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Varias Selecciones-Estudiantes Añadidas"}))
 
 
@@ -811,16 +772,14 @@ def prueba_add_selections_students():
 def prueba_add_selections_universities():
     request_data = request.get_json()
     #print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         university_id = request_data[i]['id_universidad']
         selection_id = request_data[i]["id_seleccion"]
         order = request_data[i]["orden"]
         accept = request_data[i]["aceptar"]
-        
         db.session.execute(auxiliar_universidad_seleccion.insert().values(id_universidad=university_id, id_seleccion=selection_id, aceptar=accept, orden=order))
         print("nuevas selecciones-universidades añadida \n")
         db.session.commit()
-
     return make_response(jsonify({"Status" : "Varias Selecciones-Universidades Añadidas"}))
 
 
@@ -829,10 +788,9 @@ def prueba_add_selections_universities():
 def prueba_add_subjects_las():
     request_data = request.get_json()
     #print(request_data)
-    for i in range(1, len(request_data)):
+    for i in range(0, len(request_data)):
         la_id = request_data[i]['id_LA']
         subjects_id = request_data[i]["id_AOD"]
-        
         db.session.execute(auxiliar_LA_asignaturasOD.insert().values(id_LA=la_id, id_AOD=subjects_id))
         print("nuevas las-AODs añadida \n")
         db.session.commit()
