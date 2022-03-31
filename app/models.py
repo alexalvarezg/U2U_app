@@ -32,12 +32,79 @@ auxiliar_universidad_seleccion = db.Table('aux_universidad_seleccion',
     db.Column('aceptar', db.Integer, nullable=False)
 )
 
-
 ## LA - ASIGNATURA_DESTINO_ORIGEN
 auxiliar_LA_asignaturasOD = db.Table('aux_LA_asignaturasOD', 
     db.Column('id_AOD', db.Integer, db.ForeignKey('Asignatura_Destino_Asignatura_Origen.id'), primary_key=True), 
     db.Column('id_LA', db.Integer, db.ForeignKey('LA.id'), primary_key = True)
 )
+
+## TITULO - ESTUDIANTES
+auxiliar_Titulo_Estudiantes = db.Table('aux_titulo_estudiante', 
+    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+    db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.id'), primary_key = True)
+)
+
+## TITULO - UNIVERSIDAD
+auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad', 
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+    db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.id'), primary_key = True)
+)
+
+
+
+class Titulo(db.Model):
+    '''
+    Clase: Titulo de idioma
+
+    Atributos:
+        ID: Int, clave primaria
+        idioma: 
+        nivel: 
+        
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Titulo"
+    id = db.Column(db.Integer, primary_key=True)
+    idioma = db.Column(db.String(255), nullable=False)
+    nivel = db.Column(db.String(50), nullable=False)
+    
+
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,idioma, nivel):
+        self.idioma = idioma
+        self.nivel = nivel
+    
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.idioma}:{self.nivel}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Idioma":self.idioma, "nivel":self.nivel}
+
+
+class Titulo_Schema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Titulo
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        idioma = fields.String(required=True)
+        nivel = fields.String(required=True)
+
 
 class Estudiante(db.Model):
     '''
@@ -64,7 +131,8 @@ class Estudiante(db.Model):
     apellidos = db.Column(db.String(50),nullable=False)
     curso = db.Column(db.Integer, nullable=False)
     grado = db.Column(db.String(30), nullable=False)
-    titulo = db.Column(db.String(30), nullable=False)
+    titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
+    # titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes)
     # Representar la relacion del LA
     #learning_agreemts = db.relationship('LA', backref='Estudiantes', lazy=True)
     # Representar la relacion de las selecciones
@@ -103,14 +171,8 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         apellidos = fields.String(required=True)
         curso = fields.Int(required=True)
         grado = fields.String(required=True)
-        titulo = fields.String(required=True)
+        titulo = fields.Dict(required=True)
 
-'''#association table para las asignaturas, la relacion esta exxpresada en la entidad Asignatura de destino
-asignaturas_origen_destino = db.Table('asignaturas_origen_destino', 
-    db.Column('asignatura_origen_id', db.Integer, db.ForeignKey('Asignatura_Origen.id')), 
-    db.Column('asignatura_destino_id', db.Integer, db.ForeignKey('Asignatura_Destino.id'))
-)
-'''
 
 
 class Universidad(db.Model):
@@ -134,6 +196,7 @@ class Universidad(db.Model):
     nombre = db.Column(db.String(30), nullable=False)
     ubicacion = db.Column(db.String(50), nullable=False)
     plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
+    titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
     
     
     def create(self):
@@ -141,10 +204,11 @@ class Universidad(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre,ubicacion, plazas):
+    def __init__(self,nombre,ubicacion, plazas, titulo):
         self.nombre = nombre
         self.ubicacion = ubicacion
         self.plazas = plazas
+        self.titulo = titulo
 
     def __repr__(self):
         '''
@@ -156,7 +220,7 @@ class Universidad(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas}
+        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Titulo": self.titulo}
 
 class UniversidadSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -166,6 +230,7 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
         ubicacion = fields.String(required=True)
+        titulo = fields.Dict(required=True) ### revisar esto
   
 
 
@@ -465,10 +530,11 @@ class LASchema(SQLAlchemyAutoSchema):
 
 
 
+        
 
 
 #las auxiliares estan en prueba.py
 db.drop_all()
-#aqui estaria bien meter algo de codigo para que se ejecutase el workflow de pruebas de postman
+# aqui estaria bien meter algo de codigo para que se ejecutase el workflow de pruebas de postman
 # y despues los inserts a cada una de las tablas auxiliares
 db.create_all()
