@@ -336,7 +336,7 @@ def erase_all_aboradsubjects():
         db.session.commit()
     return make_response(jsonify({"Status" : "All Subjects erased"}))
 
-from sqlalchemy.orm import sessionmaker
+
 
 '''
 UNIVERSIDAD
@@ -357,10 +357,13 @@ def add_university():
     place = request_data["ubicacion"]
     spots = request_data["plazas"]
     title = request_data["titulo"][0]
+  
     print(title)
 
     query_1 = db.session.query(Titulo).filter(Titulo.id == title)
-    print(query_1)
+    
+
+    #new_title = Titulo(id=query_1, )
     # level = getattr(title, "id")
     # print(level)
     nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, titulo=query_1)
