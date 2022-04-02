@@ -383,7 +383,9 @@ def add_universities():
         name = request_data[i]['nombre']
         place = request_data[i]["ubicacion"]
         spots = request_data[i]["plazas"]
-        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
+        title = request_data[i]["titulo"]
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots,  titulo=query_1 )
         #print("nueva universidad añadida \n")
         #print(nueva_universidad)
         db.session.add(nueva_universidad)
