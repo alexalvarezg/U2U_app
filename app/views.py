@@ -22,7 +22,7 @@ TITULO
 @app.route('/titulos', methods = ['GET'])
 def see_titulos():
     get_titulos = Titulo.query.all()
-    titulo_schema = TituloSchema(many=True)
+    titulo_schema = Titulo_Schema(many=True)
     titulos = titulo_schema.dump(get_titulos)
     return make_response(jsonify({"Titulo(s)": titulos}))
 
@@ -336,7 +336,7 @@ def erase_all_aboradsubjects():
         db.session.commit()
     return make_response(jsonify({"Status" : "All Subjects erased"}))
 
-
+from sqlalchemy.orm import sessionmaker
 
 '''
 UNIVERSIDAD
@@ -350,13 +350,20 @@ def universityd():
     return make_response(jsonify({"Universidad": universidades}))
 
 # B.1) POST: INCORPORAR UNA UNIVERSIDAD
-@app.route('/postendpoint/universidad', methods = ['POST'])
+@app.route('/postendpoint/universidad', methods = ['GET', 'POST'])
 def add_university():
     request_data = request.get_json()
     name = request_data['nombre']
     place = request_data["ubicacion"]
     spots = request_data["plazas"]
-    nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots)
+    title = request_data["titulo"][0]
+    print(title)
+
+    query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+    print(query_1)
+    # level = getattr(title, "id")
+    # print(level)
+    nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, titulo=query_1)
     #print("nueva universidad añadida \n")
     #print(nueva_universidad)
     db.session.add(nueva_universidad)
@@ -540,7 +547,7 @@ def add_selection():
     year = request_data["año"]
     round = request_data["vuelta"]
     confirmation = request_data["confirmacion"]
-    students_id = request_data["estudiantes"][0] #coge su id
+    students_id = request_data["estudiantes"] #coge su id
     ### aqui iria el getter de estudiante en base a su id
     print(students_id)
     student = Estudiante.query.get(students_id)

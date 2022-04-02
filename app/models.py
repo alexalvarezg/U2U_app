@@ -96,7 +96,7 @@ class Titulo(db.Model):
         return {"Idioma":self.idioma, "nivel":self.nivel}
 
 
-class TituloSchema(SQLAlchemyAutoSchema):
+class Titulo_Schema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Titulo
         include_relationships = True
