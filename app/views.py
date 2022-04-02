@@ -13,6 +13,49 @@ def about():
     return "All about Flask"
 
 
+
+'''
+TITULO
+'''
+
+# A) GET: MOSTRAR TODOS LOS TITULOS
+@app.route('/titulos', methods = ['GET'])
+def see_titulos():
+    get_titulos = Titulo.query.all()
+    titulo_schema = TituloSchema(many=True)
+    titulos = titulo_schema.dump(get_titulos)
+    return make_response(jsonify({"Titulo(s)": titulos}))
+
+
+# B.1) POST: INCORPORAR UN TITULO
+@app.route('/postendpoint/titulo', methods = ['POST'])
+def add_titulo():
+    request_data = request.get_json()
+    language = request_data['idioma']
+    level = request_data['nivel']
+    
+    nuevo_titulo = Titulo(idioma=language , nivel=level) 
+    #print(nuevo_titulo)
+    db.session.add(nuevo_titulo)
+    db.session.commit()
+    return make_response(jsonify({"Status" : "Titulo added"}))
+
+# B.2) POST: INCORPORAR VARIOS TITULOS
+@app.route('/postendpoint/titulos', methods = ['POST'])
+def add_titulos():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(0, len(request_data)):
+        language = request_data[i]['idioma']
+        level = request_data[i]['nivel']
+        nuevo_titulo = Titulo(idioma=language , nivel=level) 
+        #print(nuevo_estudiante)
+        db.session.add(nuevo_titulo)
+        db.session.commit()
+    return make_response(jsonify({"Status" : "Various Titulos added"}))
+
+
+
 '''
 ESTUDIANTES
 '''
