@@ -105,16 +105,16 @@ def add_students():
         grade = request_data[i]['curso']
         degree = request_data[i]['grado']
         if "titulo" in request_data[i]:
-            print("si esta")
+            #print("si esta")
             title = request_data[i]['titulo'][0]
-            print(title)
+            #print(title)
             query_1 = db.session.query(Titulo).filter(Titulo.id == title)
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
-            #print(nuevo_estudiante)
+            print("Estudiante incorporado CON titulo")
         else:
-            print("no esta")
+            #print("no esta")
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
-
+            print("Estudiante incorporado SIN titulo")
         db.session.add(nuevo_estudiante)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Students added"}))
@@ -466,9 +466,18 @@ def add_LA():
     coord_accept = request_data["aceptado_Coord"]
     RRII_sign = request_data["fdo_RRII"]
     coord_sign = request_data["fdo_Coord"]
-    nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
+    if "listado_asignaturasOD" in request_data:
+        listado = request_data["listado_asignaturasOD"]
+        for i in range(0, len(listado)):
+            asignaturas_id = listado[i]
+            query_1 = db.session.query(Asignatura_Destino_Asignatura_Origen).filter(Asignatura_Destino_Asignatura_Origen.id == asignaturas_id)
+            nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign, listado_asignaturasOD=query_1)
+            print("incorporado LA con asignaturas OD")
     #print("nuevo LA añadido \n")
     #print(nuevo_LA)
+    else: 
+        nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign, listado_asignaturasOD=[])
+        print("incorporado LA sin asignaturas OD")
     db.session.add(nuevo_LA)
     db.session.commit()
     return make_response(jsonify({"Status" : "LA added"}))
@@ -484,9 +493,17 @@ def add_LAs():
         coord_accept = request_data[i]["aceptado_Coord"]
         RRII_sign = request_data[i]["fdo_RRII"]
         coord_sign = request_data[i]["fdo_Coord"]
-        nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
-        #print("nuevos LA añadidos \n")
-        #print(nuevo_LA)
+        if "listado_asignaturasOD" in request_data[i]:
+            #print("si hay listado asignaturas")
+            asignaturas = request_data[i]["listado_asignaturasOD"]
+            for i in range(0, len(asignaturas)):
+                asignaturas_id = asignaturas[i]
+                query_1 = db.session.query(Asignatura_Destino_Asignatura_Origen).filter(Asignatura_Destino_Asignatura_Origen.id == asignaturas_id)
+                nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign, listado_asignaturasOD=query_1)
+                print("incorporado LA CON asignaturas OD")
+        else:
+            nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign, listado_asignaturasOD=[])
+            print("incorporado LA SIN asignaturas OD")
         db.session.add(nuevo_LA)
         db.session.commit()
     return make_response(jsonify({"Status" : "Varios LA Añadidos"}))
@@ -589,17 +606,17 @@ def add_selection():
     round = request_data["vuelta"]
     confirmation = request_data["confirmacion"]
     if "estudiantes" in request_data:
-        print("si hay estudiante")
+        #print("si hay estudiante")
         list_1 = request_data["estudiantes"]
         for i in range(0, len(list_1)):
             student_id = list_1[i]
             query_1 = db.session.query(Estudiante).filter(Estudiante.id == student_id)
             nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=query_1)
-            print("seleccion incorporada con estduiante")
+            print("seleccion incorporada CON estudiante")
     
     else:
         nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[])
-    
+        print("seleccion incorporada SIN estudiante")
     db.session.add(nueva_seleccion)
     db.session.commit()
     return make_response(jsonify({"Status" : "Selection added"}))
@@ -658,16 +675,16 @@ def add_selecciones():
         confirmation = request_data[i]["confirmacion"]
         #students = request_data[i]["estudiantes"]
         if "estudiantes" in request_data[i]:
-            print("si hay estudiante")
+            #print("si hay estudiante")
             list_1 = request_data[i]["estudiantes"]
             for i in range(0, len(list_1)):
                 student_id = list_1[i]
                 query_1 = db.session.query(Estudiante).filter(Estudiante.id == student_id)
                 nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=query_1)
-                print("seleccion incorporada con estduiante")
+                print("seleccion incorporada CON estudiante")
         else:
             nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[]) 
-
+            print("seleccion incorporada SIN estudiante")
         #GETTER DE STUDENTS
         #print("nueva seleccion añadida \n")
         #print(nueva_seleccion)

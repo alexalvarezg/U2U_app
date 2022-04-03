@@ -486,7 +486,7 @@ class LA(db.Model):
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
     estudiante = relationship("Estudiante", backref=backref("LA"))
-    listado_asignaturasOD = db.relationship("Asignatura_Destino_Asignatura_Origen", secondary=auxiliar_LA_asignaturasOD)
+    listado_asignaturasOD = db.relationship("Asignatura_Destino_Asignatura_Origen", secondary=auxiliar_LA_asignaturasOD, backref=backref('LA', lazy='dynamic'), lazy='dynamic')
 
     
 
