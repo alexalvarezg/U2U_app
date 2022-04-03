@@ -95,7 +95,6 @@ class Titulo(db.Model):
         '''
         return {"Idioma":self.idioma, "nivel":self.nivel}
 
-
 class Titulo_Schema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model = Titulo
@@ -171,7 +170,7 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         apellidos = fields.String(required=True)
         curso = fields.Int(required=True)
         grado = fields.String(required=True)
-        titulo = fields.Dict(required=True)
+        titulo = fields.List
 
 
 
@@ -232,7 +231,6 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         ubicacion = fields.String(required=True)
         titulo = fields.List
   
-
 
 
 class Asignatura_Origen(db.Model):

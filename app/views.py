@@ -76,8 +76,19 @@ def add_student():
     surname = request_data['apellidos']
     grade = request_data['curso']
     degree = request_data['grado']
-    level = request_data['titulo']
-    nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=level)
+    #title = request_data["titulo"]
+    print("**************************")
+    if "titulo" in request_data:
+        print("si hay titulo")
+        title = request_data["titulo"]
+        print(title)
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+
+        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
+        
+    else: 
+        print("heeey")
+        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
     #print(nuevo_estudiante)
     db.session.add(nuevo_estudiante)
     db.session.commit()
@@ -93,12 +104,40 @@ def add_students():
         surname = request_data[i]['apellidos']
         grade = request_data[i]['curso']
         degree = request_data[i]['grado']
-        level = request_data[i]['titulo']
-        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=level)
+        if "titulo" in request_data[i]:
+            print("si esta")
+            title = request_data[i]['titulo'][0]
+            print(title)
+            query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
+            #print(nuevo_estudiante)
+        else:
+            print("no esta")
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
+
+        db.session.add(nuevo_estudiante)
+        db.session.commit()
+    return make_response(jsonify({"Status" : "Various Students added"}))
+
+'''
+# B.2) POST: INCORPORAR VARIOS ESTUDIANTES
+@app.route('/postendpoint/estudiantes', methods = ['POST'])
+def add_students():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(0, len(request_data)):
+        name = request_data[i]['nombre']
+        surname = request_data[i]['apellidos']
+        grade = request_data[i]['curso']
+        degree = request_data[i]['grado']
+        title = request_data[i]['titulo']
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
         #print(nuevo_estudiante)
         db.session.add(nuevo_estudiante)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Students added"}))
+'''
 
 # C.1) DELETE: ELIMINAR UN ESTUDIANTE EN CONCRETO DESDE POSTMAN
 @app.route('/deleteendpoint', methods=['DELETE'])
@@ -356,19 +395,13 @@ def add_university():
     name = request_data['nombre']
     place = request_data["ubicacion"]
     spots = request_data["plazas"]
-    title = request_data["titulo"][0]
-  
-    print(title)
+    if "titulo" in request_data:
+        title = request_data["titulo"][0]
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, titulo=query_1)
+    else:
+        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, titulo=[]) 
 
-    query_1 = db.session.query(Titulo).filter(Titulo.id == title)
-    
-
-    #new_title = Titulo(id=query_1, )
-    # level = getattr(title, "id")
-    # print(level)
-    nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots, titulo=query_1)
-    #print("nueva universidad añadida \n")
-    #print(nueva_universidad)
     db.session.add(nueva_universidad)
     db.session.commit()
 
@@ -383,9 +416,12 @@ def add_universities():
         name = request_data[i]['nombre']
         place = request_data[i]["ubicacion"]
         spots = request_data[i]["plazas"]
-        title = request_data[i]["titulo"]
-        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
-        nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots,  titulo=query_1 )
+        if "titulo" in request_data[i]:
+            title = request_data[i]["titulo"]
+            query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots,  titulo=query_1 )
+        else:
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas=spots,  titulo=[])
         #print("nueva universidad añadida \n")
         #print(nueva_universidad)
         db.session.add(nueva_universidad)
