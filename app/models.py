@@ -41,13 +41,13 @@ auxiliar_LA_asignaturasOD = db.Table('aux_LA_asignaturasOD',
 ## TITULO - ESTUDIANTES
 auxiliar_Titulo_Estudiantes = db.Table('aux_titulo_estudiante', 
     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-    db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.id'), primary_key = True)
+    db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.idioma, Titulo.nivel'), primary_key = True)
 )
 
 ## TITULO - UNIVERSIDAD
 auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad', 
     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-    db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.id'), primary_key = True)
+    db.Column('titulo', db.Integer, db.ForeignKey('Titulo.idioma, Titulo.nivel'), primary_key = True)
 )
 
 
@@ -68,9 +68,9 @@ class Titulo(db.Model):
         def json(self)
     '''
     __tablename__ = "Titulo"
-    id = db.Column(db.Integer, primary_key=True)
-    idioma = db.Column(db.String(255), nullable=False)
-    nivel = db.Column(db.String(50), nullable=False)
+    #id = db.Column(db.Integer, primary_key=True)
+    idioma = db.Column(db.String(255), nullable=False, primary_key=True)
+    nivel = db.Column(db.String(50), nullable=False, primary_key=True)
     
 
 
@@ -100,7 +100,7 @@ class Titulo_Schema(SQLAlchemyAutoSchema):
         model = Titulo
         include_relationships = True
         sqla_session = db.session
-        id = fields.Number(dump_only=True)
+        #id = fields.Number(dump_only=True)
         idioma = fields.String(required=True)
         nivel = fields.String(required=True)
 
