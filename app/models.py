@@ -495,12 +495,13 @@ class LA(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,id_estudiante,aceptado_RRII,aceptado_Coord, fdo_RRII, fdo_Coord):
+    def __init__(self,id_estudiante,aceptado_RRII,aceptado_Coord, fdo_RRII, fdo_Coord, listado_asignaturasOD):
         self.id_estudiante = id_estudiante  
         self.aceptado_RRII = aceptado_RRII
         self.aceptado_Coord = aceptado_Coord
         self.fdo_RRII = fdo_RRII
         self.fdo_Coord = fdo_Coord
+        self.listado_asignaturasOD = listado_asignaturasOD
 
     def __repr__(self):
         '''
@@ -525,6 +526,7 @@ class LASchema(SQLAlchemyAutoSchema):
         aceptado_Coord = fields.Boolean(required=True)
         fdo_RRII = fields.Boolean(required=True)
         fdo_Coord = fields.Boolean(required=True)
+        listado_asignaturasOD = fields.List
 
 
 
