@@ -360,6 +360,7 @@ class Seleccion(db.Model):
     año = db.Column(db.Integer, nullable=False)
     vuelta = db.Column(db.Integer, nullable=False)
     confirmacion = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    #indica relacion con uni
     universidad_confirmada = relationship("Universidad", backref=backref("Seleccion"))
     estudiantes = db.relationship("Estudiante", secondary=auxiliar_estudiante_seleccion, backref=backref('Seleccion', lazy='dynamic'), lazy='dynamic')
     listado_universidades = db.relationship("Universidad", secondary=auxiliar_universidad_seleccion)

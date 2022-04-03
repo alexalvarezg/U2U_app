@@ -588,6 +588,47 @@ def add_selection():
     year = request_data["año"]
     round = request_data["vuelta"]
     confirmation = request_data["confirmacion"]
+    if "estudiantes" in request_data:
+        print("si hay estudiante")
+        list_1 = request_data["estudiantes"]
+        for i in range(0, len(list_1)):
+            student_id = list_1[i]
+            query_1 = db.session.query(Estudiante).filter(Estudiante.id == student_id)
+            nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=query_1)
+            print("seleccion incorporada con estduiante")
+    
+    else:
+        nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[])
+    
+    db.session.add(nueva_seleccion)
+    db.session.commit()
+    return make_response(jsonify({"Status" : "Selection added"}))
+
+
+    
+    
+
+''' 
+students_id = request_data["estudiantes"] #coge su id
+    ### aqui iria el getter de estudiante en base a su id
+    print(students_id)
+    student = Estudiante.query.get(students_id)
+    print(student) #este es el student
+    print(type(student))
+    print(student.nombre)
+    nuevo_estudiante = Estudiante(nombre=student.nombre , apellidos=student.apellidos, curso=student.curso, grado=student.grado, titulo=student.titulo)
+    nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=nuevo_estudiante)
+    #print("nueva seleccion añadida \n")
+    #print(nueva_seleccion)
+
+# B.1) POST: INCORPORAR UNA SELECCION
+@app.route('/postendpoint/seleccion', methods = ['POST'])
+def add_selection():
+    request_data = request.get_json()
+    term = request_data['cuatri']
+    year = request_data["año"]
+    round = request_data["vuelta"]
+    confirmation = request_data["confirmacion"]
     students_id = request_data["estudiantes"] #coge su id
     ### aqui iria el getter de estudiante en base a su id
     print(students_id)
@@ -602,6 +643,8 @@ def add_selection():
     db.session.add(nueva_seleccion)
     db.session.commit()
     return make_response(jsonify({"Status" : "Selection added"}))
+'''
+
 
 # B.2) POST: INCORPORAR VARIAS SELECCIONES
 @app.route('/postendpoint/selecciones', methods = ['POST'])
@@ -613,9 +656,19 @@ def add_selecciones():
         year = request_data[i]["año"]
         round = request_data[i]["vuelta"]
         confirmation = request_data[i]["confirmacion"]
-        students = request_data[i]["estudiantes"]
+        #students = request_data[i]["estudiantes"]
+        if "estudiantes" in request_data[i]:
+            print("si hay estudiante")
+            list_1 = request_data[i]["estudiantes"]
+            for i in range(0, len(list_1)):
+                student_id = list_1[i]
+                query_1 = db.session.query(Estudiante).filter(Estudiante.id == student_id)
+                nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=query_1)
+                print("seleccion incorporada con estduiante")
+        else:
+            nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[]) 
+
         #GETTER DE STUDENTS
-        nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students) 
         #print("nueva seleccion añadida \n")
         #print(nueva_seleccion)
         db.session.add(nueva_seleccion)
