@@ -230,7 +230,7 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
         ubicacion = fields.String(required=True)
-        titulo = fields.Dict(required=True) ### revisar esto
+        titulo = fields.List
   
 
 
