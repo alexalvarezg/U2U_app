@@ -110,6 +110,62 @@ class Titulo_Schema(SQLAlchemyAutoSchema):
         nivel = fields.String(required=True)
 
 
+class Universidad(db.Model):
+    '''
+    Clase: Universidad
+
+    Atributos:
+        ID: Int, clave primaria
+        Nombre: Str(30) Nombre de la universidad de destino
+        Ubicación: Str(50) País y ciudad
+        plazas: numero de plazas disponibles en la universidad
+        
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Universidad"
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(30), nullable=False)
+    ubicacion = db.Column(db.String(50), nullable=False)
+    plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
+    titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
+    
+    
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,nombre,ubicacion, plazas, titulo):
+        self.nombre = nombre
+        self.ubicacion = ubicacion
+        self.plazas = plazas
+        self.titulo = titulo
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.nombre}:{self.id}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Titulo": self.titulo}
+
+class UniversidadSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Universidad
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        ubicacion = fields.String(required=True)
+        titulo = fields.List
 
 class Estudiante(db.Model):
     '''
@@ -180,62 +236,6 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
 
 
 
-class Universidad(db.Model):
-    '''
-    Clase: Universidad
-
-    Atributos:
-        ID: Int, clave primaria
-        Nombre: Str(30) Nombre de la universidad de destino
-        Ubicación: Str(50) País y ciudad
-        plazas: numero de plazas disponibles en la universidad
-        
-    Funciones
-        def create(self)
-        def __init__
-        def __repr__
-        def json(self)
-    '''
-    __tablename__ = "Universidad"
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30), nullable=False)
-    ubicacion = db.Column(db.String(50), nullable=False)
-    plazas = db.Column(db.Integer, nullable=True) #puede que no haya plazas
-    titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
-    
-    
-    def create(self):
-      db.session.add(self)
-      db.session.commit()
-      return self
-
-    def __init__(self,nombre,ubicacion, plazas, titulo):
-        self.nombre = nombre
-        self.ubicacion = ubicacion
-        self.plazas = plazas
-        self.titulo = titulo
-
-    def __repr__(self):
-        '''
-        repr method represents how one onject will look like
-        '''
-        return f"{self.nombre}:{self.id}"
-
-    def json(self):
-        '''
-        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
-        '''
-        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas":self.plazas, "Titulo": self.titulo}
-
-class UniversidadSchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
-        model = Universidad
-        include_relationships = True
-        sqla_session = db.session
-        id = fields.Number(dump_only=True)
-        nombre = fields.String(required=True)
-        ubicacion = fields.String(required=True)
-        titulo = fields.List
   
 
 
