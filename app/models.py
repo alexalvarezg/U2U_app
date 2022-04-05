@@ -1,13 +1,16 @@
 
 from __future__ import unicode_literals
-from ast import dump
+from ast import Index, dump
 from tkinter.tix import Tree
+from unicodedata import name
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
 from sqlalchemy import ForeignKey, Table, Column
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from . import db
+
+from sqlalchemy import UniqueConstraint
 
 from sqlalchemy import insert
 #from app import db
@@ -68,10 +71,12 @@ class Titulo(db.Model):
         def json(self)
     '''
     __tablename__ = "Titulo"
+    __table_args__ = (
+        db.UniqueConstraint('idioma', 'nivel', name='unique_titulo:idioma'),
+    )
     id = db.Column(db.Integer, primary_key=True)
     idioma = db.Column(db.String(255), nullable=False)
     nivel = db.Column(db.String(50), nullable=False)
-    
 
 
     def create(self):
@@ -103,6 +108,7 @@ class Titulo_Schema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         idioma = fields.String(required=True)
         nivel = fields.String(required=True)
+
 
 
 class Estudiante(db.Model):
