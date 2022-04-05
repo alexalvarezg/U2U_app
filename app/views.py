@@ -66,6 +66,7 @@ def index():
     get_estudiantes = Estudiante.query.all()
     estudiante_schema = EstudianteSchema(many=True)
     estudiantes = estudiante_schema.dump(get_estudiantes)
+    # Estudiantes should have the object titles
     return make_response(jsonify({"Estudiantes": estudiantes}))
 
 # B.1) POST: INCORPORAR UN ESTUDIANTE
@@ -80,11 +81,14 @@ def add_student():
     print("**************************")
     if "titulo" in request_data:
         print("si hay titulo")
-        title = request_data["titulo"]
-        print(title)
-        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        titles = request_data["titulo"]
+        print(titles)
+        # For ID in titles
+        query_1 = db.session.query(Titulo).filter(Titulo.id == titles)
+        #Resultado de query_1 con titulos (objetos de tipo titulo)
 
         nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
+        print(nuevo_estudiante.titulo)
         
     else: 
         print("heeey")
