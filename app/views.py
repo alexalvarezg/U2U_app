@@ -82,7 +82,7 @@ def add_student():
         print("si hay titulo")
         title = request_data["titulo"]
         print(title)
-        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        query_1 = db.session.query(Titulo).filter(Titulo.idioma == title)
 
         nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
         
