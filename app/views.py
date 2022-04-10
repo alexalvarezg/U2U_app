@@ -391,7 +391,7 @@ UNIVERSIDAD
 '''
 # A) GET: MOSTRAR TODAS LAS UNIVERSIDADES 
 @app.route('/universidad', methods = ['GET'])
-def universityd():
+def university():
     get_universidades = Universidad.query.all()
     Universidad_schema = UniversidadSchema(many=True)
     universidades = Universidad_schema.dump(get_universidades)

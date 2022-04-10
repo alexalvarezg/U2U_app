@@ -8,29 +8,20 @@
 <body>
 	<h2>Welcome To U2U</h2>
 	<h4>Flask: Rendering Templates</h4>
-	
+		<a href="{{ url_for('see_titulos')}}">Titulos</a> <br>
+		<a href="{{ url_for('index') }}">Estudiantes</a> <br>
+		<a href="{{ url_for('subjects') }}">Asignaturas Origen</a> <br>
+		<a href="{{ url_for('subjects_aborad') }}">Asignaturas Destino</a> <br>
+		<a href="{{ url_for('university') }}">Universidades</a> <br>
+		<a href="{{ url_for('learnignAgreement') }}">Learnign Agreements</a> <br>
+		<a href="{{ url_for('Aods') }}">Asignaturas Origen - Destino</a> <br>
+		<a href="{{ url_for('Selection') }}">Seleccion</a> <br>
 
-
-
-
-
-
-
-
-
-
-<p>This is a Flask application.</p>
-
-
-
-
-
-
-
-
-
-
-
+{% block body %}
+  
+		<p>This is a Flask application.</p> 
+ 
+{% endblock %}
 </body>
 
 </html>
