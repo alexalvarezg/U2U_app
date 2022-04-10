@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <form action="{{ url_for('add_student_form')}}" method="post">
+    <form action="{{ url_for('add_students_form')}}" method="post">
         <label for="nombre">Nombre:</label>
         <input type="text" id="name" name="name" placeholder="Nombre">
         
@@ -27,9 +27,7 @@
             <option value="3" class="option">Alemán</option>
             <option value="4" class="option">Chino</option>
             <option value="5" class="option">Italiano</option>
-          </select>
-        
-        
+        </select>
 
         <button type="submit">Login</button>
     </form>

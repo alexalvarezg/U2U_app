@@ -136,7 +136,7 @@ def add_student_form():
         # Estudiantes should have the object titles
        return make_response(jsonify({"Estudiantes": estudiantes}))
 
-    return render_template("new_estudiante.html")
+    return render_template("formulario.html")
 
 
 
