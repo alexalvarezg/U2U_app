@@ -1,10 +1,15 @@
 from tkinter import E
 from . import app, db
 from .models import *
-from flask import redirect, jsonify, make_response, request, session
+from flask import redirect, jsonify, make_response, render_template, request, session
+
 
 
 @app.route("/")
+def index_prueba():
+    return render_template("index.html")
+
+@app.route("/.")
 def index_Detail():
     return "Bienvenido a la app de gestion de Erasmus"
 
