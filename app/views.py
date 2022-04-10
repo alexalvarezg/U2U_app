@@ -2,6 +2,7 @@ from tkinter import E
 from . import app, db
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request, session
+from flask import render_template
 
 
 
@@ -73,6 +74,7 @@ def index():
     estudiantes = estudiante_schema.dump(get_estudiantes)
     # Estudiantes should have the object titles
     return make_response(jsonify({"Estudiantes": estudiantes}))
+    #return render_template('estudiantes.html', data=estudiantes)
 
 # B.1) POST: INCORPORAR UN ESTUDIANTE
 @app.route('/postendpoint/estudiante', methods = ['POST'])
@@ -102,6 +104,41 @@ def add_student():
     db.session.add(nuevo_estudiante)
     db.session.commit()
     return make_response(jsonify({"Status" : "Sudent added"}))
+
+
+# (B.1_PRUEBA) POST: INCORPORAR UN ESTUDIANTE FORMULARIO
+@app.route('/estudiante_form', methods = ['GET','POST'])
+def add_student_form():
+    if request.method == "POST":
+        # getting input with name = fname in HTML form
+       name = request.form.get("name")
+       # getting input with name = lname in HTML form 
+       surname = request.form.get("surname") 
+       grade = request.form.get("grade") 
+       degree = request.form.get("degree") 
+       
+       try:
+           title = request.form.get("title")
+           query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
+        #    db.session.add(nuevo_estudiante)
+        #    db.session.commit()
+       except:
+           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
+        #    db.session.add(nuevo_estudiante)
+        #    db.session.commit()
+       
+       db.session.add(nuevo_estudiante)
+       db.session.commit()
+       get_estudiantes = Estudiante.query.all()
+       estudiante_schema = EstudianteSchema(many=True)
+       estudiantes = estudiante_schema.dump(get_estudiantes)
+        # Estudiantes should have the object titles
+       return make_response(jsonify({"Estudiantes": estudiantes}))
+
+    return render_template("new_estudiante.html")
+
+
 
 # B.2) POST: INCORPORAR VARIOS ESTUDIANTES
 @app.route('/postendpoint/estudiantes', methods = ['POST'])

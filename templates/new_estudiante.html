@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Estudiantes </title>
+ 
+</head>
+<body>
+
+    <form action="{{ url_for('add_student_form')}}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="name" name="name" placeholder="Nombre">
+        
+        <label for="Apellidos">Apellidos:</label>
+        <input type="text" id="surname" name="surname" placeholder="Apellidos">
+        
+        <label for="Curso">Curso:</label>
+        <input type="text" id="grade" name="grade" placeholder="Curso">
+        
+        <label for="Grado">Grado:</label>
+        <input type="text" id="degree" name="degree" placeholder="Grado">
+
+        <label for="Titulo">Titulo:</label>
+        <select name="title" id="titulo" class="form-input rounded-full" placeholder="titulo" required data-error="Por favor introduzca sus apellidos">
+            <option value="-" class="option">-</option>
+            <option value="1" class="option">Inglés</option>
+            <option value="2" class="option">Francés</option>
+            <option value="3" class="option">Alemán</option>
+            <option value="4" class="option">Chino</option>
+            <option value="5" class="option">Italiano</option>
+          </select>
+        
+        
+
+        <button type="submit">Login</button>
+    </form>
+
+</body>
+</html>

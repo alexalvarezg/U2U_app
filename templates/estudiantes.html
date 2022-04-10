@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Estudiantes </title>
+ 
+</head>
+
+<style>
+ 
+    td {
+           width: 150px;
+           text-align: center;
+           border: 1px solid black;
+           padding: 5px;
+         }
+   </style>
+
+<body>
+<h2>Estudiantes Info</h2>
+<p>
+    <a href="index" >
+    <button class="grey" style="height:75px;width:150px">Estudiantes</button></a></p>
+
+
+    <table>
+    <thead>
+        <tr>
+            <th>vehicle ID</th>
+            <th>current timestamp</th>
+            <th>expiry timestamp</th>
+        </tr>
+        </thead>    
+        <tbody>
+        {% for row in data %}    
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
