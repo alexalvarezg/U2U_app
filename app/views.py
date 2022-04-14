@@ -136,7 +136,7 @@ def add_student_form():
         # Estudiantes should have the object titles
        return make_response(jsonify({"Estudiantes": estudiantes}))
 
-    return render_template("formulario.html")
+    return render_template("formulario_estudiante.html")
 
 
 
@@ -663,12 +663,41 @@ def add_selection():
     else:
         nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[])
         print("seleccion incorporada SIN estudiante")
-    db.session.add(nueva_seleccion)
-    db.session.commit()
+        db.session.add(nueva_seleccion)
+        db.session.commit()
     return make_response(jsonify({"Status" : "Selection added"}))
 
 
-    
+# (B.1_PRUEBA) POST: INCORPORAR UNA SELECCION FORMULARIO
+@app.route('/seleccion_form', methods = ['GET','POST'])
+def add_selection_form():
+    if request.method == "POST":
+        # getting input with name = fname in HTML form
+       year = request.form.get("year")
+       # getting input with name = lname in HTML form 
+       term = request.form.get("duracion") 
+       round = request.form.get("round") 
+       confirmation = request.form.get("conf_uni") 
+       try:
+           students = request.form.get("estudiantes")
+           # ARREGLAR ESTA PARTE DE AQUI
+           nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
+           print("seleccion incorporada sin estudiantes")
+
+       except:
+           nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[])
+           print("seleccion incorporada con estudiantes")
+       
+       
+       db.session.add(nueva_seleccion)
+       db.session.commit()
+       get_selecciones = Seleccion.query.all()
+       seleccion_schema = SeleccionSchema(many=True)
+       selecciones = seleccion_schema.dump(get_selecciones)
+        # Estudiantes should have the object titles
+       return make_response(jsonify({"Selecciones": selecciones}))
+
+    return render_template("formulario_seleccion.html")
     
 
 ''' 
