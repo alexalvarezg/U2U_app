@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/png">
+
+    <title>U2U - Formulario</title>
+
+    <!-- Icon -->
+    <link rel="stylesheet" type="text/css" href="assets/css/LineIcons.2.0.css">
+    <!-- Animate -->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <!-- Tiny Slider  -->
+    <link rel="stylesheet" type="text/css" href="assets/css/tiny-slider.css">
+    <!-- Tailwind css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/tailwind.css">
+  </head>
+  <body>
+
+    <!-- Header Area wrapper Starts -->
+    <header id="header-wrap" class="relative">
+      <!-- Navbar Start -->      
+      <div class="navigation fixed top-0 left-0 w-full z-30 duration-300">
+          <div class="container">
+              <nav class="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
+                  <a class="navbar-brand" href="index.html">
+                    <img src="assets/img/logo.png" alt="Logo">
+                  </a>
+                  <button class="navbar-toggler focus:outline-none block lg:hidden" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="toggler-icon"></span>
+                      <span class="toggler-icon"></span>
+                      <span class="toggler-icon"></span>
+                  </button>
+
+                  <div class="collapse navbar-collapse hidden lg:block duration-300 shadow absolute top-100 left-0 mt-full bg-white z-20 px-5 py-3 w-full lg:static lg:bg-transparent lg:shadow-none" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto justify-center items-center lg:flex">
+                          <li class="nav-item">
+                            <a class="page-scroll active" href="#hero-area">Principal</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="page-scroll" href="#services">Servicios</a>
+                          </li>
+                          
+
+                          <li class="nav-item">
+                            <a class="page-scroll" href="#testimonial">Testimonios</a>
+                          </li>
+                          
+                          <li class="nav-item">
+                            <a class="page-scroll" href="#contact">Contacto</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
+                    <a class="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white" href="#feature">FAQ</a>
+                  </div>
+              </nav>
+          </div>
+      </div>
+      <!-- Navbar End -->
+    </header>
+    <!-- Header Area wrapper End -->
+
+
+    
+
+    <!-- Contact Section Start -->
+    <section id="contact" class="bg-white-100 pt-48 pb-10">    
+      <div class="container">
+        <div class="text-center">
+          <h2 class="mb-12 text-4xl text-gray-700 font-bold tracking-wide wow fadeInDown" data-wow-delay="0.3s">Formulario</h2>
+        </div>
+
+        <div class="flex flex-wrap contact-form-area wow fadeInUp" data-wow-delay="0.4s">  
+          <div class="w-full md:w-1">        
+            <div class="contact">
+              <h2 class="uppercase font-bold text-xl text-gray-700 mb-5 ml-3">Información del Estudiante</h2>
+              <form id="StudentInfo" action="assets/contact.php">
+                <div class="flex flex-wrap">
+                  <!-- FILA 1 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Nombre </p>
+                      <input type="text" class="form-input rounded-full" id="name" name="name" placeholder="-" required data-error="Por favor introduzca su nombre">
+                    </div>                                 
+                  </div>
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Apellido </p>
+                      <input type="text" class="form-input rounded-full" id="surname" name="name" placeholder="-" required data-error="Por favor introduzca sus apellidos">
+                    </div>                                 
+                  </div>
+
+                  <!-- FILA 2 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Curso </p>
+                      <select name="curso" id="curso" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                        <option value="-" class="option"> - </option>
+                        <option value="3" class="option">3º</option>
+                        <option value="4" class="option">4º</option>
+                        <option value="5" class="option">5º</option>
+                        <option value="6" class="option">6º</option>
+                      </select>
+                    </div>                                 
+                  </div>
+
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Grado </p>
+                      <select name="curso" id="grado" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                        <option value="-" class="option"> - </option>
+                        <option value="GIT" class="option">GIT</option>
+                        <option value="GAD" class="option">GAD</option>
+                        <option value="GAM" class="option">GAM</option>
+                        <option value="GMK" class="option">GMK</option>
+                        <option value="GID" class="option">GID</option>
+                        <option value="GNF" class="option">GNF</option>
+                        <option value="GEL" class="option">GEL</option>
+                      </select>
+                    </div>                                 
+                  </div>
+                
+
+                  <!-- FILA 3 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Idioma </p>
+                      <select name="curso" id="idioma" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                        <option value="-" class="option">-</option>
+                        <option value="Ingles" class="option">Inglés</option>
+                        <option value="Frances" class="option">Francés</option>
+                        <option value="Aleman" class="option">Alemán</option>
+                        <option value="Chino" class="option">Chino</option>
+                        <option value="Italiano" class="option">Italiano</option>
+                      </select>
+                    </div>                                 
+                  </div>
+
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Nivel </p>
+                      <select name="curso" id="nivel" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                        <option value="-" class="option">-</option>
+                        <option value="A1" class="option">A1</option>
+                        <option value="A2" class="option">A2</option>
+                        <option value="B1" class="option">B1</option>
+                        <option value="B2" class="option">B2</option>
+                        <option value="C1" class="option">C1</option>
+                        <option value="C2" class="option">C2</option>
+                      </select>
+                    </div>                                 
+                  </div>
+                
+                  <div class="w-full">
+                    <div class="submit-button mx-3">
+                      <button class="btn" id="form-submit" type="submit">Guardar</button>
+                    </div>
+                  </div>
+                </div>  
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <br>
+          <br>
+          <br>
+        </div>
+        
+
+        <!-- INFORMACION DEL PROCESO DE SELECCION -->
+
+        <div class="flex flex-wrap contact-form-area wow fadeInUp" data-wow-delay="0.4s">   
+          <div class="w-full md:w-1">
+            <div class="contact">
+              <h2 class="uppercase font-bold text-xl text-gray-700 mb-5 ml-3">Información de la Seleccion</h2>
+              <form id="SeleccionInfo" action="assets/contact.php">
+                <div class="flex flex-wrap">
+                  
+                  <!-- FILA 1 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Año actual </p>
+                      <select name="year" id="year" class="form-input rounded-full">
+                        <option value="-" class="option">-</option>
+                        <option value="2022" class="option">2022</option>
+                      </select>
+                    </div>                                 
+                  </div>
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> Cuatrimestre que se desea marchar </p>
+                      <select name="duracion" id="term" class="form-input rounded-full">
+                        <option value="-" class="option">-</option>
+                        <option value="1" class="option">1º cuatrimestre</option>
+                        <option value="2" class="option">2º cuatrimestre</option>
+                        <option value="3" class="option">Ambos, Movilidad anual</option>
+                      </select>                  
+                    </div>                                 
+                  </div>
+
+                  <!-- FILA 2 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> 1ª Universidad </p>
+                      <select name="uni1" id="uni1" class="form-input rounded-full">
+                        <option value="-" class="option"> - </option>
+                        <option value="Tilburg University" class="option">Tilburg University</option>
+                        <option value="Inholland University" class="option">Inholland University</option>
+                        <option value="Nantes University" class="option">Nantes University</option>
+                        <option value="Pitsburg University" class="option">Pitsburg University</option>
+                        <option value="St. Louis University" class="option">St. Louis University</option>
+                      </select>
+                    </div>                                 
+                  </div>
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> 2ª Universidad </p>
+                      <select name="uni2" id="uni2" class="form-input rounded-full">
+                        <option value="-" class="option"> - </option>
+                        <option value="Tilburg University" class="option">Tilburg University</option>
+                        <option value="Inholland University" class="option">Inholland University</option>
+                        <option value="Nantes University" class="option">Nantes University</option>
+                        <option value="Pitsburg University" class="option">Pitsburg University</option>
+                        <option value="St. Louis University" class="option">St. Louis University</option>
+                      </select>                  
+                    </div>                                 
+                  </div>
+
+                  <!-- FILA 3 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> 3ª Universidad </p>
+                      <select name="uni3" id="uni3" class="form-input rounded-full">
+                        <option value="-" class="option"> - </option>
+                        <option value="Tilburg University" class="option">Tilburg University</option>
+                        <option value="Inholland University" class="option">Inholland University</option>
+                        <option value="Nantes University" class="option">Nantes University</option>
+                        <option value="Pitsburg University" class="option">Pitsburg University</option>
+                        <option value="St. Louis University" class="option">St. Louis University</option>
+                      </select>
+                    </div>                                 
+                  </div>
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> 4ª Universidad </p>
+                      <select name="uni4" id="uni4" class="form-input rounded-full">
+                        <option value="-" class="option"> - </option>
+                        <option value="Tilburg University" class="option">Tilburg University</option>
+                        <option value="Inholland University" class="option">Inholland University</option>
+                        <option value="Nantes University" class="option">Nantes University</option>
+                        <option value="Pitsburg University" class="option">Pitsburg University</option>
+                        <option value="St. Louis University" class="option">St. Louis University</option>
+                      </select>                  
+                    </div>                                 
+                  </div>
+
+                  <!-- FILA 4 -->
+                  <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
+                    <div class="mx-3">
+                      <p> 5ª Universidad </p>
+                      <select name="uni5" id="uni5" class="form-input rounded-full">
+                        <option value="-" class="option"> - </option>
+                        <option value="Tilburg University" class="option">Tilburg University</option>
+                        <option value="Inholland University" class="option">Inholland University</option>
+                        <option value="Nantes University" class="option">Nantes University</option>
+                        <option value="Pitsburg University" class="option">Pitsburg University</option>
+                        <option value="St. Louis University" class="option">St. Louis University</option>
+                      </select>
+                    </div>                                 
+                  </div>
+
+                  
+                
+
+                  
+
+                  <!-- 
+                  <div class="w-full">
+                    <div class="mx-3">
+                      <input type="text" placeholder="Subject" id="subject" name="subject" class="form-input rounded-full" required data-error="Please enter your subject">
+                    </div>
+                  </div>
+                  -->
+                  <!-- TEXTAREA
+                  <div class="w-full">
+                    <div class="mx-3"> 
+                      <textarea class="form-input rounded-lg" id="message" name="message" placeholder="Your Message" rows="5" data-error="Write your message" required></textarea>
+                    </div>
+                  </div>
+                  -->
+                  
+                  <div class="w-full">
+                    <div class="submit-button mx-3">
+                      <button class="btn" id="form-s5ubmit" type="submit">Guardar</button>
+                    </div>
+                    <div>
+                      <br>
+                      <br>
+                      <br>
+                    </div>
+                  </div>
+                </div>  
+              </form>
+            </div>
+          </div>
+      </div>
+
+      </div> 
+    </section>
+    <!-- Contact Section End -->
+  
+    
+
+
+    
+	  
+
+    <section class="bg-gray-800 py-6 border-t-2 border-gray-700 border-dotted">
+      <div class="container">
+        <div class="flex flex-wrap">
+          <div class="w-full text-center">
+            <p class="text-white">Designed and Developed by <a class="text-white duration-300 hover:text-blue-600" href="https://tailwindtemplates.co" rel="nofollow">TailwindTemplates</a>, <a class="text-white duration-300 hover:text-blue-600" href="https://uideck.com" rel="nofollow">UIdeck</a> and <strong> Alejandro Álvarez </strong></p>
+          </div>
+        </div>
+      </div>
+    </section>   
+
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top w-10 h-10 fixed bottom-0 right-0 mb-5 mr-5 flex items-center justify-center rounded-full bg-blue-600 text-white text-lg z-20 duration-300 hover:bg-blue-400">
+      <i class="lni lni-arrow-up"></i>
+    </a>
+    
+    <!-- Preloader -->
+<!--     <div id="preloader">
+      <div class="loader" id="loader-1"></div>
+    </div> -->
+    <!-- End Preloader -->
+    
+    <!-- All js Here -->
+    <script src="assets/js/wow.js"></script>
+    <script src="assets/js/tiny-slider.js"></script>
+    <script src="assets/js/contact-form.js"></script>      
+    <script src="assets/js/main.js"></script>      
+  </body>
+</html>
