@@ -13,6 +13,7 @@ The URI connection sintaxis looks like:
 app = Flask(__name__, template_folder='C:/Users/ASUS/Desktop/TFG_Github/TFG_Alex-1/templates/')
 
 #esto no me convence del todo
+
 path = "C:/Users/ASUS/Desktop/TFG_Github/TFG_Alex-1/gitignore/config.json"
 with open(path, 'r') as f:
     conf = json.load(f)
