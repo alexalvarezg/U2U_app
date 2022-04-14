@@ -11,6 +11,7 @@
 		<a href="{{ url_for('see_titulos')}}">Titulos</a> <br>
 		<a href="{{ url_for('index') }}">Estudiantes</a> <br>
 		<a href="{{ url_for('add_student_form') }}">Incorporar Estudiante</a> <br>
+		<a href="{{ url_for('add_selection_form') }}">Incorporar Seleccion</a> <br>
 		<a href="{{ url_for('subjects') }}">Asignaturas Origen</a> <br>
 		<a href="{{ url_for('subjects_aborad') }}">Asignaturas Destino</a> <br>
 		<a href="{{ url_for('university') }}">Universidades</a> <br>
@@ -18,11 +19,7 @@
 		<a href="{{ url_for('Aods') }}">Asignaturas Origen - Destino</a> <br>
 		<a href="{{ url_for('Selection') }}">Seleccion</a> <br>
 
-{% block body %}
-  
-		<p>This is a Flask application.</p> 
- 
-{% endblock %}
+
 </body>
 
 </html>
