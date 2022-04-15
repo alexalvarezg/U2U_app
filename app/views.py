@@ -1,7 +1,10 @@
-from . import app, db, db_connection
+from tkinter import E
+from . import app, db
 from .models import *
-from flask import redirect, jsonify, make_response, render_template, request, session
+from flask import redirect, jsonify, make_response, render_template, request
 from flask import render_template
+from sqlalchemy import text
+
 
 
 
@@ -17,10 +20,17 @@ def index_Detail():
 def about():
     return "All about Flask"
 
+
+query = 'select * from estudiantes;'
+
+
+
+
 @app.route("/query")
 def query():
-    dash = db_connection.execute('SELECT DISTINCT nombre, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE u.id=A.id_universidad AND T.id = A.id_titulo').fetchall()
-    return dash
+    output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
+    return render_template('query_result.html',result=output)
+    
 
 
 
