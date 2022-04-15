@@ -20,19 +20,36 @@ def index_Detail():
 def about():
     return "All about Flask"
 
+'''
+QUERIES
+'''
 
-query = 'select * from estudiantes;'
-
-
-
-
-@app.route("/query")
-def query():
+@app.route("/estudiantes")
+def select_estudiantes():
     output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
-    return render_template('query_result.html',result=output)
+    return render_template('Estudiantes.html',result=output)
     
+@app.route("/estudiantes_con_idiomas")
+def select_estudiantes_idiomas():
+    output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
+    return render_template('Estudiantes_idiomas.html',result=output)
+    
+@app.route("/universidades")
+def select_universidades():
+    output = db.engine.execute('SELECT * FROM universidad;').fetchall()
+    return render_template('Universidad.html',result=output)
 
 
+@app.route("/universidades_con_idiomas")
+def select_universidades_idiomas():
+    output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
+    return render_template('Universidad_idiomas.html',result=output)
+
+
+@app.route("/titulos")
+def select_titulos():
+    output = db.engine.execute('SELECT * FROM titulo ORDER BY id;').fetchall()
+    return render_template('Titulos.html',result=output)
 
 '''
 TITULO
@@ -148,7 +165,9 @@ def add_student_form():
        estudiante_schema = EstudianteSchema(many=True)
        estudiantes = estudiante_schema.dump(get_estudiantes)
         # Estudiantes should have the object titles
-       return make_response(jsonify({"Estudiantes": estudiantes}))
+       output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
+       return render_template('Estudiantes.html',result=output)
+       #return make_response(jsonify({"Estudiantes": estudiantes}))
 
     return render_template("formulario_estudiante.html")
 

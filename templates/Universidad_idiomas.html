@@ -2,22 +2,23 @@
 <html>
 
 <head>
-	<title>Estudiantes</title>
+	<title>Universidades + idiomas</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
     <div class="text-center">
-    <h1>Estudiantes</h1>
+        <h1>Universidades con idiomas</h1>
     </div>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
             <th>NOMBRE</th>
-            <th>APELLIDOS</th>
-            <th>CURSO</th>
-            <th>GRADO</th>
+            <th>UBICACION</th>
+            <th>PLAZAS</th>
+            <th>IDIOMA</th>
+            <th>NIVEL</th>
 
         </tr>
         </thead>
@@ -29,7 +30,7 @@
                 <td> {{ item[2] }} </td>
                 <td> {{ item[3] }} </td>
                 <td> {{ item[4] }} </td>
-               
+                <td> {{ item[5] }} </td>
             </tr>
         {% endfor %}
         </tbody>
