@@ -1,8 +1,8 @@
 from distutils.command.config import config
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, create_engine
 import json
-
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 '''
 The URI connection sintaxis looks like:
@@ -28,6 +28,9 @@ host = conf['CONFIGURATION']['MYSQL_HOST']
 app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://' + user + ':' + password + '@' + host+':'+ port + '/' +db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 db = SQLAlchemy(app)
+
+engine = create_engine('mysql+pymysql://' + user + ':' + password + '@' + host+':'+ port + '/' +db)
+database = scoped_session(sessionmaker(bind=engine))
 
 
 from app import views
