@@ -1,4 +1,3 @@
-from tkinter import E
 from . import app, db, db_connection
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request, session

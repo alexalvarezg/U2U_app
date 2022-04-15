@@ -1,4 +1,4 @@
-from distutils.command.config import config
+#from distutils.command.config import config
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy, create_engine
 import json
