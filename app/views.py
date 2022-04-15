@@ -1,5 +1,5 @@
 from tkinter import E
-from . import app, db
+from . import app, db, db_connection
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request, session
 from flask import render_template
@@ -17,6 +17,11 @@ def index_Detail():
 @app.route("/about")
 def about():
     return "All about Flask"
+
+@app.route("/query")
+def query():
+    dash = db_connection.execute('SELECT DISTINCT nombre, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE u.id=A.id_universidad AND T.id = A.id_titulo').fetchall()
+    return dash
 
 
 

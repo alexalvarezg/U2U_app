@@ -30,7 +30,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 engine = create_engine('mysql+pymysql://' + user + ':' + password + '@' + host+':'+ port + '/' +db)
-database = scoped_session(sessionmaker(bind=engine))
+db_connection = scoped_session(sessionmaker(bind=engine))
 
 
 from app import views
