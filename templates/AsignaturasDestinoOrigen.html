@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Equivalencias Asignaturas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Equivalencias Asignaturas en Origen y Destino</h1>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ASIGNATURA ORIGEN</th>
+            <th>ASIGNATURA DESTINO</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in result %}
+            <tr>
+                <td> {{ item[0]}} </td>
+                <td> {{ item[1] }} </td>
+                <td> {{ item[2] }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

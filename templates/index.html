@@ -19,13 +19,19 @@
 
 		<a href="{{ url_for('select_titulos')}}">Titulos</a> <br>
 		<br>
-		<a href="{{ url_for('add_selection_form') }}">Incorporar Seleccion</a> <br>
-		<a href="{{ url_for('subjects') }}">Asignaturas Origen</a> <br>
-		<a href="{{ url_for('subjects_aborad') }}">Asignaturas Destino</a> <br>
-		
+
+		<a href="{{ url_for('select_asignaturasO') }}">Asignaturas Origen</a> <br>
+		<a href="{{ url_for('select_asignaturasD') }}">Asignaturas Destino</a> <br>
+		<a href="{{ url_for('select_asignaturasOD') }}">Asignaturas Origen - Destino</a> <br>
 		<a href="{{ url_for('learnignAgreement') }}">Learnign Agreements</a> <br>
-		<a href="{{ url_for('Aods') }}">Asignaturas Origen - Destino</a> <br>
+		<br>
+
 		<a href="{{ url_for('Selection') }}">Seleccion</a> <br>
+		<a href="{{ url_for('add_selection_form') }}">Incorporar Seleccion</a> <br>
+		
+		
+		
+		
 
 {% block body %}
   

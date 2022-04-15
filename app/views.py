@@ -51,6 +51,23 @@ def select_titulos():
     output = db.engine.execute('SELECT * FROM titulo ORDER BY id;').fetchall()
     return render_template('Titulos.html',result=output)
 
+
+@app.route("/asignaturasOrigen")
+def select_asignaturasO():
+    output = db.engine.execute('SELECT * FROM asignatura_origen;').fetchall()
+    return render_template('AsignaturasOrigen.html',result=output)
+
+@app.route("/asignaturasDestino")
+def select_asignaturasD():
+    output = db.engine.execute('SELECT * FROM asignatura_destino;').fetchall()
+    return render_template('AsignaturasDestino.html',result=output)
+
+@app.route("/asignaturasDestinoOrigen")
+def select_asignaturasOD():
+    output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
+    return render_template('AsignaturasDestinoOrigen.html',result=output)
+
+
 '''
 TITULO
 '''
