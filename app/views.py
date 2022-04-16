@@ -213,7 +213,7 @@ def add_student():
 
 
 # (B.1_PRUEBA) POST: INCORPORAR UN ESTUDIANTE FORMULARIO
-@app.route('/estudiante_form', methods = ['GET','POST'])
+@app.route('/nuevo_estudiante', methods = ['GET','POST'])
 def add_student_form():
     if request.method == "POST":
         # getting input with name = fname in HTML form
