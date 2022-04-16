@@ -6,22 +6,17 @@ from flask import render_template
 from sqlalchemy import text
 
 
-
-
 @app.route("/")
 def index_prueba():
     return render_template("index.html")
 
-@app.route("/.")
-def index_Detail():
-    return "Bienvenido a la app de gestion de Erasmus"
 
-@app.route("/about")
-def about():
-    return "All about Flask"
+
 
 '''
-QUERIES
+********************
+ QUERIES
+*********************
 '''
 
 @app.route("/estudiantes")
@@ -78,6 +73,57 @@ def select_las():
     output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
     return render_template('LearningAgreement.html',result=output)
 
+
+
+
+
+
+
+
+
+'''
+********************
+ CASOS DE USO
+*********************
+'''
+
+@app.route("/seleccion/<id_estudiante>", methods=["GET"])
+def select_selection_id(id_estudiante):
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING E.id='+str(id_estudiante)+';').fetchall()
+    return render_template('Seleccion.html',result=output)
+
+@app.route("/seleccion/year/<year>", methods=["GET"])
+def select_selection_year(year):
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+';').fetchall()
+    return render_template('Seleccion.html',result=output)
+
+@app.route("/seleccion/year/<year>/<cuatri>", methods=["GET"])
+def select_selection_year_cuatri(year, cuatri):
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+';').fetchall()
+    return render_template('Seleccion.html',result=output)
+
+
+@app.route("/learningAgreements/<id_estudiante>", methods=["GET"])
+def select_las_id(id_estudiante):
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante HAVING E.id='+str(id_estudiante)+';').fetchall()
+    return render_template('LearningAgreement.html',result=output)
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+********************
+ VIEWS PARA LAS ENTIDAES, GET, POST, DELETE
+*********************
+'''
 
 
 '''
