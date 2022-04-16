@@ -2,46 +2,106 @@
 <html>
 
 <head>
-	<title>Menu</title>
+	<title>
+		{%block title%}
+    	{%endblock%}
+	</title>
+	<link rel="shortcut icon" href="./assets/img/logo.png" type="image/png"> <!-- No funciona -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h2>Bienvenido a U2U</h2>
-	<h4>Menú de opciones</h4>
-		<a href="{{ url_for('select_estudiantes') }}">Estudiantes</a> <br>
-		<a href="{{ url_for('select_estudiantes_idiomas') }}">Estudiantes (con titulo idioma)</a> <br>
-		<a href="{{ url_for('add_student_form') }}">Incorporar Estudiante</a> <br>
-		<br>
-
-		<a href="{{ url_for('select_universidades') }}">Universidades</a> <br>
-		<a href="{{ url_for('select_universidades_idiomas') }}">Universidades con idiomas</a> <br>
-		<br>
-
-		<a href="{{ url_for('select_titulos')}}">Titulos</a> <br>
-		<br>
-
-		<a href="{{ url_for('select_asignaturasO') }}">Asignaturas Origen</a> <br>
-		<a href="{{ url_for('select_asignaturasD') }}">Asignaturas Destino</a> <br>
-		<a href="{{ url_for('select_asignaturasOD') }}">Asignaturas Origen - Destino</a> <br>
-		<a href="{{ url_for('select_las') }}">Learnign Agreements</a> <br>
-		<br>
-
-		<a href="{{ url_for('select_selection') }}">Seleccion</a> <br>
-		<a href="{{ url_for('add_selection_form') }}">Incorporar Seleccion</a> <br>
-		<br>
-
-		<a href="">Estado Movilidad (con LA)</a> <br> <!-- procesoMovilidad.html-->
-		<a href="">Estado Movilidad (sin LA)</a> <br>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			<a class="navbar-brand" href="#">
+				<img src="./assets/img/logo.png"><!-- No funciona -->
+			</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			</div>
 		
-		
-		
-		
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estudiantes <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="{{ url_for('select_estudiantes') }}">Estudiantes</a></li>
+					<li><a href="{{ url_for('select_estudiantes_idiomas') }}">Estudiantes con titulo de idioma</a></li>
+					<li><a href="#">Estudiantes sin titulo de idioma</a></li>
+					<li><a href="{{ url_for('add_student_form') }}">Incorporar estudiante</a></li>
+					</ul>
+				</li>
+			</ul>
 
-{% block body %}
-  
-		<p>Aplicacion creada con Flask, Python y MySQL</p> 
- 
-{% endblock %}
+			<ul class="nav navbar-nav ">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Universidades <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="{{ url_for('select_universidades') }}">Universidades</a></li>
+					<li><a href="{{ url_for('select_universidades_idiomas') }}">Universidades con idioma</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav">
+				<li><a href="{{ url_for('select_titulos')}}">Titulos</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav ">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Asignaturas <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="{{ url_for('select_asignaturasO') }}">Asignaturas Origen</a></li>
+					<li><a href="{{ url_for('select_asignaturasD') }}">Asignaturas Destino</a></li>
+					<li><a href="{{ url_for('select_asignaturasOD') }}">Equivalencias Asignaturas Origen y Destino</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav">
+				<li><a href="{{ url_for('select_las') }}">Learnign Agreements</a></li>
+			</ul>
+
+			<ul class="nav navbar-nav ">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Selección <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="{{ url_for('select_selection') }}">Selección</a></li>
+					<li><a href="{{ url_for('add_selection_form') }}">Incorporar Selección </a></li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav ">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estado Movilidad <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="#">Movilidad con LA</a></li>
+					<li><a href="#">Movilidad sin LA</a></li>
+					</ul>
+				</li>
+			</ul>
+
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+		</nav>
+
+		<div class="container">
+			{%block body%}
+			{%endblock%}
+		</div>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </body>
 
 </html>
