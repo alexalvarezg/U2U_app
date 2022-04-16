@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+    {% extends "index.html" %}
+    {%block title%}
+        Proceso Seleccion
+    {%endblock%}
 
-<head>
-	<title>Proceso Seleccion</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
 
-<body>
+    {% block body%}
     <div class="text-center">
         <h1>Estado Procesos Seleccion</h1>
     </div>
@@ -42,5 +41,4 @@
         {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    {%endblock%}

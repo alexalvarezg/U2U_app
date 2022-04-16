@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+    {% extends "index.html" %}
+    {%block title%}
+        Universidad
+    {%endblock%}
 
-<head>
-	<title>Universidades</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
 
-<body>
+    {% block body%}
     <div class="text-center">
         <h1>Universidades</h1>
     </div>
@@ -30,5 +29,4 @@
         {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    {%endblock%} 

@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
-<head>
- <title>Nuevo Seleccion </title>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- 
-</head>
+    {% extends "index.html" %}
+    {%block title%}
+        Nueva Seleccion
+    {%endblock%}
 
 
-<div class="text-center">
-    <h1>Nueva Seleccion</h1>
-    <p>Rellene el formulario para incorporar una nueva seleccion</p>
-    <br>
-</div>
-<body>
+    {% block body%}
+
+    <div class="text-center">
+        <h1>Nueva Seleccion</h1>
+        <p>Rellene el formulario para incorporar una nueva seleccion</p>
+        <br>
+    </div>
    
     <form class="form-horizontal" action="{{ url_for('add_selection_form')}}" method="post" >
     
@@ -149,5 +148,4 @@
         </div>
     
     </form>
-</body>
-</html>
+    {%endblock%}
