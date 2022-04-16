@@ -198,7 +198,7 @@ def add_student_form():
        return render_template('Estudiantes.html',result=output)
        #return make_response(jsonify({"Estudiantes": estudiantes}))
 
-    return render_template("formulario_estudiante.html")
+    return render_template("Nuevo_Estudiante.html")
 
 
 
