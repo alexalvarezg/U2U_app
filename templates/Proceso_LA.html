@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Estado LA</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Estado Tramitación Learning Agreement</h1>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDOS</th>
+            <th>CURSO</th>
+            <th>GRADO</th>
+            <th>UNIV. ESCOGIDA</th>
+            <th>DURACIÓN</th>
+            <th>IDIOMA UNIV.</th>
+            <th>NIVEL UNIV.</th>
+            <th>IDIOMA ESTUD.</th>
+            <th>NIVEL ESTUD.</th>
+            <th>IDIOMA UNI</th>
+            <th>ACEPTADO COORD</th>
+            <th>ACEPTADO RRII</th>
+            <th>FIRMADO COORD</th>
+            <th>FIRMADO RRII</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in result %}
+            <tr>
+                <td> {{ item[0]}} </td>
+                <td> {{ item[1] }} </td>
+                <td> {{ item[2] }} </td>
+                <td> {{ item[3] }} </td>
+                <td> {{ item[4] }} </td>
+                <td> {{ item[5] }} </td>
+                <td> {{ item[6] }} </td>
+                <td> {{ item[7]}} </td>
+                <td> {{ item[8] }} </td>
+                <td> {{ item[9] }} </td>
+                <td> {{ item[10] }} </td>
+                <td> {{ item[11] }} </td>
+                <td> {{ item[12] }} </td>
+                <td> {{ item[13] }} </td>
+                <td> {{ item[14] }} </td>
+                <td> {{ item[15] }} </td>
+                <td> {{ item[16] }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
