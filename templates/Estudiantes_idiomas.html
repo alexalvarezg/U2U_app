@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html>
+    {% extends "index.html" %}
+    {%block title%}
+        Estudiantes con título idioma
+    {%endblock%}
 
-<head>
-	<title>Estudiantes con idioma</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
 
-<body>
+    {% block body%}
     <div class="text-center">
-        <h1>Estudiantes con idiomas</h1>
+        <h1>Estudiantes con título de idiomas</h1>
     </div>
     <table class="table">
         <thead>
@@ -37,5 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    {%endblock%}

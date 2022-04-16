@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html>
-<head>
- <title>Nuevo Estudiante </title>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- 
-</head>
+    {% extends "index.html" %}
+    {%block title%}
+        Nuevo Estudiante
+    {%endblock%}
 
 
-<div class="text-center">
-    <h1>Nuevo Estudiante</h1>
-    <p>Rellene el formulario para incorporar al estudiante</p>
-    <br>
-</div>
-<body>
+    {% block body%}
+
+    <div class="text-center">
+        <h1>Nuevo Estudiante</h1>
+        <p>Rellene el formulario para incorporar al estudiante</p>
+        <br>
+    </div>
+    
    
     <form class="form-horizontal" action="{{ url_for('add_student_form')}}" method="post" >
     
@@ -111,5 +111,4 @@
         </div>
     
     </form>
-</body>
-</html>
+    {%endblock%}
