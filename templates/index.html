@@ -9,7 +9,7 @@
 	<h2>Bienvenido a U2U</h2>
 	<h4>Menú de opciones</h4>
 		<a href="{{ url_for('select_estudiantes') }}">Estudiantes</a> <br>
-		<a href="{{ url_for('select_estudiantes_idiomas') }}">Estudiantes con idiomas</a> <br>
+		<a href="{{ url_for('select_estudiantes_idiomas') }}">Estudiantes (con titulo idioma)</a> <br>
 		<a href="{{ url_for('add_student_form') }}">Incorporar Estudiante</a> <br>
 		<br>
 
@@ -23,11 +23,15 @@
 		<a href="{{ url_for('select_asignaturasO') }}">Asignaturas Origen</a> <br>
 		<a href="{{ url_for('select_asignaturasD') }}">Asignaturas Destino</a> <br>
 		<a href="{{ url_for('select_asignaturasOD') }}">Asignaturas Origen - Destino</a> <br>
-		<a href="{{ url_for('learnignAgreement') }}">Learnign Agreements</a> <br>
+		<a href="{{ url_for('select_las') }}">Learnign Agreements</a> <br>
 		<br>
 
 		<a href="{{ url_for('select_selection') }}">Seleccion</a> <br>
 		<a href="{{ url_for('add_selection_form') }}">Incorporar Seleccion</a> <br>
+		<br>
+
+		<a href="">Estado Movilidad (con LA)</a> <br> <!-- procesoMovilidad.html-->
+		<a href="">Estado Movilidad (sin LA)</a> <br>
 		
 		
 		
@@ -35,7 +39,7 @@
 
 {% block body %}
   
-		<p>This is a Flask application.</p> 
+		<p>Aplicacion creada con Flask, Python y MySQL</p> 
  
 {% endblock %}
 </body>
