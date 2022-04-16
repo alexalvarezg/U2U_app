@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+    {% extends "index.html" %}
+    {%block title%}
+        Asignaturas Destino
+    {%endblock%}
 
-<head>
-	<title>Asignaturas Destino</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
 
-<body>
+    {% block body%}
     <div class="text-center">
         <h1>Asignaturas Destino</h1>
     </div>
@@ -26,5 +25,4 @@
         {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    {%endblock%}
