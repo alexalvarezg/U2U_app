@@ -8,9 +8,25 @@ from sqlalchemy import text
 
 @app.route("/")
 def index_prueba():
-    return render_template("index.html")
+    output = []
+    students = db.engine.execute('select count(id) from estudiantes;').fetchone()
+    print(students)
+    students_title = db.engine.execute('SELECT count(E.id) FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo;').fetchone()
+    print(students_title)
+    output.append(students[0])
+    output.append(students_title[0])
+    print(output)
+    return render_template("index.html", result=output)
 
 
+
+
+@app.route("/")
+def prueba1():
+    
+    students = db.engine.execute('select count(id) from estudiantes;').fetchone()
+    
+    return render_template("index.html", result=students)
 
 
 '''
@@ -28,7 +44,9 @@ def select_estudiantes():
 def select_estudiantes_idiomas():
     output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
     return render_template('Estudiantes_idiomas.html',result=output)
-    
+
+
+
 @app.route("/universidades")
 def select_universidades():
     output = db.engine.execute('SELECT * FROM universidad;').fetchall()
@@ -100,6 +118,12 @@ def select_selection_year(year):
 @app.route("/seleccion/year/<year>/<cuatri>", methods=["GET"])
 def select_selection_year_cuatri(year, cuatri):
     output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+';').fetchall()
+    return render_template('Seleccion.html',result=output)
+
+
+@app.route("/seleccion/year/<year>/<cuatri>/<vuelta>", methods=["GET"])
+def select_selection_year_cuatri_vuelta(year, cuatri, vuelta):
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+' AND S.vuelta='+str(vuelta)+';').fetchall()
     return render_template('Seleccion.html',result=output)
 
 

@@ -98,24 +98,37 @@
 		
 
 		<div class="container">
+
 			{%block body%}
 			<h1> Bienvenido a U2U app</h1>
-			<p> Arriba encontrará un menú de navegación en el que podrá consultar las distintas opciones que podrá usar</p>
-			<br>
-			<p> Aqui podriamos poner un contador de los procesos de seleccion activos en 2022</p>
-			<p> Movilidades para el primer cuatri de 2023</p>
-			<p> Movilidades para el segundo cuatri de 2023</p>
-			<p> Movilidades anuales para 2023</p>
-			<br>
-			<p> Estudiantes registrados en el proceso de selección</p>
-			<p> Estudiantes con titulo de idioma</p>
-			<p> Estudiantes sin titulo de idioma</p>
-			<br>
-			<p>Estado de tramitación de los Learning Agreements</p>
-			<p>Cantidad de LA aceptados por Coordinadores y RRII</p>
-			<p>Cantidad de LA firmados por Coordinadores y RRII</p>
+			<p> Dispone de un menú de navegación arriba, y una vista general a continuación; </p>
+			
+			<table class="table table-hover">
+				<h3>Tabla aux</h3>
+				<tr>
+					<th>Estudiantes registrados</th>
+					<th>Estudiantes con titulo de idiomas</th>
+					<th>Estudiantes sin titulo de idioma</th>
+					<th>Procesos seleccion activos</th>
+					<th>Selecciones <br> 1º cuatri 2023</th>
+					<th>Selecciones <br> 2º cuatri 2023</th>
+					<th>Selecciones anuales 2023</th>
+					<th>Learning Agreements aceptados</th>
+					<th>Learning Agreements firmados</th>
+				</tr>
+				<tr>
+					{% for item in result %}
+					<td class="text center">{{ item }} </td>
+					{% endfor %}
+				</tr>
+			</table>
+
 
 			{%endblock%}
+
+
+			
+				  
 		</div>
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
