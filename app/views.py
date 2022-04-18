@@ -155,6 +155,10 @@ def select_las_id(id_estudiante):
 
 
 
+@app.route("/asignaturasDestinoOrigen/<nombre>", methods=["GET"])
+def select_asignaturasOD_name(nombre):
+    output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino HAVING O.nombre="' +str(nombre)+'";').fetchall()
+    return render_template('AsignaturasDestinoOrigen.html',result=output)
 
 
 
