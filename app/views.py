@@ -46,7 +46,8 @@ def index_prueba():
 def prueba1():
     
     students = db.engine.execute('select count(id) from estudiantes;').fetchone()
-    
+    # REDIRECT a 5500/index.thml
+
     return render_template("index.html", result=students)
 
 
