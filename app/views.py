@@ -23,7 +23,7 @@ def login():
             flash('Login Successfully','success')
             return redirect('/')
         else:
-            flash('Invalid Login. Try Again','danger')
+            flash('Email o contraseña incorrectos. Por favor, pruebe de nuevo','danger')
     return render_template("login.html")
 #check if user logged in
 def is_logged_in(f):
@@ -47,7 +47,7 @@ def reg():
         pwd=request.form["upass"]
         db.engine.execute("insert into users(nombre,password,email) values(%s,%s,%s)",(name,pwd,email))
         db.session.commit()
-        flash('Registration Successfully. Login Here...','success')
+        flash('Registro correcto. Inicie sesión a continuación','success') 
         return redirect('login')
     return render_template("register.html",status=status)
 
@@ -55,7 +55,7 @@ def reg():
 @app.route("/logout")
 def logout():
 	session.clear()
-	flash('You are now logged out','success')
+	flash('Ha cerrado sesión correctamente','success')
 	return redirect(url_for('login'))
 
 @app.route("/")

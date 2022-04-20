@@ -4,10 +4,10 @@
 {% block body %}
   <div class="row mt-5">
     <div class="col-4 mx-auto">
-      <h4 class="text-center">User Registration</h4><hr>
+      <h4 class="text-center">Registro </h4><hr>
       <form action="{{url_for('reg')}}" method="post">
         <div class="form-group">
-          <label>User Name</label>
+          <label>Nombre de usuario</label>
           <input type="text" name="uname" required class="form-control">  
         </div>
         <div class="form-group">
@@ -15,10 +15,10 @@
           <input type="email" name="email" required class="form-control">  
         </div>
         <div class="form-group">
-          <label>Password</label>
+          <label>Contraseña</label>
           <input type="password" name="upass" required class="form-control">  
         </div>
-        <input type="submit" name="submit" value="Submit" class="btn btn-success">
+        <input type="submit" name="submit" value="Registrarse" class="btn btn-success">
       </form>
     </div>
   </div>
