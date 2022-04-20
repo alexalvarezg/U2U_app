@@ -55,6 +55,68 @@ auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad',
 
 
 
+
+class User(db.Model):
+    '''
+    Clase: Usuario
+
+    Atributos:
+        ID: Int, clave primaria
+        nombre: 
+        email: 
+        password
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,nombre, email, password):
+        self.nombre = nombre
+        self.email = email
+        self.password = password
+    
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.name}:{self.email}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"nombre":self.nombre, "amail":self.email, "password": self.password}
+
+class User_Schema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = User
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        email = fields.String(required=True)
+        password = fields.String(required=True)
+
+
+
+
+
+
 class Titulo(db.Model):
     '''
     Clase: Titulo de idioma
