@@ -73,6 +73,9 @@ class User(db.Model):
         def json(self)
     '''
     __tablename__ = "Users"
+    __table_args__ = (
+        db.UniqueConstraint('email'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
