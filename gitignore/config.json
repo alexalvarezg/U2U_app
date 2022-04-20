@@ -5,7 +5,8 @@
         "MYSQL_USER" : "root", 
         "MYSQL_PASSWORD" : "TFG_Alexa1!",
         "MYSQL_DB" : "tfg"
-    }    
+    },
+    "SECRET_KEY": "b_5#y2LUQOEJK762389"
 }
 
 

@@ -6,6 +6,28 @@ from flask import render_template
 from sqlalchemy import text
 
 
+from flask import Flask,render_template,request,redirect,session,flash,url_for
+from functools import wraps
+
+
+@app.route('/login',methods=['POST','GET'])
+def login():
+    status=True
+    if request.method=='POST':
+        email=request.form["email"]
+        pwd=request.form["password"]
+        data = db.engine.execute("select * from users where email=%s and password=%s",(email,pwd)).fetchone()
+        if data:
+            session['logged_in']=True
+            session['username']=data["nombre"]
+            flash('Login Successfully','success')
+            return redirect('/')
+        else:
+            flash('Invalid Login. Try Again','danger')
+    return render_template("login.html")
+
+
+
 @app.route("/")
 def index_prueba():
     output = []

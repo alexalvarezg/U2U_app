@@ -22,8 +22,9 @@ port = conf['CONFIGURATION']['PORT']
 password = conf['CONFIGURATION']['MYSQL_PASSWORD']
 db = conf['CONFIGURATION']['MYSQL_DB']
 host = conf['CONFIGURATION']['MYSQL_HOST']
+sk = conf['SECRET_KEY']
 
-
+app.secret_key = sk
 app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://' + user + ':' + password + '@' + host+':'+ port + '/' +db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 db = SQLAlchemy(app)
