@@ -60,6 +60,8 @@ def logout():
 
 @app.route("/")
 def index_prueba():
+    # IF SESSION = TRUE, CARGO
+    # ELSE REDIRIJO A NOT LOGGED IN
     output = []
     students = db.engine.execute('select count(id) from estudiantes;').fetchone()
     output.append(students[0])
