@@ -96,9 +96,6 @@ def index_prueba():
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
         
-    #return render_template("login.html")
-    # IF SESSION = TRUE, CARGO
-    # ELSE REDIRIJO A NOT LOGGED IN
     
 
 
@@ -120,59 +117,98 @@ def prueba1():
 
 @app.route("/estudiantes")
 def select_estudiantes():
-    output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
-    return render_template('Estudiantes.html',result=output)
-    
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
+        return render_template('Estudiantes.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
+        
 @app.route("/estudiantes_con_idiomas")
 def select_estudiantes_idiomas():
-    output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
-    return render_template('Estudiantes_idiomas.html',result=output)
-
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
+        return render_template('Estudiantes_idiomas.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 
 @app.route("/universidades")
 def select_universidades():
-    output = db.engine.execute('SELECT * FROM universidad;').fetchall()
-    return render_template('Universidad.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM universidad;').fetchall()
+        return render_template('Universidad.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 
 @app.route("/universidades_con_idiomas")
 def select_universidades_idiomas():
-    output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
-    return render_template('Universidad_idiomas.html',result=output)
-
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
+        return render_template('Universidad_idiomas.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 @app.route("/titulos")
 def select_titulos():
-    output = db.engine.execute('SELECT * FROM titulo ORDER BY id;').fetchall()
-    return render_template('Titulos.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM titulo ORDER BY id;').fetchall()
+        return render_template('Titulos.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 
 @app.route("/asignaturasOrigen")
 def select_asignaturasO():
-    output = db.engine.execute('SELECT * FROM asignatura_origen;').fetchall()
-    return render_template('AsignaturasOrigen.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM asignatura_origen;').fetchall()
+        return render_template('AsignaturasOrigen.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 @app.route("/asignaturasDestino")
 def select_asignaturasD():
-    output = db.engine.execute('SELECT * FROM asignatura_destino;').fetchall()
-    return render_template('AsignaturasDestino.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM asignatura_destino;').fetchall()
+        return render_template('AsignaturasDestino.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 @app.route("/asignaturasDestinoOrigen")
 def select_asignaturasOD():
-    output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
-    return render_template('AsignaturasDestinoOrigen.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
+        return render_template('AsignaturasDestinoOrigen.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 
 @app.route("/seleccion")
 def select_selection():
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
-    return render_template('Seleccion.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
+        return render_template('Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 @app.route("/learningAgreements")
 def select_las():
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
-    return render_template('LearningAgreement.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
+        return render_template('LearningAgreement.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 
 
@@ -190,37 +226,66 @@ def select_las():
 
 @app.route("/seleccion/<id_estudiante>", methods=["GET"])
 def select_selection_id(id_estudiante):
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING E.id='+str(id_estudiante)+';').fetchall()
-    return render_template('Seleccion.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING E.id='+str(id_estudiante)+';').fetchall()
+        return render_template('Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 @app.route("/seleccion/year/<year>", methods=["GET"])
 def select_selection_year(year):
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+';').fetchall()
-    return render_template('Seleccion.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+';').fetchall()
+        return render_template('Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 
 @app.route("/seleccion/year/<year>/<cuatri>", methods=["GET"])
 def select_selection_year_cuatri(year, cuatri):
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+';').fetchall()
-    return render_template('Seleccion.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+';').fetchall()
+        return render_template('Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 
 
 @app.route("/seleccion/year/<year>/<cuatri>/<vuelta>", methods=["GET"])
 def select_selection_year_cuatri_vuelta(year, cuatri, vuelta):
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+' AND S.vuelta='+str(vuelta)+';').fetchall()
-    return render_template('Seleccion.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion HAVING S.año='+str(year)+' AND S.cuatri='+str(cuatri)+' AND S.vuelta='+str(vuelta)+';').fetchall()
+        return render_template('Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 
 
 @app.route("/learningAgreements/<id_estudiante>", methods=["GET"])
 def select_las_id(id_estudiante):
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante HAVING E.id='+str(id_estudiante)+';').fetchall()
-    return render_template('LearningAgreement.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante HAVING E.id='+str(id_estudiante)+';').fetchall()
+        return render_template('LearningAgreement.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 
 
 
 @app.route("/asignaturasDestinoOrigen/<nombre>", methods=["GET"])
 def select_asignaturasOD_name(nombre):
-    output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino HAVING O.nombre="' +str(nombre)+'";').fetchall()
-    return render_template('AsignaturasDestinoOrigen.html',result=output)
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino HAVING O.nombre="' +str(nombre)+'";').fetchall()
+        return render_template('AsignaturasDestinoOrigen.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 
 
 
