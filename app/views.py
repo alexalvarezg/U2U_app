@@ -10,7 +10,7 @@ from flask import Flask,render_template,request,redirect,session,flash,url_for
 from functools import wraps
 
 
-@app.route('/login',methods=['POST','GET'])
+@app.route('/',methods=['POST','GET'])
 def login():
     status=True
     if request.method=='POST':
@@ -21,7 +21,7 @@ def login():
             session['logged_in']=True
             session['username']=data["nombre"]
             flash('Login Successfully','success')
-            return redirect('/')
+            return redirect('/main')
         else:
             flash('Email o contraseña incorrectos. Por favor, pruebe de nuevo','danger')
     return render_template("login.html")
@@ -48,7 +48,7 @@ def reg():
         db.engine.execute("insert into users(nombre,password,email) values(%s,%s,%s)",(name,pwd,email))
         db.session.commit()
         flash('Registro correcto. Inicie sesión a continuación','success') 
-        return redirect('login')
+        return redirect(url_for('login'))
     return render_template("register.html",status=status)
 
 #logout
@@ -58,41 +58,48 @@ def logout():
 	flash('Ha cerrado sesión correctamente','success')
 	return redirect(url_for('login'))
 
-@app.route("/")
+@app.route("/main")
 def index_prueba():
+    if 'logged_in' in session:
+        output = []
+        students = db.engine.execute('select count(id) from estudiantes;').fetchone()
+        output.append(students[0])
+
+        students_title = db.engine.execute('SELECT count(E.id) FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo;').fetchone()
+        output.append(students_title[0])
+
+        no_title = (output[0]-output[1]) #PROVISIONAL
+        output.append(no_title)
+        
+        selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
+        output.append(selecciones23[0])
+        
+        selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
+        output.append(selecciones_primercuatri[0])
+        
+        selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
+        output.append(selecciones_segundocuatri[0])
+        
+        selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
+        output.append(selecciones_anual[0])
+
+        LAS_aceptados = db.engine.execute('select count(id) from la where aceptado_Coord=1 AND aceptado_RRII=1;').fetchone()
+        output.append(LAS_aceptados[0])
+
+        LAS_fdos = db.engine.execute('select count(id) from la where fdo_Coord=1 AND fdo_RRII=1;').fetchone()
+        output.append(LAS_fdos[0])
+        
+        #print(output)
+        return render_template("index.html", result=output)
+			
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+        
+    #return render_template("login.html")
     # IF SESSION = TRUE, CARGO
     # ELSE REDIRIJO A NOT LOGGED IN
-    output = []
-    students = db.engine.execute('select count(id) from estudiantes;').fetchone()
-    output.append(students[0])
-
-    students_title = db.engine.execute('SELECT count(E.id) FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo;').fetchone()
-    output.append(students_title[0])
-
-    no_title = (output[0]-output[1]) #PROVISIONAL
-    output.append(no_title)
     
-    selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
-    output.append(selecciones23[0])
-    
-    selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
-    output.append(selecciones_primercuatri[0])
-    
-    selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
-    output.append(selecciones_segundocuatri[0])
-    
-    selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
-    output.append(selecciones_anual[0])
-
-    LAS_aceptados = db.engine.execute('select count(id) from la where aceptado_Coord=1 AND aceptado_RRII=1;').fetchone()
-    output.append(LAS_aceptados[0])
-
-    LAS_fdos = db.engine.execute('select count(id) from la where fdo_Coord=1 AND fdo_RRII=1;').fetchone()
-    output.append(LAS_fdos[0])
-    
-    #print(output)
-    return render_template("index.html", result=output)
-
 
 
 
