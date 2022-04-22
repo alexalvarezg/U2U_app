@@ -58,6 +58,50 @@ def logout():
 	flash('Ha cerrado sesión correctamente','success')
 	return redirect(url_for('login'))
 
+
+
+
+
+
+'''
+********************
+ STUDENT VIEWS
+*********************
+'''
+
+
+
+@app.route("/cliente")
+def client():
+    
+    return render_template("Estudiante/index.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+********************
+ ADMIN VIEWS
+*********************
+'''
+
+
+
+
+
 @app.route("/main")
 def index_prueba():
     if 'logged_in' in session:
