@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-    {% extends "index.html" %}
+    {% extends "Admin/index.html" %}
     {%block title%}
-        Universidad
+        Universidades con idioma
     {%endblock%}
 
 
     {% block body%}
     <div class="text-center">
-        <h1>Universidades</h1>
+        <h1>Universidades con idiomas</h1>
     </div>
     <table class="table">
         <thead>
@@ -16,6 +16,9 @@
             <th>NOMBRE</th>
             <th>UBICACION</th>
             <th>PLAZAS</th>
+            <th>IDIOMA</th>
+            <th>NIVEL</th>
+
         </tr>
         </thead>
         <tbody>
@@ -25,6 +28,8 @@
                 <td> {{ item[1] }} </td>
                 <td> {{ item[2] }} </td>
                 <td> {{ item[3] }} </td>
+                <td> {{ item[4] }} </td>
+                <td> {{ item[5] }} </td>
             </tr>
         {% endfor %}
         </tbody>

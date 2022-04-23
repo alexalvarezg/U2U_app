@@ -1,0 +1,1504 @@
+{
+	"info": {
+		"_postman_id": "103ff714-2967-47f1-a896-c40e5ed5c87c",
+		"name": "U2U Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Titulo",
+			"item": [
+				{
+					"name": "Titulo insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idioma\": \"Inglés\", \r\n    \"nivel\": \"C1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/postendpoint/titulo",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"titulo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Titulo get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/titulos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"titulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Titulos insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idioma\": \"Inglés\",\r\n        \"nivel\":\"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Inglés\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Inglés\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Inglés\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Ingles\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Inglés\",\r\n        \"nivel\": \"C2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Francés\",\r\n        \"nivel\": \"C2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Alemán\",\r\n        \"nivel\": \"C2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Italiano\",\r\n        \"nivel\": \"C2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Chino\",\r\n        \"nivel\": \"C2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"A1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"A2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"B1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"B2\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"C1\"\r\n    }, \r\n    {\r\n        \"idioma\": \"Portugués\",\r\n        \"nivel\": \"C2\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/postendpoint/titulos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"titulos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estudiantes",
+			"item": [
+				{
+					"name": "Students Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/estudiantes",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Student Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apellidos\": \"Fernandez Ochoa\", \r\n    \"curso\": 4, \r\n    \"grado\": \"GID\", \r\n    \"nombre\": \"Juan\",\r\n    \"titulo\": [1]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/postendpoint/estudiante",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Students Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n      \"nombre\": \"Alejandro\", \r\n      \"apellidos\": \"Alvarez Gallardo\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [2]\r\n\r\n    }, \r\n    {\r\n      \"nombre\": \"Ana\", \r\n      \"apellidos\": \"Cerro Garcia\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\",\r\n      \"titulo\": [1] \r\n    }, \r\n    {\r\n      \"nombre\": \"Diego\", \r\n      \"apellidos\": \"del Rio\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [3]\r\n    }, \r\n    {\r\n      \"nombre\": \"Eduardo\", \r\n      \"apellidos\": \"Efosa Edokpolor\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [1]\r\n    }, \r\n    {\r\n      \"nombre\": \"Eugenia\", \r\n      \"apellidos\": \"Ortega\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [4]\r\n    }, \r\n    {\r\n      \"nombre\": \"Javier\", \r\n      \"apellidos\": \"Valero\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [5]\r\n    }, \r\n    {\r\n      \"nombre\": \"Jose\", \r\n      \"apellidos\": \"Garcia\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [1]\r\n    }, \r\n    {\r\n      \"nombre\": \"Lucas\", \r\n      \"apellidos\": \"Encinas Sabater\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [2]\r\n      \r\n    }, \r\n    {\r\n      \"nombre\": \"Martin\", \r\n      \"apellidos\": \"Cordero\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\", \r\n      \"titulo\": [1]\r\n    }, \r\n    {\r\n      \"nombre\": \"Clara\", \r\n      \"apellidos\": \"Esteban\", \r\n      \"curso\": 4, \r\n      \"grado\": \"GIT\"\r\n    }\r\n  ]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/postendpoint/estudiantes",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Student Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apellidos\": \"Esteban\",\r\n    \"curso\": 4,\r\n    \"grado\": \"GIT\",\r\n    \"id\": 14,\r\n    \"nombre\": \"Clara\",\r\n    \"titulo\": \"InglesB2\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteendpoint",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteendpoint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Student Delete id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Lucas\", \r\n    \"apellidos\": \"Encinas Sabater\", \r\n    \"curso\": 4, \r\n    \"grado\": \"GIT\",\r\n    \"id\" : 22, \r\n    \"titulo\": \"InglesC2\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/estudiantes/delete/22",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"estudiantes",
+								"delete",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Students Delete All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteAllStudents",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllStudents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Universidad",
+			"item": [
+				{
+					"name": "Universidad Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/universidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"universidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Universidad Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Tilburg University\",\r\n    \"ubicacion\": \"Tilburg, Netherlands\",\r\n    \"plazas\": 2,\r\n    \"titulo\": [1]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/universidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"universidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Universidades Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"nombre\": \"Tilburg University\",\r\n        \"ubicacion\": \"Tilburg, Netherlands\",\r\n        \"plazas\": 2,\r\n        \"titulo\": 2\r\n    },\r\n    {\r\n        \"nombre\": \"Inholland University\",\r\n        \"ubicacion\": \"The hague, Netherlands\",\r\n        \"plazas\": 2\r\n    },\r\n    {\r\n        \"nombre\": \"Nantes University\",\r\n        \"ubicacion\": \"Nantes, France\",\r\n        \"plazas\": 1, \r\n        \"titulo\":3\r\n        \r\n    },\r\n    {\r\n        \"nombre\": \"Pitsburg University\",\r\n        \"ubicacion\": \"Somewhere, Somewhere\",\r\n        \"plazas\": 7, \r\n        \"titulo\":3\r\n    },\r\n    {\r\n        \"nombre\": \"Bristol University\",\r\n        \"ubicacion\": \"London, Uk\",\r\n        \"plazas\": 2, \r\n        \"titulo\":4\r\n    },\r\n    {\r\n        \"nombre\": \"St.Louis University\",\r\n        \"ubicacion\": \"Somewhere, Somewhere\",\r\n        \"plazas\": 2, \r\n        \"titulo\":5\r\n    }\r\n]\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/universidades",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"universidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Universidades Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteAllUniversidades",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllUniversidades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignatura Origen",
+			"item": [
+				{
+					"name": "Asignaturas Origen Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/asignaturas_origen",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"asignaturas_origen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignaturas Origen Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"nombre\": \"Deontologia\"\r\n    },\r\n    {\r\n        \"nombre\":\"Doctrina Social de la Iglesia\"\r\n    },\r\n    {\r\n        \"nombre\":\"Etica\"\r\n    },\r\n    {\r\n        \"nombre\":\"Gestion de Bases de datos\"\r\n    },\r\n    {\r\n        \"nombre\":\"Algoritmos\"\r\n    },\r\n    {\r\n        \"nombre\":\"Analisis de datos mktg\"\r\n    },\r\n    {\r\n        \"nombre\":\"Mineria de datos I\"\r\n    },\r\n    {\r\n        \"nombre\":\"Mineria de datos II\"\r\n    },\r\n    {\r\n        \"nombre\":\"Teoria de Juegos\"\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/asignaturas_origen",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"asignaturas_origen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignatura Origen Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Matematicas\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/asignatura_origen",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"asignatura_origen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignaturas Origen Delete All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteAllAsignaturasOrigen",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllAsignaturasOrigen"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignatura Destino",
+			"item": [
+				{
+					"name": "Asignaturas Destino Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/asignaturas_destino",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"asignaturas_destino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignaturas Destino Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"nombre\": \"Deontology\", \r\n        \"id_universidad\": 1\r\n    },\r\n    {\r\n        \"nombre\":\"Social Doctrine of The Church\", \r\n        \"id_universidad\":1\r\n    },\r\n    {\r\n        \"nombre\":\"Ethics\", \r\n        \"id_universidad\":1\r\n    },\r\n    {\r\n        \"nombre\":\"Databases Management\",\r\n        \"id_universidad\":2 \r\n    },\r\n    {\r\n        \"nombre\":\"Algorithms\", \r\n        \"id_universidad\":2\r\n    },\r\n    {\r\n        \"nombre\":\"Marketing Data Analysis\", \r\n        \"id_universidad\":3\r\n    },\r\n    {\r\n        \"nombre\":\"Data Mining I\", \r\n        \"id_universidad\":4\r\n    },\r\n    {\r\n        \"nombre\":\"Data Mining II\", \r\n        \"id_universidad\":4\r\n    },\r\n    {\r\n        \"nombre\":\"Game Theory\", \r\n        \"id_universidad\":3\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/asignaturas_destino",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"asignaturas_destino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignatura Destino Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Mathematics\", \r\n    \"id_universidad\":2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/asignatura_destino",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"asignatura_destino"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignaturas Destino Delete All Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteAllAsignaturasDestino",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllAsignaturasDestino"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Selección - algo falla",
+			"item": [
+				{
+					"name": "Seleccion Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/Seleccion",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"Seleccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cuatri\":1,\r\n    \"año\": 2023,\r\n    \"vuelta\":2 ,\r\n    \"confirmacion\": 3,\r\n    \"estudiantes\" : []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/seleccion",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"seleccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion Post Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cuatri\":1,\r\n    \"año\": 2023,\r\n    \"vuelta\":2 ,\r\n    \"confirmacion\": 7,\r\n    \"estudiantes\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/seleccion",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"seleccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecciones Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":2 ,\r\n        \"estudiantes\" : [1]\r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":1 ,\r\n        \"estudiantes\" : [2]\r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2021,\r\n        \"vuelta\":1 ,\r\n        \"estudiantes\" : [3] \r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2022,\r\n        \"vuelta\":1 ,\r\n        \"estudiantes\" : [4]\r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":3 ,\r\n        \"estudiantes\" : [5,6,7,8]\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/selecciones",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"selecciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecciones Post Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":1,\r\n        \"confirmacion\":1,\r\n        \"estudiantes\" : [1,2]\r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":2,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [3,4]\r\n    }, \r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2023,\r\n        \"vuelta\":2,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [5]\r\n    }, \r\n    {\r\n        \"cuatri\":2,\r\n        \"año\": 2023,\r\n        \"vuelta\":2,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [6]\r\n    },\r\n    {\r\n        \"cuatri\":3,\r\n        \"año\": 2023,\r\n        \"vuelta\":1,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [7]\r\n    },\r\n    {\r\n        \"cuatri\":1,\r\n        \"año\": 2022,\r\n        \"vuelta\":1,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [8]\r\n    },\r\n    {\r\n        \"cuatri\":2,\r\n        \"año\": 2022,\r\n        \"vuelta\":1,\r\n        \"confirmacion\":2,\r\n        \"estudiantes\" : [10]\r\n    }\r\n    \r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/selecciones",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"selecciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion Del",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deleteAllSelecciones",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllSelecciones"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AOD",
+			"item": [
+				{
+					"name": "AOD Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_asignatura_origen\":2,\r\n    \"id_asignatura_destino\" : 3\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/Asignatura_destino_origen",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"Asignatura_destino_origen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AODs Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_asignatura_origen\":1,\r\n        \"id_asignatura_destino\" : 1\r\n    },\r\n    {\r\n        \"id_asignatura_origen\":1,\r\n        \"id_asignatura_destino\" : 1\r\n    },\r\n    {\r\n        \"id_asignatura_origen\":2,\r\n        \"id_asignatura_destino\" : 2\r\n    }, \r\n    {\r\n        \"id_asignatura_origen\":3,\r\n        \"id_asignatura_destino\" : 3\r\n    }, \r\n    {\r\n        \"id_asignatura_origen\":4,\r\n        \"id_asignatura_destino\" : 4\r\n    }, \r\n    {\r\n        \"id_asignatura_origen\":5,\r\n        \"id_asignatura_destino\" : 5\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/various_Asignatura_destino_origen",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"various_Asignatura_destino_origen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOD Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/aods",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"aods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AODs Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deleteAllAODs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllAODs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learnign Agreement",
+			"item": [
+				{
+					"name": "LA Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/LA",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"LA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LA Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_estudiante\": \"1\",\r\n    \"aceptado_RRII\": true,\r\n    \"aceptado_Coord\": true,\r\n    \"fdo_RRII\": true,\r\n    \"fdo_Coord\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/LA",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"LA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LAs Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_estudiante\": \"1\",\r\n        \"aceptado_RRII\": true,\r\n        \"aceptado_Coord\": true,\r\n        \"fdo_RRII\": false,\r\n        \"fdo_Coord\": false, \r\n        \"listado_asignaturasOD\" : [1]   \r\n    }, \r\n    {\r\n        \"id_estudiante\": \"2\",\r\n        \"aceptado_RRII\": true,\r\n        \"aceptado_Coord\": true,\r\n        \"fdo_RRII\": false,\r\n        \"fdo_Coord\": false,\r\n        \"listado_asignaturasOD\" : [2]      \r\n    }, \r\n    {\r\n        \"id_estudiante\": \"3\",\r\n        \"aceptado_RRII\": false,\r\n        \"aceptado_Coord\": false,\r\n        \"fdo_RRII\": false,\r\n        \"fdo_Coord\": false, \r\n        \"listado_asignaturasOD\": [3,4,6]\r\n    }, \r\n    {\r\n        \"id_estudiante\": \"4\",\r\n        \"aceptado_RRII\": true,\r\n        \"aceptado_Coord\": true,\r\n        \"fdo_RRII\": true,\r\n        \"fdo_Coord\": true\r\n    }\r\n  ]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/LAs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"LAs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LA Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/deleteAllLAs",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllLAs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seleccion - Estudiante",
+			"item": [
+				{
+					"name": "Seleccion - Estudiante Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/prueba/Seleccion-Estudiante",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"prueba",
+								"Seleccion-Estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion - Estudiante Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_estudiante\": 2,\r\n    \"id_seleccion\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/seleccion-estudiante",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"seleccion-estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecciones - Estudiantes Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_estudiante\": 1,\r\n        \"id_seleccion\":3,\r\n        \"plaza\":\"20\",\r\n        \"aceptar\":true\r\n    },\r\n    {\r\n        \"id_estudiante\": 2,\r\n        \"id_seleccion\":7,\r\n        \"plaza\":\"10\",\r\n        \"aceptar\":false\r\n    }, \r\n    {\r\n        \"id_estudiante\": 3,\r\n        \"id_seleccion\":8,\r\n        \"plaza\":\"23\",\r\n        \"aceptar\":true\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/selecciones-estudiantes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"selecciones-estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion - Estudiante Del",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deleteAllSelecciones_Estudiantes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllSelecciones_Estudiantes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Universidad - Seleccion",
+			"item": [
+				{
+					"name": "Seleccion-Universidad Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/Seleccion-Universidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"Seleccion-Universidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Selecciones-Universidades Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_universidad\": 2,\r\n        \"id_seleccion\":3,\r\n        \"orden\":1, \r\n        \"aceptar\":1\r\n    },\r\n    {\r\n        \"id_universidad\": 4,\r\n        \"id_seleccion\":4, \r\n        \"orden\":3,\r\n        \"aceptar\":2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/selecciones-universidades",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"selecciones-universidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion-Universidad Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_universidad\": 2,\r\n    \"id_seleccion\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/seleccion-universidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"seleccion-universidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seleccion-Universidad Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deleteAllSelecciones_Universidades",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllSelecciones_Universidades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AOD - LA",
+			"item": [
+				{
+					"name": "AOD - LA Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/AOD_LAs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"AOD_LAs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOD - LA Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_AOD\":3,\r\n    \"id_LA\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/aod_La",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"aod_La"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOD - LA Delete All",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deleteAllAODsLAs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deleteAllAODsLAs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AODs - LAs Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_AOD\":3,\r\n        \"id_LA\":2\r\n    }, \r\n    {\r\n        \"id_AOD\":4,\r\n        \"id_LA\":2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/aods_Las",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"aods_Las"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pruebas",
+			"item": [
+				{
+					"name": "prueba Estudiante- Seleccion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"id_estudiante\": 1,\r\n    \"id_seleccion\":2\r\n    }, \r\n    {\r\n    \"id_estudiante\": 2,\r\n    \"id_seleccion\":3\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/prueba_seleccion_estudiante",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"prueba_seleccion_estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba LAs- AODs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"id_AOD\": 1,\r\n    \"id_LA\":2\r\n    }, \r\n    {\r\n    \"id_AOD\": 2,\r\n    \"id_LA\":3\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/prueba_la_asignaturas",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"prueba_la_asignaturas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba Selecciones-Universidades",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id_universidad\": 2,\r\n        \"id_seleccion\":3,\r\n        \"orden\":1, \r\n        \"aceptar\":1\r\n    },\r\n    {\r\n        \"id_universidad\": 4,\r\n        \"id_seleccion\":4, \r\n        \"orden\":3,\r\n        \"aceptar\":2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/prueba_seleccion_universidad",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"prueba_seleccion_universidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prueba insertar universidades",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"nombre\": \"Tilburg University\",\r\n        \"ubicacion\": \"Tilburg, Netherlands\",\r\n        \"plazas\": 2, \r\n        \"titulo\": 2\r\n    },\r\n    {\r\n        \"nombre\": \"Nantes University\",\r\n        \"ubicacion\": \"Nantes, France\",\r\n        \"plazas\": 1,\r\n        \"titulo\": [1]\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/postendpoint/universidades",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"postendpoint",
+								"universidades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

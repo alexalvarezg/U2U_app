@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-    {% extends "index.html" %}
+    {% extends "Admin/index.html" %}
     {%block title%}
-        Learning Agreements
+        Proceso Seleccion
     {%endblock%}
 
 
     {% block body%}
     <div class="text-center">
-        <h1>Learning Agreements</h1>
-        <p>Si desea buscar algun learning agreement en concreto solamente debe indicarlo en la barra de búsqueda de la siguiente manera:</p>       
-        <pre>.../learningAgreement/<i>&#60id_estudiante&#62</i></pre> 
+        <h1>Estado Procesos Seleccion</h1>
+        <p>Si desea buscar algun proceso de seleccion concreto solamente debe indicarlo en la barra de búsqueda de la siguiente manera:</p>       
+        <pre>.../seleccion/year/<i>&#60año&#62</i>/<i>&#60cuatrimestre&#62</i>/<i>&#60vuelta&#62</i></pre> 
     
-        <p> como por ejemplo: &nbsp; .../learningAgreement/4</p>
+        <p> como por ejemplo: &nbsp; .../seleccion/year/<i>2023</i>/<i>1</i>/<i>1</i></p>
+
     </div>
     <table class="table">
         <thead>
         <tr>
-            <th>ID ESTUDIANTE</th>
+            <th>ID</th>
             <th>NOMBRE</th>
             <th>APELLIDOS</th>
             <th>CURSO</th>
             <th>GRADO</th>
-            <th>ID LA</th>
-            <th>ACEPTADO COORD</th>
-            <th>ACEPTADO RRII</th>
-            <th>FIRMADO COORD</th>
-            <th>FIRMADO RRII</th>
+            <th>AÑO</th>
+            <th>DURACION (cuatri)</th>
+            <th>VUELTA</th>
+            <th>UNIVERSIDAD</th>
 
         </tr>
         </thead>
@@ -39,9 +39,9 @@
                 <td> {{ item[4] }} </td>
                 <td> {{ item[5] }} </td>
                 <td> {{ item[6] }} </td>
-                <td> {{ item[7]}} </td>
+                <td> {{ item[7] }} </td>
                 <td> {{ item[8] }} </td>
-                <td> {{ item[9] }} </td>
+                <td><a href="">update</a>, <a href="">delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -4,19 +4,20 @@
 <head>
 	<title>
 		{%block title%}
+		Pagina Principal Admin
     	{%endblock%}
 	</title>
-	<link rel="shortcut icon" href="./assets/img/logo.png" type="image/png"> <!-- No funciona -->
+	<link rel="shortcut icon" href="../static/img/logo.png" type="image/png"> 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
+		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-			<a class="navbar-brand" href="/">
-				<img src="./assets/img/logo.png"><!-- No funciona -->
+			<a class = "navbar-brand" href="/main"> <!-- class = "navbar-brand"-->
+				<img src="../static/img/logo_index.png"> 
 			</a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span>
@@ -90,7 +91,14 @@
 					</ul>
 				</li>
 			</ul>
+			
+			<ul class="nav navbar-nav navbar-right ">
+				<a class="nav-link" href="/logout">
+					<button type="button" class="btn btn-default navbar-btn" href="/logout">Cerrar Sesión</button>
+				</a>
+			</ul>
 
+			
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 		</nav>
@@ -100,7 +108,8 @@
 		<div class="container">
 
 			{%block body%}
-			<h1> Bienvenido a U2U app</h1>
+			<!-- <h1> Bienvenido a U2U app</h1> -->
+			<h1 class="jumbotron">Bienvenido a U2U app {{session.username}}</h1>
 			<p> Dispone de un menú de navegación arriba, y una vista general a continuación; </p>
 			<br>
 			<table class="table table-hover">
