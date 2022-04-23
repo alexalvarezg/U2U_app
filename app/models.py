@@ -232,6 +232,8 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         ubicacion = fields.String(required=True)
         titulo = fields.List
 
+
+
 class Estudiante(db.Model):
     '''
     Clase: Estudiante
