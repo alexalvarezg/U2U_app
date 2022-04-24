@@ -56,13 +56,13 @@ auxiliar_seleccion = db.Table('aux_seleccion',
 )
 
 ## TITULACIONES - UNIVERSIDAD DE DESTINO
-auxiliar_titulaciones_universidades = db.Table('aux_titulaciones_universidad', 
+auxiliar_titulacion_universidad = db.Table('aux_titulacion_universidad', 
     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
     db.Column('id_titulacion', db.Integer, db.ForeignKey('Titulaciones.id'), primary_key=True)
 )
 
 ## ASIGNATURAS ORIGEN - TITULACIONES
-auxiliar_titulaciones_asignaturasO = db.Table('aux_titulaciones_asignaturas_O', 
+auxiliar_titulacion_asignaturasO = db.Table('aux_titulacion_asignaturas_O', 
     db.Column('id_asignatura_O', db.Integer, db.ForeignKey('Asignatura_Origen.id'), primary_key=True), 
     db.Column('id_titulacion', db.Integer, db.ForeignKey('Titulaciones.id'), primary_key=True)
 )
@@ -241,19 +241,22 @@ class Universidad(db.Model):
     plazas_2 = db.Column(db.Integer, nullable=True) 
     # asociado a la tabla auxiliar TITULO - UNIVERSIDAD
     titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
-    
+    # asociado a la tabla auxiliar TITULACIONES - UNIVERSIDAD
+    titulaciones = db.relationship("Titulaciones", secondary=auxiliar_titulacion_universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
+
     
     def create(self):
       db.session.add(self)
       db.session.commit()
       return self
 
-    def __init__(self,nombre,ubicacion, plazas1, plazas2,titulo):
+    def __init__(self,nombre,ubicacion, plazas1, plazas2,titulo, titulaciones):
         self.nombre = nombre
         self.ubicacion = ubicacion
         self.plazas1 = plazas1
         self.plazas2 = plazas2
         self.titulo = titulo
+        self.titulaciones = titulaciones
 
     def __repr__(self):
         '''
@@ -265,7 +268,7 @@ class Universidad(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas primer cuatri":self.plazas1, "Plazas segundo cuatri":self.plazas2,"Titulo": self.titulo}
+        return {"Nombre":self.nombre, "Ubicación":self.ubicacion, "Plazas primer cuatri":self.plazas1, "Plazas segundo cuatri":self.plazas2,"Titulo": self.titulo, "Titulaciones": self.titulaciones}
 
 class UniversidadSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -278,6 +281,7 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
         plazas1 = fields.Integer(required=True)
         plazas2 = fields.Integer(required=True)
         titulo = fields.List
+        titulaciones = fields.List
 
 
 
@@ -301,7 +305,7 @@ class Titulacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(30), nullable=False)
     codigo = db.Column(db.String(30), nullable=False)
-    
+
     
     def create(self):
       db.session.add(self)
@@ -492,17 +496,20 @@ class Asignatura_Origen(db.Model):
     nombre = db.Column(db.String(255), nullable=False)
     codigo = db.Column(db.String(50), nullable=False)
     curso = db.Column(db.Integer, nullable=False)
+    # asociado a la tabla auxiliar TITULACIONES - UNIVERSIDAD
+    titulaciones = db.relationship("Titulaciones", secondary=auxiliar_titulacion_asignaturasO, backref=backref('Asignatura_Origen', lazy='dynamic'), lazy='dynamic')
 
-
+    
     def create(self):
       db.session.add(self)
       db.session.commit()
       return self
 
-    def __init__(self,nombre, codigo, curso):
+    def __init__(self,nombre, codigo, curso, titulaciones):
         self.nombre = nombre
         self.codigo = codigo
         self.curso = curso
+        self.titulaciones = titulaciones
     
     def __repr__(self):
         '''
@@ -514,7 +521,7 @@ class Asignatura_Origen(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Id":self.id, "nombre":self.nombre, "codigo":self.codigo, "curso":self.curso}
+        return {"Id":self.id, "nombre":self.nombre, "codigo":self.codigo, "curso":self.curso, "Titulaciones": self.titulaciones}
 
 class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -525,6 +532,7 @@ class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
         nombre = fields.String(required=True)
         codigo = fields.String(required=True)
         curso = fields.Integer(required=True)
+        titulaciones = fields.List
 
 
 
