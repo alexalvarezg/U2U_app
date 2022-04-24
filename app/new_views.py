@@ -1,7 +1,7 @@
 from tkinter import E
 from . import app, db
 from .models import *
-from flask import redirect, jsonify, make_response, render_template, request
+from flask import redirect, jsonify, make_response, render_template, request, request_finished
 from flask import render_template
 from sqlalchemy import text
 
@@ -130,3 +130,72 @@ def add_titulaciones():
         db.session.add(nueva_titulacion)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Titulaciones added"}))
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------- UNIVERSIDAD
+@app.route('/universidad', methods = ['GET'])
+def university():
+    get_universidades = Universidad.query.all()
+    Universidad_schema = UniversidadSchema(many=True)
+    universidades = Universidad_schema.dump(get_universidades)
+    return make_response(jsonify({"Universidad": universidades}))
+
+# B.1) POST: INCORPORAR UNA UNIVERSIDAD
+@app.route('/postendpoint/universidad', methods = ['GET', 'POST'])
+def add_university():
+    request_data = request.get_json()
+    name = request_data['nombre']
+    place = request_data["ubicacion"]
+    spots1 = request_data["plazas1"]
+    spots2 = request_data["plazas2"]
+    if "titulo" in request_data:
+        title = request_data["titulo"][0]
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        if "titulaciones" in request_data:
+            degree = request_data["titulaciones"][0]
+            query_2 = db.session.query(Titulacion).filter(Titulacion.id == degree)
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=query_1, titulaciones=query_2)
+        else:
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plaza_1=spots1, plazas2=spots2, titulo=query_1, titulaciones=[])
+    else:
+        if "titulaciones" in request_data:
+            degree = request_data["titulaciones"][0]
+            query_2 = db.session.query(Titulacion).filter(Titulacion.id == degree)
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=[], titulaciones=query_2) 
+        else: 
+            nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=[], titulaciones=[]) 
+    db.session.add(nueva_universidad)
+    db.session.commit()
+    return make_response(jsonify({"Status" : "Universidad added"}))
+
+
+# B.2) POST: INCORPORAR VARIAS UNIVERSIDADES
+@app.route('/postendpoint/universidades', methods = ['POST'])
+def add_universities():
+    request_data = request.get_json()
+    for i in range(0, len(request_data)):
+        name = request_data[i]['nombre']
+        place = request_data[i]["ubicacion"]
+        spots1 = request_data[i]["plazas1"]
+        spots2 = request_data[i]["plazas2"]
+        if "titulo" in request_data[i]:
+            title = request_data[i]["titulo"]
+            query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+            if "titulaciones" in request_data[i]:
+                degree = request_data[i]["titulaciones"]
+                query_2 = db.session.query(Titulacion).filter(Titulacion.id == degree)
+                nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=query_1, titulaciones=query_2)
+            else:
+                nueva_universidad = Universidad(nombre=name, ubicacion=place, plaza_1=spots1, plazas2=spots2, titulo=query_1, titulaciones=[])
+        else:
+            if "titulaciones" in request_data[i]:
+                degree = request_data[i]["titulaciones"]
+                query_2 = db.session.query(Titulacion).filter(Titulacion.id == degree)
+                nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=[], titulaciones=query_2) 
+            else: 
+                nueva_universidad = Universidad(nombre=name, ubicacion=place, plazas1=spots1, plazas2=spots2, titulo=[], titulaciones=[]) 
+        db.session.add(nueva_universidad)
+        db.session.commit()
+    return make_response(jsonify({"Status" : "Varias Universidades Añadidas"}))

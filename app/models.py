@@ -283,10 +283,10 @@ class Universidad(db.Model):
     '''
     __tablename__ = "Universidad"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False)
     ubicacion = db.Column(db.String(50), nullable=False)
-    plazas_1 = db.Column(db.Integer, nullable=True) 
-    plazas_2 = db.Column(db.Integer, nullable=True) 
+    plazas1 = db.Column(db.Integer, nullable=True) 
+    plazas2 = db.Column(db.Integer, nullable=True) 
     # asociado a la tabla auxiliar TITULO - UNIVERSIDAD
     titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Universidad, backref=backref('Universidad', lazy='dynamic'), lazy='dynamic')
     # asociado a la tabla auxiliar TITULACIONES - UNIVERSIDAD
