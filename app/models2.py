@@ -655,9 +655,84 @@ class LASchema(SQLAlchemyAutoSchema):
 
 
 # ------------------------------------------------------------------------ ASOCIACION LA - ASIGNATURA 
+class AsociacionLA_A(db.Model):
+    '''
+    Clase: AsociacionLA_A
 
+    Atributos:
+        ID: Int, clave primaria
+        ID_reflexivo: su propio id como consecuencia de la relacion reflexiva (1,N) 
+        cancelado: 
+        fecha cancelacion
+        motivo: 
+        aceptado:
+        fecha aceptacion
+        id_La
+        id_asignatura_origen_destino
 
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "AsociacionLA_A"
+    id = db.Column(db.Integer, primary_key=True)
+    cancelado = db.Column(db.Boolean, default=False)
+    fecha_cancelacion = db.Column(db.Datetime, nullable=True)
+    motivo = db.Column(db.String(255), nullable=True)
+    aceptado = db.Column(db.Boolean, default=False)
+    fecha_aceptacion = db.Column(db.Datetime, nullable=True)
 
+    id_LA = db.Column(db.Integer, ForeignKey("LA.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    learnign_agreement = relationship("LA", backref=backref("AsociacionLA_A"))
+    id_asignatura_OD = db.Column(db.Integer, ForeignKey("Asignatura_Destino_Asignatura_Origen.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    asignatura_destino_origen = relationship("Asignatura_Destino_Asignatura_Origen", backref=backref("AsociacionLA_A"))
+    
+    
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,cancelado, fecha_cancelacion, motivo, aceptado, fecha_aceptacion ,id_LA, id_asignatura_OD):
+        self.cancelado = cancelado
+        self.fecha_cancelacion = fecha_cancelacion
+        self.motivo = motivo 
+        self.aceptado = aceptado
+        self.fecha_aceptacion = fecha_aceptacion
+        self.id_LA = id_LA
+        self.id_asignatura_OD = id_asignatura_OD
+        
+        
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.id}:{self.aceptado}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Id":self.id, "Cancelado":self.cancelado, "Fecha Cancelacion": self.fecha_cancelacion, "Motivo":self.motivo, "Aceptado":self.aceptado, "Fecha Aceptacion": self.fecha_aceptacion, "ID Learning Agreement": self.id_LA, "ID Asignatura OD": self.id_asignatura_OD}
+
+class AsociacionLA_ASchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = AsociacionLA_A
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        cancelado = fields.Boolean(required=True)
+        fecha_cancelacion = fields.DateTime(required=False)
+        motivo = fields.String(required=False)
+        aceptado = fields.Boolean(required=False)
+        fecha_aceptacion = fields.DateTime(required=False)
+        id_LA = fields.Integer(required=True)
+        id_asignatura_OD = fields.Integer(required=True)
+
+       
+       
 # ------------------------------------------------------------------------ ENLACE ASIGNATURA DESTINO
 class EnlaceAD(db.Model):
     '''
