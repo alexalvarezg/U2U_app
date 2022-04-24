@@ -31,7 +31,12 @@ db = SQLAlchemy(app)
 
 
 
-from app import views
+
+
+#views for models antiguo
+#from app import views
+
+from app import new_views
 
 
 #from .views import *

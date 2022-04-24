@@ -228,7 +228,7 @@ class Titulacion(db.Model):
     '''
     __tablename__ = "Titulaciones"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(30), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False)
     codigo = db.Column(db.String(30), nullable=False)
 
     
@@ -750,7 +750,6 @@ class AsociacionLA_A(db.Model):
     motivo = db.Column(db.String(255), nullable=True)
     aceptado = db.Column(db.Boolean, default=False)
     fecha_aceptacion = db.Column(db.Date, nullable=True)
-
     id_LA = db.Column(db.Integer, ForeignKey("LA.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     learnign_agreement = relationship("LA", backref=backref("AsociacionLA_A"))
     id_asignatura_OD = db.Column(db.Integer, ForeignKey("Asignatura_Destino_Asignatura_Origen.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
