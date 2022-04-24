@@ -74,7 +74,7 @@ auxiliar_seleccion = db.Table('aux_seleccion',
 '''
 ENTIDADES - SEGURIDAD
 '''
-
+# ------------------------------------------------------------------------ USUARIO
 class User(db.Model):
     '''
     Clase: Usuario
@@ -133,9 +133,6 @@ class User_Schema(SQLAlchemyAutoSchema):
         nombre = fields.String(required=True)
         email = fields.String(required=True)
         password = fields.String(required=True)
-
-
-
 
 
 
@@ -279,6 +276,57 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
 
 
 # ------------------------------------------------------------------------ TITULACIONES UNIVERSITARIAS
+class Titulacion(db.Model):
+    '''
+    Clase: Titulacion
+
+    Atributos:
+        ID: Int, clave primaria
+        nombre: Str(30) Nombre de la universidad de destino
+        codigo: abreviatura de la titulacion
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Titulaciones"
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(30), nullable=False)
+    codigo = db.Column(db.String(30), nullable=False)
+    
+    
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,nombre,codigo):
+        self.nombre = nombre
+        self.codigo = codigo
+        
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.nombre}:{self.codigo}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Nombre":self.nombre, "Codigo": self.codigo}
+
+class TitulacionSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Titulacion
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+        codigo = fields.String(required=True)
+
 
 
 
