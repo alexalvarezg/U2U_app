@@ -1,5 +1,6 @@
 from tkinter import E
 from . import app, db
+#from .models_antiguo import *
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request
 from flask import render_template
@@ -145,12 +146,8 @@ def index_prueba():
 
 
 @app.route("/")
-def prueba1():
-    
-    students = db.engine.execute('select count(id) from estudiantes;').fetchone()
-    # REDIRECT a 5500/index.thml
-
-    return render_template("Admin/index.html", result=students)
+def welcome():
+   return "This is a flask app"
 
 
 '''

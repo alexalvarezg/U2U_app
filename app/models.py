@@ -16,7 +16,6 @@ from sqlalchemy import insert
 #from app import db
 
 
-
 #Base = declarative_base()
 
 #Establecemos las tablas auxiliares
