@@ -208,7 +208,6 @@ class Titulo_Schema(SQLAlchemyAutoSchema):
 
 
 
-
 # ------------------------------------------------------------------------ UNIVERSIDAD DE DESTINO
 class Universidad(db.Model):
     '''
@@ -464,6 +463,8 @@ class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
         codigo = fields.String(required=True)
         curso = fields.Integer(required=True)
 
+
+
 # ------------------------------------------------------------------------ ASIGNATURA DESTINO
 class Asignatura_Destino(db.Model):
     '''
@@ -526,7 +527,62 @@ class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
 
 
 
-# ------------------------------------------------------------------------ ASIGNATURA DESTINOM - ORIGEN 
+# ------------------------------------------------------------------------ ASIGNATURA DESTINO - ORIGEN 
+
+class Asignatura_Destino_Asignatura_Origen(db.Model):
+    '''
+    Clase: Asignatura_Destino_Asignatura_Origen
+
+    Atributos:
+        ID: Int, clave primaria
+        ID_Asignatura_destino: Int, clave foránea que hace referencia al id de la asignatura de destino
+        ID_Asignatura_origen: Int, clave foránea que hace referencia al id de la asignatura de origen
+        
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Asignatura_Destino_Asignatura_Origen"
+    id = db.Column(db.Integer, primary_key=True)
+    id_asignatura_origen = db.Column(db.Integer, ForeignKey("Asignatura_Origen.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    asignatura_origen = relationship("Asignatura_Origen", backref=backref("Asignatura_Destino_Asignatura_Origen"))
+    id_asignatura_destino = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    asignatura_destino = relationship("Asignatura_Destino", backref=backref("Asignatura_Destino_Asignatura_Origen"))
+
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self, id_asignatura_destino, id_asignatura_origen):
+        self.id_asignatura_destino = id_asignatura_destino
+        self.id_asignatura_origen = id_asignatura_origen
+   
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.id_asignatura_destino}:{self.id_asignatura_origen}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Id":self.id, "Id asignatura destino":self.id_asignatura_destino, "Id asignatura origen":self.id_asignatura_origen}
+
+class Asignatura_Destino_Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Asignatura_Destino_Asignatura_Origen
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_asignatura_destino = fields.Number(required=True)
+        id_asignatura_origen = fields.Number(required=True)
+
 
 
 
@@ -552,11 +608,12 @@ class LA(db.Model):
     __tablename__ = "LA"
     id = db.Column(db.Integer, primary_key=True)
     id_estudiante = db.Column(db.Integer, db.ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    aceptado_RRII = db.Column(db.Boolean, default=False)
+    estudiante = relationship("Estudiante", backref=backref("LA"))
+    ceptado_RRII = db.Column(db.Boolean, default=False)
     aceptado_Coord = db.Column(db.Boolean, default=False)
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
-    estudiante = relationship("Estudiante", backref=backref("LA"))
+    
 
 
     def create(self):
@@ -602,6 +659,66 @@ class LASchema(SQLAlchemyAutoSchema):
 
 
 # ------------------------------------------------------------------------ ENLACE ASIGNATURA DESTINO
+class EnlaceAD(db.Model):
+    '''
+    Clase: EnlaceAD
+
+    Atributos:
+        ID: Int, clave primaria
+        ID_Asignatura_destino: 
+        año: 
+        cuatri:
+        link: 
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "EnlaceAD"
+    id = db.Column(db.Integer, primary_key=True)
+    año = db.Column(db.Integer, nullable=False)
+    link = db.Column(db.String(255), nullable=False)
+    cuatri = db.Column(db.Integer, nullable=False)
+    id_asignatura_destino = db.Column(db.Integer, ForeignKey("Asignatura_Destino.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    asignatura_destino = relationship("Asignatura_Destino", backref=backref("EnlaceAD"))
+
+    
+    
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,año,link, cuatri, id_asignatura_destino):
+        self.año = año
+        self.link = link
+        self.cuatri = cuatri
+        self.id_asignatura_destino = id_asignatura_destino
+        
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.id_asignatura_destino}:{self.link}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"ID asignatura Destino":self.id_asignatura_destino, "año":self.año, "cuatri": self.cuatri, "link":self.link}
+
+class EnlaceADSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = EnlaceAD
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_asignatura_destino = fields.Number(required=True)
+        año = fields.Number(required=True)
+        cuatri = fields.Number(required=True)
+        link = fields.String(required=True)
 
 
 #las auxiliares estan en prueba.py
