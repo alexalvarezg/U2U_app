@@ -38,11 +38,26 @@ auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad',
 )
 
 ## (PRE SELECCION) ESTUDIANTE - UNIVERSIDAD DE DESTINO
+auxiliar_pre_seleccion = db.Table('aux_pre_seleccion', 
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+    db.Column('año', db.Integer, nullable=False), 
+    db.Column('cuatri', db.Integer, nullable=False), 
+    db.Column('orden', db.Integer, nullable=False) # esto no puede ser un integer, deberia ser una lista o algo
+)
 
 ## (SELECCION) ESTUDIANTE - UNIVERSIDAD DESTINO
-
+auxiliar_seleccion = db.Table('aux_seleccion', 
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+    db.Column('año', db.Integer, nullable=False), 
+    db.Column('cuatri', db.Integer, nullable=False), 
+    db.Column('vuelta', db.Integer, nullable=False)
+)
 
 ## TITULACIONES - UNIVERSIDAD DE DESTINO
+
+
 
 ## ASIGNATURAS ORIGEN - TITULACIONES
 
