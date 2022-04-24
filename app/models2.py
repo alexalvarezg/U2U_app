@@ -337,8 +337,55 @@ class TitulacionSchema(SQLAlchemyAutoSchema):
 
 
 # ------------------------------------------------------------------------ REQUISITOS
+class Requisitos(db.Model):
+    '''
+    Clase: Requisitos
+
+    Atributos:
+        ID: Int, clave primaria
+        nombre:
+        
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Requisitos"
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(55), nullable=True)
+    
 
 
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,nombre):
+        self.nombre = nombre
+        
+    
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.nombre}:{self.id}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Id":self.id, "nombre":self.nombre}
+
+class RequisitosSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Requisitos
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        nombre = fields.String(required=True)
+       
 
 # ------------------------------------------------------------------------ ESTUDIANTES
 class Estudiante(db.Model):
@@ -372,6 +419,11 @@ class Estudiante(db.Model):
     id_requisitos = db.Column(db.Integer, ForeignKey("Requisitos.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     # asociado a la tabla auxiliar TITULO - ESTUDIANTE 
     titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
+    #asociado a la tabla PRE-SELECCION
+    pre_seleccion = db.relationship("Universidad", secondary=auxiliar_pre_seleccion, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
+    #asociado a la tabla SELECCION
+    seleccion = db.relationship("Universidad", secondary=auxiliar_seleccion, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
+
     
 
     def create(self):
@@ -379,13 +431,15 @@ class Estudiante(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre,apellidos,curso,grado,titulo,id_requisito):
+    def __init__(self,nombre,apellidos,curso,grado,titulo,id_requisito, pre_seleccion, seleccion):
         self.nombre = nombre
         self.apellidos = apellidos
         self.curso = curso
         self.grado = grado
         self.titulo = titulo
         self.id_requisito = id_requisito
+        self.pre_seleccion = pre_seleccion
+        self.seleccion = seleccion
 
     def __repr__(self):
         '''
@@ -397,7 +451,7 @@ class Estudiante(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisito}
+        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisito, "Pre Seleccion":self.pre_seleccion, "Seleccion":self.seleccion}
 
 class EstudianteSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -411,6 +465,8 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         grado = fields.String(required=True)
         titulo = fields.List
         id_requisito = fields.Integer(required=True)
+        pre_seleccion = fields.List
+        seleccion = fields.Integer #que sea el id de la uni
 
 
 
