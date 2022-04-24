@@ -56,17 +56,24 @@ auxiliar_seleccion = db.Table('aux_seleccion',
 )
 
 ## TITULACIONES - UNIVERSIDAD DE DESTINO
-
-
+auxiliar_titulaciones_universidades = db.Table('aux_titulaciones_universidad', 
+    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+    db.Column('id_titulacion', db.Integer, db.ForeignKey('Titulaciones.id'), primary_key=True)
+)
 
 ## ASIGNATURAS ORIGEN - TITULACIONES
+auxiliar_titulaciones_asignaturasO = db.Table('aux_titulaciones_asignaturas_O', 
+    db.Column('id_asignatura_O', db.Integer, db.ForeignKey('Asignatura_Origen.id'), primary_key=True), 
+    db.Column('id_titulacion', db.Integer, db.ForeignKey('Titulaciones.id'), primary_key=True)
+)
 
 
 
 
 
-
-
+''' 
+titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
+'''
 
 
 
@@ -732,7 +739,7 @@ class AsociacionLA_ASchema(SQLAlchemyAutoSchema):
         id_asignatura_OD = fields.Integer(required=True)
 
        
-       
+
 # ------------------------------------------------------------------------ ENLACE ASIGNATURA DESTINO
 class EnlaceAD(db.Model):
     '''
