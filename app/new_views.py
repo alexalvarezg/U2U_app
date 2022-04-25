@@ -567,17 +567,7 @@ def add_AsociacionLA_a():
     db.session.commit()
     return make_response(jsonify({"Status" : "ASociacionLA_A added"}))
 
-'''
-{
-    "cancelado": 0, 
-    "fecha_cancelacion": "", 
-    "motivo": "no se ha cancelado aun", 
-    "aceptado":1, 
-    "fecha_aceptacion":"", 
-    "id_LA": 2,
-    "id_asignatura_OD": 2
-}
-'''
+
 
 # B.2) POST: INCORPORAR VARIOS LA
 @app.route('/postendpoint/asociacionesLA_a', methods = ['POST'])
