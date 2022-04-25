@@ -334,8 +334,6 @@ class UniversidadSchema(SQLAlchemyAutoSchema):
 
 
 
-
-
 # ------------------------------------------------------------------------ REQUISITOS
 class Requisitos(db.Model):
     '''
@@ -676,7 +674,7 @@ class LA(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_estudiante = db.Column(db.Integer, db.ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     estudiante = relationship("Estudiante", backref=backref("LA"))
-    ceptado_RRII = db.Column(db.Boolean, default=False)
+    aceptado_RRII = db.Column(db.Boolean, default=False)
     aceptado_Coord = db.Column(db.Boolean, default=False)
     fdo_RRII = db.Column(db.Boolean, default=False)
     fdo_Coord = db.Column(db.Boolean, default=False)
@@ -688,7 +686,7 @@ class LA(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,id_estudiante,aceptado_RRII,aceptado_Coord, fdo_RRII, fdo_Coord, listado_asignaturasOD):
+    def __init__(self,id_estudiante,aceptado_RRII,aceptado_Coord, fdo_RRII, fdo_Coord):
         self.id_estudiante = id_estudiante  
         self.aceptado_RRII = aceptado_RRII
         self.aceptado_Coord = aceptado_Coord
