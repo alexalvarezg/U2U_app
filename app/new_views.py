@@ -225,13 +225,6 @@ def add_requisito():
     db.session.commit()
     return make_response(jsonify({"Status" : "Requisito added"}))
 
-'''
-{
-    "nombre": "Requisito numero 1"
-}
-'''
-
-
 
 # B.2) POST: INCORPORAR VARIOS REQUISITOS
 @app.route('/postendpoint/requisitos', methods = ['POST'])
@@ -247,22 +240,6 @@ def add_requisitos():
     return make_response(jsonify({"Status" : "Various Requisitos added"}))
 
 
-'''
-[
-    {
-        "nombre": "Requisito general"
-    },
-    {
-        "nombre": "Requisito numero 1"
-    },
-    {
-        "nombre": "Requisito numero 2"
-    },
-    {
-        "nombre": "Requisito numero 3"
-    },
-]
-'''
 
 
 # --------------------------------------------------------------------------------------------------------------------------- ESTUDIANTES
@@ -316,18 +293,6 @@ def add_student():
     return make_response(jsonify({"Status" : "Sudent added"}))
 
 
-'''
-{
-    "nombre": " Elena", 
-    "apellidos": "Martin Lopez", 
-    "curso": 4, 
-    "grado": GIS
-    "titulo" : [7], 
-    "id_requisitos: [1], 
-    "pre_seleccion": [], 
-    "seleccion": []
-}
-'''
 
 # (B.1_PRUEBA) POST: INCORPORAR UN ESTUDIANTE FORMULARIO --------------------------------------------------------------------------------------------------------------------------- MODIFICAR
 @app.route('/nuevo_estudiante', methods = ['GET','POST'])
@@ -408,41 +373,6 @@ def add_students():
 
 
 
-'''
-[
-    {
-    "nombre": " Elena", 
-    "apellidos": "Martin Lopez", 
-    "curso": 4, 
-    "grado": GIS
-    "titulo" : [7], 
-    "id_requisitos: [1], 
-    "pre_seleccion": [], 
-    "seleccion": []
-    }, 
-    {
-    "nombre": " Candela", 
-    "apellidos": "Lopez Mori", 
-    "curso": 4, 
-    "grado": GIS
-    "titulo" : [5], 
-    "id_requisitos: [1], 
-    "pre_seleccion": [], 
-    "seleccion": []
-    }, 
-    {
-    "nombre": " Jesus", 
-    "apellidos": "Vicente Lopez", 
-    "curso": 3, 
-    "grado": GIT
-    "titulo" : [8], 
-    "id_requisitos: [1], 
-    "pre_seleccion": [], 
-    "seleccion": []
-    }, 
-]
-'''
-
 
 # --------------------------------------------------------------------------------------------------------------------------- ASIGNATURAS DE ORIGEN
 # A) GET: MOSTRAR TODAS LAS ASIGNATURAS DE ORIGEN 
@@ -466,14 +396,6 @@ def add_subject():
     db.session.commit()
     return make_response(jsonify({"Status" : "Asignatura de origen added"}))
 
-'''
-{
-    "nombre": " Deontologia", 
-    "codigo": "C345S", 
-    "curso": 4, 
-    "titulaciones" : [GIT]
-}
-'''
 
 # B.2) POST: INCORPORAR VARIAS ASIGNATURAS DE ORIGEN
 @app.route('/postendpoint/asignaturas_origen', methods = ['POST'])
@@ -493,34 +415,7 @@ def add_subjects():
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Subjects added"}))
 
-'''
-[
-    {
-    "nombre": " Deontologia", 
-    "codigo": "C345S", 
-    "curso": 4, 
-    "titulaciones" : [GIT]
-    }, 
-    {
-    "nombre": " Mineria de Datos", 
-    "codigo": "MD345S", 
-    "curso": 3, 
-    "titulaciones" : [GIS]
-    }, 
-    {
-    "nombre": " Analaisis de Datos", 
-    "codigo": "AD345S", 
-    "curso": 4, 
-    "titulaciones" : [GIS]
-    }, 
-    {
-    "nombre": " Doctrina", 
-    "codigo": "DS45S", 
-    "curso": 3, 
-    "titulaciones" : [GIT]
-    }
-]
-'''
+
 
 # --------------------------------------------------------------------------------------------------------------------------- ASIGNATURAS DE DESTINO
 # A) GET: MOSTRAR TODAS LAS ASIGNATURAS DE DESTINO 
@@ -544,13 +439,6 @@ def add_subject_abroad():
     db.session.commit()
     return make_response(jsonify({"Status" : "Asignatura de destino added"}))
 
-'''
-{
-    "nombre": " Deontology", 
-    "codigo": "RWEYU76189", 
-    "id_universidad": 1
-}
-'''
 
 
 # B.2) POST: INCORPORAR VARIAS ASIGNATURAS DE DESTINO
@@ -565,31 +453,6 @@ def add_subjects_abroad():
         db.session.add(nueva_asignatura)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Subjects added"}))
-
-'''
-[
-    {
-    "nombre": " Deontology", 
-    "codigo": "RWEYU76189", 
-    "id_universidad": 1
-    }, 
-    {
-    "nombre": "Data Mining", 
-    "codigo": "LKJ879", 
-    "id_universidad": 2
-    }, 
-    {
-    "nombre": "Data Analysis", 
-    "codigo": "CSD890", 
-    "id_universidad": 3
-    }, 
-    {
-    "nombre": "Social Doctrine of the Church", 
-    "codigo": "FSEWQ3W4", 
-   "id_universidad": 4
-    }
-]
-'''
 
 
 
@@ -617,12 +480,6 @@ def add_origin_and_destiny_subject():
     db.session.commit()
     return make_response(jsonify({"Status" : "AOD added"}))
 
-'''
-{
-    "id_asignatura_origen": 1, 
-    "id_asignatura_destino": 1 
-}
-'''
 
 # B.2) POST: INCORPORAR VARIOS CONJUNTOS DE ASIGNATURA DESTINO Y ORIGEN
 @app.route('/postendpoint/various_Asignatura_destino_origen', methods = ['POST'])
@@ -636,26 +493,7 @@ def add_origin_and_destiny_subjects():
         db.session.commit()
     return make_response(jsonify({"Status" : "Multiple AODs relations added"}))
 
-'''
-[
-    {
-    "id_asignatura_origen": 1, 
-    "id_asignatura_destino": 1 
-    }, 
-    {
-    "id_asignatura_origen": 2, 
-    "id_asignatura_destino": 2 
-    }, 
-    {
-    "id_asignatura_origen": 3, 
-    "id_asignatura_destino": 3 
-    },  
-    {
-    "id_asignatura_origen": 4, 
-    "id_asignatura_destino": 4 
-    }, 
-]
-'''
+
 
 # --------------------------------------------------------------------------------------------------------------------------- LEARNING AGREEMENT
 # A) GET: MOSTRAR TODOS LOS LA 
@@ -682,15 +520,6 @@ def add_LA():
     return make_response(jsonify({"Status" : "LA added"}))
 
 
-'''
-{
-    "id_estudiante": 1, 
-    "aceptado_RRII": 0, 
-    "aceptado_Coord": 0, 
-    "fdo_RRII":0, 
-    "fdo_Coord":0
-}
-'''
 
 # B.2) POST: INCORPORAR VARIOS LA
 @app.route('/postendpoint/LAs', methods = ['POST'])
@@ -708,39 +537,6 @@ def add_LAs():
         db.session.add(nuevo_LA)
         db.session.commit()
     return make_response(jsonify({"Status" : "Varios LA Añadidos"}))
-
-'''
-[
-    {
-    "id_estudiante": 1, 
-    "aceptado_RRII": 0, 
-    "aceptado_Coord": 0, 
-    "fdo_RRII":0, 
-    "fdo_Coord":0
-    }, 
-    {
-    "id_estudiante": 2, 
-    "aceptado_RRII": 1, 
-    "aceptado_Coord": 1, 
-    "fdo_RRII":0, 
-    "fdo_Coord":0
-    },
-    {
-    "id_estudiante": 3, 
-    "aceptado_RRII": 1, 
-    "aceptado_Coord": 1, 
-    "fdo_RRII":1, 
-    "fdo_Coord":1
-    },
-   {
-    "id_estudiante": 4, 
-    "aceptado_RRII": 1, 
-    "aceptado_Coord": 1, 
-    "fdo_RRII":0, 
-    "fdo_Coord":1
-    },
-]
-'''
 
 
 # --------------------------------------------------------------------------------------------------------------------------- ASOCIACIONLA_A
@@ -784,7 +580,7 @@ def add_AsociacionLA_a():
 '''
 
 # B.2) POST: INCORPORAR VARIOS LA
-@app.route('/postendpoint/asociacionLA_As', methods = ['POST'])
+@app.route('/postendpoint/asociacionesLA_a', methods = ['POST'])
 def add_AsociacionLA_as():
     request_data = request.get_json()
     #print(request_data)
@@ -802,46 +598,6 @@ def add_AsociacionLA_as():
         db.session.commit()
     return make_response(jsonify({"Status" : "Varios ASociacionLA_A Añadidos"}))
 
-'''
-[
-    {
-    "cancelado": 0, 
-    "fecha_cancelacion": "", 
-    "motivo": "no se ha cancelado aun", 
-    "aceptado":1, 
-    "fecha_aceptacion":"", 
-    "id_LA": 2,
-    "id_asignatura_OD": 2
-    },
-    {
-    "cancelado": 1, 
-    "fecha_cancelacion": "", 
-    "motivo": "mal estrcuturado", 
-    "aceptado":0, 
-    "fecha_aceptacion":"", 
-    "id_LA": 1,
-    "id_asignatura_OD": 1
-    },
-    {
-    "cancelado": 0, 
-    "fecha_cancelacion": "", 
-    "motivo": "no se ha cancelado aun", 
-    "aceptado":, 
-    "fecha_aceptacion":"", 
-    "id_LA": 3,
-    "id_asignatura_OD": 3
-    },
-    {
-    "cancelado": 0, 
-    "fecha_cancelacion": "", 
-    "motivo": "no se ha cancelado aun", 
-    "aceptado":1, 
-    "fecha_aceptacion":"", 
-    "id_LA": 4,
-    "id_asignatura_OD": 4
-    },
-]
-'''
 
 
 # --------------------------------------------------------------------------------------------------------------------------- ASOCIACIONLA_A
@@ -869,17 +625,10 @@ def add_enlaceAD():
     db.session.commit()
     return make_response(jsonify({"Status" : "nuevo_EnlaceAD added"}))
 
-'''
-{
-    "año": 2023, 
-    "link": "", 
-    "cuatri": 1, 
-    "id_Asignatura_destino":1
-}
-'''
+
 
 # B.1) POST: INCORPORAR VARIOS REGISTRO DE ENLACEAD
-@app.route('/postendpoint/enlaceAD', methods = ['POST'])
+@app.route('/postendpoint/enlacesAD', methods = ['POST'])
 def add_enlacesAD():
     request_data = request.get_json()
     for i in range(0, len(request_data)):
@@ -895,31 +644,3 @@ def add_enlacesAD():
         db.session.commit()
     return make_response(jsonify({"Status" : "Nuevos EnlaceAD added"}))
 
-'''
-[
-    {
-    "año": 2023, 
-    "link": "", 
-    "cuatri": 1, 
-    "id_Asignatura_destino":1
-    },
-    {
-    "año": 2023, 
-    "link": "enlace2", 
-    "cuatri": 2, 
-    "id_Asignatura_destino": 2
-    },
-    {
-    "año": 2023, 
-    "link": "enlace4", 
-    "cuatri": 1, 
-    "id_Asignatura_destino": 3
-    },
-    {
-    "año": 2023, 
-    "link": "enlace3", 
-    "cuatri": 1, 
-    "id_Asignatura_destino": 4
-    },
-]
-'''
