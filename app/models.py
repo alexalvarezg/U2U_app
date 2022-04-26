@@ -429,13 +429,13 @@ class Estudiante(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre,apellidos,curso,grado,titulo,id_requisito, pre_seleccion, seleccion):
+    def __init__(self,nombre,apellidos,curso,grado,titulo,id_requisitos, pre_seleccion, seleccion):
         self.nombre = nombre
         self.apellidos = apellidos
         self.curso = curso
         self.grado = grado
         self.titulo = titulo
-        self.id_requisito = id_requisito
+        self.id_requisitos = id_requisitos
         self.pre_seleccion = pre_seleccion
         self.seleccion = seleccion
 

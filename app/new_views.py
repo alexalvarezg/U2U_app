@@ -212,7 +212,7 @@ def requisitos():
     return make_response(jsonify({"Requisitos": requisitos}))
 
 # B.1) POST: INCORPORAR UN TITULO
-@app.route('/postendpoint/requisitos', methods = ['POST'])
+@app.route('/postendpoint/requisito', methods = ['POST'])
 def add_requisito():
     request_data = request.get_json()
     name = request_data['nombre']
@@ -266,7 +266,7 @@ def add_student():
 
 
     if "id_requisito" in request_data:
-        requisite = request_data["id_requisito"]
+        requisite = request_data["id_requisitos"]
         query_2 = db.session.query(Requisitos).filter(Requisitos.id == requisite)
     else:
         query_2 = []
@@ -345,7 +345,7 @@ def add_students():
 
 
         if "id_requisito" in request_data[i]:
-            requisite = request_data[i]["id_requisito"]
+            requisite = request_data[i]["id_requisitos"]
             query_2 = db.session.query(Requisitos).filter(Requisitos.id == requisite)
         else:
             query_2 = []
