@@ -1,6 +1,3 @@
-from tkinter import E
-
-from zmq import EVENT_CLOSE_FAILED
 from . import app, db
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request, request_finished
