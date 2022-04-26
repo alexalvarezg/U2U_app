@@ -252,6 +252,7 @@ def students():
 @app.route('/postendpoint/estudiante', methods = ['POST'])
 def add_student():
     request_data = request.get_json()
+    print(request_data)
     name = request_data['nombre']
     surname = request_data['apellidos']
     grade = request_data['curso']
@@ -260,16 +261,26 @@ def add_student():
     print("**************************")
     if "titulo" in request_data:
         titles = request_data["titulo"]
+        print("Titles" + str(titles))
         query_1 = db.session.query(Titulo).filter(Titulo.id == titles)
+        print("query 1 abajo")
+        print(query_1)
     else:
         query_1 = []
+        print("query 1 abajo")
+        print(query_1)
 
 
     if "id_requisito" in request_data:
         requisite = request_data["id_requisitos"]
+        print("requisite es igual a " + str(requisite))
         query_2 = db.session.query(Requisitos).filter(Requisitos.id == requisite)
+        print("query 2 abajo")
+        print(query_2)
     else:
         query_2 = []
+        print("query 2 abajo")
+        print(query_2)
 
 
     if  "pre_seleccion" in request_data:
@@ -282,7 +293,7 @@ def add_student():
     else:
         selection = []
 
-    nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisito=query_2, pre_seleccion=pre_selection, seleccion=selection)
+    nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=query_2, pre_seleccion=pre_selection, seleccion=selection)
 
     #print(nuevo_estudiante)
     db.session.add(nuevo_estudiante)
@@ -361,7 +372,7 @@ def add_students():
         else:
             selection = []
 
-        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisito=query_2, pre_seleccion=pre_selection, seleccion=selection)
+        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=query_2, pre_seleccion=pre_selection, seleccion=selection)
         print("nuevo estudiante incorporado")
 
         db.session.add(nuevo_estudiante)

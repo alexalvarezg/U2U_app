@@ -4,7 +4,7 @@ from tkinter.tix import Tree
 from unicodedata import name
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
-from sqlalchemy import ForeignKey, Table, Column
+from sqlalchemy import ForeignKey, Table, Column, false
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from . import db
@@ -41,9 +41,9 @@ auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad',
 auxiliar_pre_seleccion = db.Table('aux_pre_seleccion', 
     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-    db.Column('año', db.Integer, nullable=False), 
-    db.Column('cuatri', db.Integer, nullable=False), 
-    db.Column('orden', db.Integer, nullable=False) # esto no puede ser un integer, deberia ser una lista o algo
+    db.Column('año', db.Integer, nullable=True), 
+    db.Column('cuatri', db.Integer, nullable=True), 
+    db.Column('orden', db.Integer, nullable=True) # esto no puede ser un integer, deberia ser una lista o algo
 )
 
 ## (SELECCION) ESTUDIANTE - UNIVERSIDAD DESTINO
@@ -449,7 +449,7 @@ class Estudiante(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisito, "Pre Seleccion":self.pre_seleccion, "Seleccion":self.seleccion}
+        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisitos, "Pre Seleccion":self.pre_seleccion, "Seleccion":self.seleccion}
 
 class EstudianteSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -462,9 +462,9 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         curso = fields.Int(required=True)
         grado = fields.String(required=True)
         titulo = fields.List
-        id_requisito = fields.Integer(required=True)
+        id_requisitos = fields.Integer(required=True)
         pre_seleccion = fields.List
-        seleccion = fields.Integer #que sea el id de la uni
+        seleccion = fields.Integer(required=False) #que sea el id de la uni
 
 
 
