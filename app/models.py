@@ -926,7 +926,7 @@ class AsociacionLA_ASchema(SQLAlchemyAutoSchema):
         cancelado = fields.Boolean(required=True)
         fecha_cancelacion = fields.DateTime(required=False)
         motivo = fields.String(required=False)
-        aceptado = fields.Boolean(required=False)
+        aceptado = fields.Boolean(required=True)
         fecha_aceptacion = fields.DateTime(required=False)
         id_LA = fields.Integer(required=True)
         id_asignatura_OD = fields.Integer(required=True)
