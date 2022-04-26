@@ -342,8 +342,14 @@ def add_subject():
     name = request_data['nombre']
     code = request_data['codigo']
     grade = request_data['curso']
-    degree = request_data['titulaciones']
-    nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=degree)
+    if "titulaciones" in request_data:
+        titulation = request_data["titulaciones"][0]
+        print(titulation)
+        query_1 = db.session.query(Titulacion).filter(Titulacion.codigo == titulation)
+        nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=query_1)
+    else: 
+        nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=[])
+
     db.session.add(nueva_asignatura)
     db.session.commit()
     return make_response(jsonify({"Status" : "Asignatura de origen added"}))
@@ -358,11 +364,13 @@ def add_subjects():
         code = request_data[i]['codigo']
         grade = request_data[i]['curso']
         if "titulaciones" in request_data[i]:
-            degree = request_data[0]['titulaciones']
-        else:
-            degree = []
+            titulation = request_data[i]["titulaciones"][0]
+            print(titulation)
+            query_1 = db.session.query(Titulacion).filter(Titulacion.codigo == titulation)
+            nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=query_1)
+        else: 
+            nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=[])
 
-        nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=degree)
         db.session.add(nueva_asignatura)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Subjects added"}))
