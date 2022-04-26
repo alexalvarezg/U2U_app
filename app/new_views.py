@@ -1,3 +1,4 @@
+from winreg import QueryValue
 from . import app, db
 from .models import *
 from flask import redirect, jsonify, make_response, render_template, request, request_finished
@@ -248,6 +249,7 @@ def students():
     estudiantes = estudiante_schema.dump(get_estudiantes)
     return make_response(jsonify({"Estudiantes": estudiantes}))
 
+
 # B.1) POST: INCORPORAR UN ESTUDIANTE
 @app.route('/postendpoint/estudiante', methods = ['POST'])
 def add_student():
@@ -257,84 +259,32 @@ def add_student():
     surname = request_data['apellidos']
     grade = request_data['curso']
     degree = request_data['grado']
-    #title = request_data["titulo"]
     print("**************************")
+
     if "titulo" in request_data:
-        titles = request_data["titulo"]
-        print("Titles" + str(titles))
-        query_1 = db.session.query(Titulo).filter(Titulo.id == titles)
-        print("query 1 abajo")
-        print(query_1)
+        title = request_data["titulo"][0]
+        query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+        if "id_requisitos" in request_data:
+            print("HAY DE LOS DOS")
+            requisite = request_data["id_requisitos"][0]
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
+        else:
+            print("SOLO HAY TITULO Y NO HAY REQUISITO")
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
     else:
-        query_1 = []
-        print("query 1 abajo")
-        print(query_1)
+        if "id_requisitos" in request_data:
+            print("NO HAY TITULO Y SI HAY REQUISITO")
+            requisite = request_data["id_requisitos"][0]
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
+        else:
+            print("NO HAY NINUGNO") 
+            nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
 
-
-    if "id_requisito" in request_data:
-        requisite = request_data["id_requisitos"]
-        print("requisite es igual a " + str(requisite))
-        query_2 = db.session.query(Requisitos).filter(Requisitos.id == requisite)
-        print("query 2 abajo")
-        print(query_2)
-    else:
-        query_2 = []
-        print("query 2 abajo")
-        print(query_2)
-
-
-    if  "pre_seleccion" in request_data:
-        pre_selection = request_data["pre_seleccion"]
-    else: 
-        pre_selection = []
-    
-    if "seleccion"  in request_data:
-        selection = request_data["seleccion"]
-    else:
-        selection = []
-
-    nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=query_2, pre_seleccion=pre_selection, seleccion=selection)
-
-    #print(nuevo_estudiante)
+    print(nuevo_estudiante)
     db.session.add(nuevo_estudiante)
+    print("Estudiante incorporado")
     db.session.commit()
     return make_response(jsonify({"Status" : "Sudent added"}))
-
-
-
-# (B.1_PRUEBA) POST: INCORPORAR UN ESTUDIANTE FORMULARIO --------------------------------------------------------------------------------------------------------------------------- MODIFICAR
-@app.route('/nuevo_estudiante', methods = ['GET','POST'])
-def add_student_form():
-    if request.method == "POST":
-        # getting input with name = fname in HTML form
-       name = request.form.get("name")
-       # getting input with name = lname in HTML form 
-       surname = request.form.get("surname") 
-       grade = request.form.get("grade") 
-       degree = request.form.get("degree") 
-       
-       try:
-           title = request.form.get("title")
-           query_1 = db.session.query(Titulo).filter(Titulo.id == title)
-           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
-        #    db.session.add(nuevo_estudiante)
-        #    db.session.commit()
-       except:
-           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
-        #    db.session.add(nuevo_estudiante)
-        #    db.session.commit()
-       
-       db.session.add(nuevo_estudiante)
-       db.session.commit()
-       get_estudiantes = Estudiante.query.all()
-       estudiante_schema = EstudianteSchema(many=True)
-       estudiantes = estudiante_schema.dump(get_estudiantes)
-        # Estudiantes should have the object titles
-       output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
-       return render_template('Estudiantes.html',result=output)
-       #return make_response(jsonify({"Estudiantes": estudiantes}))
-
-    return render_template("Admin/Nuevo_Estudiante.html")
 
 
 
@@ -348,33 +298,27 @@ def add_students():
         surname = request_data[i]['apellidos']
         grade = request_data[i]['curso']
         degree = request_data[i]['grado']
+
         if "titulo" in request_data[i]:
-            title = request_data[i]['titulo'][0]
+            title = request_data[i]["titulo"][0]
             query_1 = db.session.query(Titulo).filter(Titulo.id == title)
+            if "id_requisitos" in request_data[0]:
+                print("HAY DE LOS DOS")
+                requisite = request_data[i]["id_requisitos"][0]
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
+            else:
+                print("SOLO HAY TITULO Y NO HAY REQUISITO")
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
         else:
-            query_1 = []
-
-
-        if "id_requisito" in request_data[i]:
-            requisite = request_data[i]["id_requisitos"]
-            query_2 = db.session.query(Requisitos).filter(Requisitos.id == requisite)
-        else:
-            query_2 = []
-
-
-        if  "pre_seleccion" in request_data[i]:
-            pre_selection = request_data[i]["pre_seleccion"]
-        else: 
-            pre_selection = []
+            if "id_requisitos" in request_data[i]:
+                print("NO HAY TITULO Y SI HAY REQUISITO")
+                requisite = request_data[i]["id_requisitos"][0]
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
+            else:
+                print("NO HAY NINUGNO") 
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
         
-        if "seleccion" in request_data[i]:
-            selection = request_data[i]["seleccion"]
-        else:
-            selection = []
-
-        nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=query_2, pre_seleccion=pre_selection, seleccion=selection)
-        print("nuevo estudiante incorporado")
-
+        print(nuevo_estudiante)
         db.session.add(nuevo_estudiante)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Students added"}))

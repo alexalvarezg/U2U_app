@@ -402,7 +402,6 @@ class Estudiante(db.Model):
         Curso: Int (1-6)
         Grado: Str(30) - Enum de grados?
         Titulo: 
-        ¿ACEPTAR?
         ID_requisitos
 
     Funciones
@@ -433,15 +432,14 @@ class Estudiante(db.Model):
       db.session.commit()
       return self
 
-    def __init__(self,nombre,apellidos,curso,grado,titulo,id_requisitos, pre_seleccion, seleccion):
+    def __init__(self,nombre, apellidos, curso, grado, titulo, id_requisitos):
         self.nombre = nombre
         self.apellidos = apellidos
         self.curso = curso
         self.grado = grado
         self.titulo = titulo
         self.id_requisitos = id_requisitos
-        self.pre_seleccion = pre_seleccion
-        self.seleccion = seleccion
+
 
     def __repr__(self):
         '''
@@ -453,7 +451,7 @@ class Estudiante(db.Model):
         '''
         Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
         '''
-        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisitos, "Pre Seleccion":self.pre_seleccion, "Seleccion":self.seleccion}
+        return {"Nombre":self.nombre, "Apellidos":self.apellidos, "Curso":self.curso, "Grado":self.grado, "Titulo":self.titulo, "Requisitos": self.id_requisitos}
 
 class EstudianteSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -463,12 +461,11 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         id = fields.Number(dump_only=True)
         nombre = fields.String(required=True)
         apellidos = fields.String(required=True)
-        curso = fields.Int(required=True)
+        curso = fields.Number(required=True)
         grado = fields.String(required=True)
         titulo = fields.List
-        id_requisitos = fields.Integer(required=True)
-        pre_seleccion = fields.List
-        seleccion = fields.Integer(required=False) #que sea el id de la uni
+        id_requisitos = fields.Number(required=True)
+        
 
 
 
