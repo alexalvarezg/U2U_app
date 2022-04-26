@@ -38,22 +38,22 @@ auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad',
 )
 
 ## (PRE SELECCION) ESTUDIANTE - UNIVERSIDAD DE DESTINO
-auxiliar_pre_seleccion = db.Table('aux_pre_seleccion', 
-    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-    db.Column('año', db.Integer, nullable=True), 
-    db.Column('cuatri', db.Integer, nullable=True), 
-    db.Column('orden', db.Integer, nullable=True) # esto no puede ser un integer, deberia ser una lista o algo
-)
+# auxiliar_pre_seleccion = db.Table('aux_pre_seleccion', 
+#     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+#     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+#     db.Column('año', db.Integer, nullable=True), 
+#     db.Column('cuatri', db.Integer, nullable=True), 
+#     db.Column('orden', db.Integer, nullable=True) # esto no puede ser un integer, deberia ser una lista o algo
+# )
 
-## (SELECCION) ESTUDIANTE - UNIVERSIDAD DESTINO
-auxiliar_seleccion = db.Table('aux_seleccion', 
-    db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-    db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-    db.Column('año', db.Integer, nullable=False), 
-    db.Column('cuatri', db.Integer, nullable=False), 
-    db.Column('vuelta', db.Integer, nullable=False)
-)
+# ## (SELECCION) ESTUDIANTE - UNIVERSIDAD DESTINO
+# auxiliar_seleccion = db.Table('aux_seleccion', 
+#     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
+#     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
+#     db.Column('año', db.Integer, nullable=False), 
+#     db.Column('cuatri', db.Integer, nullable=False), 
+#     db.Column('vuelta', db.Integer, nullable=False)
+# )
 
 ## TITULACIONES - UNIVERSIDAD DE DESTINO
 auxiliar_titulacion_universidad = db.Table('aux_titulacion_universidad', 
@@ -385,6 +385,10 @@ class RequisitosSchema(SQLAlchemyAutoSchema):
         nombre = fields.String(required=True)
        
 
+
+
+
+
 # ------------------------------------------------------------------------ ESTUDIANTES
 class Estudiante(db.Model):
     '''
@@ -417,10 +421,11 @@ class Estudiante(db.Model):
     id_requisitos = db.Column(db.Integer, ForeignKey("Requisitos.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     # asociado a la tabla auxiliar TITULO - ESTUDIANTE 
     titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
-    #asociado a la tabla PRE-SELECCION
-    pre_seleccion = db.relationship("Universidad", secondary=auxiliar_pre_seleccion, backref=backref('Estudiante_preseleccion', lazy='dynamic'), lazy='dynamic') #no se podia usar backref Estudiante en preseleccion y seleccion a la vez
+
+    #asociado a la clase PRE-SELECCION
+    #pre_seleccion = db.relationship("PreSeleccion") 
     #asociado a la tabla SELECCION
-    seleccion = db.relationship("Universidad", secondary=auxiliar_seleccion, backref=backref('Estudiante_seleccion', lazy='dynamic'), lazy='dynamic')
+    #seleccion = db.relationship("Universidad", secondary=auxiliar_seleccion, backref=backref('Estudiante_seleccion', lazy='dynamic'), lazy='dynamic')
 
 
     def create(self):
@@ -466,6 +471,8 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         seleccion = fields.Integer(required=False) #que sea el id de la uni
 
 
+
+
 # ------------------------------------------------------------------------ PRE SELECCION (ASSOCIATION TABLE)
 class PreSeleccion(db.Model):
     '''
@@ -482,14 +489,14 @@ class PreSeleccion(db.Model):
     '''
     __tablename__ = "PreSeleccion"
     id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    estudiante = db.relationship("Estudiante", backref=backref("Preseleccion"))
     id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    universidad = db.relationship("Universidad", backref=backref("Preseleccion"))
 
     id = db.Column(db.Integer, primary_key=True)
     año = db.Column(db.Integer, nullable=False)
     orden = db.Column(db.String(155),nullable=False) #¿?
     cuatri = db.Column(db.Integer, nullable=False)
-
-    estudiante = relationship("Estudiante")
 
 
     def create(self):
@@ -528,6 +535,75 @@ class PreSeleccionSchema(SQLAlchemyAutoSchema):
         año = fields.Integer(required=True)
         cuatri = fields.Integer(required=True)
         orden = fields.List
+
+
+
+# ------------------------------------------------------------------------ SELECCION (ASSOCIATION TABLE)
+class Seleccion(db.Model):
+    '''
+    Clase: Selecccion
+    
+    Atributos:
+        
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "Seleccion"
+    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    estudiante = db.relationship("Estudiante", backref=backref("Seleccion"))
+    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    universidad = db.relationship("Universidad", backref=backref("Seleccion"))
+
+    id = db.Column(db.Integer, primary_key=True)
+    año = db.Column(db.Integer, nullable=False)
+    cuatri = db.Column(db.Integer, nullable=False)
+    vuelta = db.Column(db.Integer, nullable=False)
+
+
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,id_estudiante, id_universidad, año, cuatri, vuelta):
+        self.id_estudiante = id_estudiante
+        self.id_universidad = id_universidad
+        self.año = año
+        self.vuelta = vuelta
+        self.cuatri = cuatri
+        
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.id_estudiante}:{self.id_universidad}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Id Estudiante":self.id_estudiante, "Id Universidad":self.id_universidad, "Año":self.año, "Vuelta":self.vuelta, "Cuatri":self.cuatri}
+
+class SeleccionSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Seleccion
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_estudiante = fields.Integer(required=True)
+        id_universidad = fields.Integer(required=True)
+        año = fields.Integer(required=True)
+        cuatri = fields.Integer(required=True)
+        vuelta = fields.Integer(required=True)
+
+
+
 
 
 
