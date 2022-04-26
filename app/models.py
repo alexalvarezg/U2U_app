@@ -422,7 +422,6 @@ class Estudiante(db.Model):
     #asociado a la tabla SELECCION
     seleccion = db.relationship("Universidad", secondary=auxiliar_seleccion, backref=backref('Estudiante_seleccion', lazy='dynamic'), lazy='dynamic')
 
-    
 
     def create(self):
       db.session.add(self)
@@ -465,6 +464,70 @@ class EstudianteSchema(SQLAlchemyAutoSchema):
         id_requisitos = fields.Integer(required=True)
         pre_seleccion = fields.List
         seleccion = fields.Integer(required=False) #que sea el id de la uni
+
+
+# ------------------------------------------------------------------------ PRE SELECCION (ASSOCIATION TABLE)
+class PreSeleccion(db.Model):
+    '''
+    Clase: Pre Selecccion
+    
+    Atributos:
+        
+
+    Funciones
+        def create(self)
+        def __init__
+        def __repr__
+        def json(self)
+    '''
+    __tablename__ = "PreSeleccion"
+    id_estudiante = db.Column(db.Integer, ForeignKey("Estudiantes.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    id_universidad = db.Column(db.Integer, ForeignKey("Universidad.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+
+    id = db.Column(db.Integer, primary_key=True)
+    año = db.Column(db.Integer, nullable=False)
+    orden = db.Column(db.String(155),nullable=False) #¿?
+    cuatri = db.Column(db.Integer, nullable=False)
+
+    estudiante = relationship("Estudiante")
+
+
+    def create(self):
+      db.session.add(self)
+      db.session.commit()
+      return self
+
+    def __init__(self,id_estudiante, id_universidad, año, cuatri, orden):
+        self.id_estudiante = id_estudiante
+        self.id_universidad = id_universidad
+        self.año = año
+        self.orden = orden
+        self.cuatri = cuatri
+        
+
+    def __repr__(self):
+        '''
+        repr method represents how one onject will look like
+        '''
+        return f"{self.id_estudiante}:{self.id_universidad}"
+
+    def json(self):
+        '''
+        Como las apis funcionan con JSON, creamos un metodo .json para que devuelva un json product object
+        '''
+        return {"Id Estudiante":self.id_estudiante, "Id Universidad":self.id_universidad, "Año":self.año, "Orden":self.orden, "Cuatri":self.cuatri}
+
+class PreSeleccionSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = PreSeleccion
+        include_relationships = True
+        sqla_session = db.session
+        id = fields.Number(dump_only=True)
+        id_estudiante = fields.Integer(required=True)
+        id_universidad = fields.Integer(required=True)
+        año = fields.Integer(required=True)
+        cuatri = fields.Integer(required=True)
+        orden = fields.List
 
 
 
