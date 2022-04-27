@@ -45,6 +45,26 @@ def is_logged_in(f):
 
 
 
+'''
+********************
+ STUDENT VIEWS
+*********************
+'''
+
+@app.route("/cliente")
+def client():
+    
+    return render_template("Estudiante/index.html")
+
+
+'''
+********************
+ ADMIN VIEWS
+*********************
+'''
+
+
+
 
 
 
