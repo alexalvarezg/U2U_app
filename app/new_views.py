@@ -152,17 +152,18 @@ def select_estudiantes_idiomas():
 @app.route("/universidades")
 def select_universidades():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT * FROM universidad;').fetchall()
+        output = db.engine.execute('Select u.id, u.nombre, u.ubicacion, t.codigo, u.plazas1, u.plazas2 from universidad u, titulaciones t, aux_titulacion_universidad a where u.id=a.id_universidad and t.id = a.id_titulacion order by u.id;').fetchall()
         return render_template('Admin/Universidad.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
-        
+
+
 
 @app.route("/universidades_con_idiomas")
 def select_universidades_idiomas():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas, idioma, nivel FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
+        output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas1, plazas2, idioma, nivel, tipo FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
         return render_template('Admin/Universidad_idiomas.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
