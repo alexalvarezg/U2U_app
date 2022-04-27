@@ -143,7 +143,7 @@ def select_estudiantes():
 @app.route("/estudiantes_con_idiomas")
 def select_estudiantes_idiomas():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
+        output = db.engine.execute('SELECT E.id, nombre, apellidos, curso, grado, idioma, nivel, tipo FROM estudiantes E, titulo T, aux_titulo_estudiante A WHERE E.id=A.id_estudiante AND T.id = A.id_titulo ORDER BY E.id;').fetchall()
         return render_template('Admin/Estudiantes_idiomas.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
@@ -557,7 +557,9 @@ def add_students():
             query_1 = db.session.query(Titulo).filter(Titulo.id == title)
             if "id_requisitos" in request_data[0]:
                 print("HAY DE LOS DOS")
+                
                 requisite = request_data[i]["id_requisitos"][0]
+                print(type(requisite))
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
             else:
                 print("SOLO HAY TITULO Y NO HAY REQUISITO")
@@ -591,22 +593,33 @@ def add_student_form():
        try:
            title = request.form.get("title")
            query_1 = db.session.query(Titulo).filter(Titulo.id == title)
-           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1)
-        #    db.session.add(nuevo_estudiante)
-        #    db.session.commit()
+           if request.form.get("requisitos"):
+                print("HAY DE LOS DOS")
+                requisite = request.form.get("requisitos")
+                requisite = int(requisite)
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
+           else:
+                print("NO HAY NINUGNO") 
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
        except:
-           nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[])
+           if request.form.get("requisitos"):
+                requisite = request.form.get("requisitos")
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
+           else:
+                print("NO HAY NINUGNO") 
+                nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
         #    db.session.add(nuevo_estudiante)
         #    db.session.commit()
        
        db.session.add(nuevo_estudiante)
+       print(nuevo_estudiante)
        db.session.commit()
-       get_estudiantes = Estudiante.query.all()
-       estudiante_schema = EstudianteSchema(many=True)
-       estudiantes = estudiante_schema.dump(get_estudiantes)
-        # Estudiantes should have the object titles
+    #    get_estudiantes = Estudiante.query.all()
+    #    estudiante_schema = EstudianteSchema(many=True)
+    #    estudiantes = estudiante_schema.dump(get_estudiantes)
+    #    # Estudiantes should have the object titles
        output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
-       return render_template('Estudiantes.html',result=output)
+       return render_template('Admin/Estudiantes.html',result=output)
        #return make_response(jsonify({"Estudiantes": estudiantes}))
 
     return render_template("Admin/Nuevo_Estudiante.html")
