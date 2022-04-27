@@ -1,22 +1,24 @@
 <!DOCTYPE html>
     {% extends "Admin/index.html" %}
     {%block title%}
-        Equivalencia Asignaturas
+        Asignaturas Destino
     {%endblock%}
 
 
     {% block body%}
     <div class="text-center">
-        <h1>Equivalencias Asignaturas en Origen y Destino</h1>
+        <h1>Asignaturas Destino con enlace</h1>
     </div>
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>ASIGNATURA ORIGEN</th>
-            <th>CODIGO ORIGEN</th>
-            <th>ASIGNATURA DESTINO</th>
-            <th>CODIGO DESTINO</th>
+            <th>ID ASIGNATURA</th>
+            <th>NOMBRE</th>
+            <th>CÓDIGO</th>
+            <th>ID UNIVERSIDAD</th>
+            <th>AÑO</th>
+            <th>CUATRI</th>
+            <th>ENLACE</th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +29,8 @@
                 <td> {{ item[2] }} </td>
                 <td> {{ item[3] }} </td>
                 <td> {{ item[4] }} </td>
+                <td> {{ item[5] }} </td>
+                <td> {{ item[6] }} </td>
             </tr>
         {% endfor %}
         </tbody>

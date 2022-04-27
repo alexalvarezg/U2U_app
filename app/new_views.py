@@ -179,6 +179,15 @@ def select_titulos():
         return redirect(url_for('login'))
 
 
+@app.route("/titulaciones")
+def select_titulations():
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT * FROM titulaciones;').fetchall()
+        return render_template('Admin/Titulaciones.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 @app.route("/asignaturasOrigen")
 def select_asignaturasO():
     if 'logged_in' in session:
@@ -197,10 +206,30 @@ def select_asignaturasD():
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
 
+@app.route("/enlaceAD")
+def select_enlaceAD():
+    if 'logged_in' in session:
+        output = db.engine.execute('select a.id, a.nombre, a.codigo, a.id_universidad, e.año, e.cuatri, e.link FROM asignatura_destino a, enlacead e WHERE a.id=e.id_asignatura_destino order by a.id;').fetchall()
+        return render_template('Admin/EnlaceAsignaturaDestino.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
+@app.route("/requisitos")
+def select_requisites():
+    if 'logged_in' in session:
+        output = db.engine.execute('select * FROM requisitos;').fetchall()
+        return render_template('Admin/Requisitos.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
+
+
 @app.route("/asignaturasDestinoOrigen")
 def select_asignaturasOD():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT OD.id, O.nombre, D.nombre FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
+        output = db.engine.execute('SELECT OD.id, O.nombre, o.codigo, D.nombre, D.codigo FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
         return render_template('Admin/AsignaturasDestinoOrigen.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
@@ -215,6 +244,18 @@ def select_las():
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
+
+@app.route("/Asociacion")
+def select_asociations():
+    if 'logged_in' in session:
+        output = db.engine.execute('select l.id_estudiante, a.id_LA, a.id_asignatura_OD, a.aceptado, a.fecha_aceptacion, a.cancelado, a.fecha_cancelacion, a.motivo from la l, asociacionla_a a where l.id=a.id_la order by l.id;').fetchall()
+        return render_template('Admin/Asociacion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
+
+
 
 
 @app.route("/seleccion")
