@@ -149,6 +149,7 @@ def select_estudiantes_idiomas():
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
 
+
 @app.route("/universidades")
 def select_universidades():
     if 'logged_in' in session:
@@ -157,7 +158,6 @@ def select_universidades():
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
-
 
 
 @app.route("/universidades_con_idiomas")
@@ -191,7 +191,7 @@ def select_asignaturasO():
 @app.route("/asignaturasDestino")
 def select_asignaturasD():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT * FROM asignatura_destino;').fetchall()
+        output = db.engine.execute('SELECT a.id, a.nombre, a.codigo, u.nombre FROM asignatura_destino a, universidad u WHERE a.id_universidad=u.id;').fetchall()
         return render_template('Admin/AsignaturasDestino.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
