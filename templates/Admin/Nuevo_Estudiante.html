@@ -105,6 +105,24 @@
         </div>
 
         <div class="form-group">
+            <pre>Tenga en cuenta que, para poder inscribirse correctamente debe cumplir una serie de requisitos indicados a continuación</pre> 
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="pwd">Requisitos:</label>
+            <div class="col-sm-5">
+            <select class="form-control" name="requisitos" id="requisitos" required >
+                <option value="-" class="option">-</option>
+                <option value="1" class="option">Superados más de X ECTS y dispongo de idioma</option>
+                <option value="2" class="option">Superados más de X ECTS pero no dispongo de idioma</option>
+                <option value="3" class="option">Superados más de X ECTS y dispongo de idioma pero con asignaturas pendientes</option>
+                <option value="4" class="option">Superados más de X ECTS y es mi segunda solicitud</option>
+            </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">Guardar</button>
         </div>
