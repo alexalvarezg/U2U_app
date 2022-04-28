@@ -95,17 +95,24 @@ def index_prueba():
         no_title = (output[0]-output[1]) #PROVISIONAL
         output.append(no_title)
         
-        # selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
-        # output.append(selecciones23[0])
-        
+        #selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
+        #output.append(selecciones23[0])
+        output.append("selecciones totales")
+
         # selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
         # output.append(selecciones_primercuatri[0])
-        
+        output.append("selecciones primer cuatri")
+
         # selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
         # output.append(selecciones_segundocuatri[0])
-        
+        output.append("selecciones segundo cuatri")
+
         # selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
         # output.append(selecciones_anual[0])
+        output.append("Movilidades anuales")
+        
+        totalLAS = db.engine.execute('select count(id) from la;').fetchone()
+        output.append(totalLAS[0])
 
         LAS_aceptados = db.engine.execute('select count(id) from la where aceptado_Coord=1 AND aceptado_RRII=1;').fetchone()
         output.append(LAS_aceptados[0])
