@@ -26,6 +26,7 @@ def login():
         if data:
             session['logged_in']=True
             session['username']=data["nombre"]
+            session['user_id'] = 1 #SELECT ID FROM USERNAME!
             flash('Login Successfully','success')
             return redirect('/main')
         else:
@@ -72,7 +73,7 @@ def logout():
 
 @app.route("/cliente")
 def client():
-    
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/index.html")
 
 
@@ -170,7 +171,11 @@ def select_universidades():
 @app.route("/universidades_con_idiomas")
 def select_universidades_idiomas():
     if 'logged_in' in session:
+
+        # CONCAT - SELECT IDIOMA FROM TITULO_IDIOMA 
+
         output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas1, plazas2, idioma, nivel, tipo FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
+
         return render_template('Admin/Universidad_idiomas.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
