@@ -48,10 +48,10 @@
         <ul class="nav navbar-nav">
           <li ><a href="{{ url_for('forms') }}">Inscripcion <span class="sr-only">(current)</span></a></li>
           <li class="active"><a href="{{ url_for('student_title_upload') }}">Certificado <span class="sr-only">(current)</span></a></li>
-          <li ><a href="#">Oferta <span class="sr-only">(current)</span></a></li>
+          <li ><a href="{{ url_for('oferta') }}">Oferta <span class="sr-only">(current)</span></a></li>
           <li ><a href="{{ url_for('preselection') }}">Pre seleccion <span class="sr-only">(current)</span></a></li>
           <li ><a href="{{ url_for('plaza_uni') }}">Plaza <span class="sr-only">(current)</span></a></li>
-          <li ><a href="#">Convalidaciones <span class="sr-only">(current)</span></a></li>
+          <li ><a href="{{ url_for('convalidaciones') }}">Convalidaciones <span class="sr-only">(current)</span></a></li>
           <li ><a href="{{ url_for('students_La') }}">LA <span class="sr-only">(current)</span></a></li> 
         </ul>
         <form class="navbar-form navbar-right">

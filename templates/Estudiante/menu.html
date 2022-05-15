@@ -18,39 +18,47 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/tiny-slider.css">
     <!-- Tailwind css -->
     <link rel="stylesheet" type="text/css" href="../../static/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
   </head>
   <body>
 
     <!-- Header Area wrapper Starts -->
-    <header id="header-wrap" class="relative">
-      <!-- Navbar Start -->      
-      <div class="navigation fixed top-0 left-0 w-full z-30 duration-300">
-          <div class="container">
-              <nav class="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
-                  <a class="navbar-brand" href="{{ url_for('student_menu') }}">
-                    <img src="../../static/img/logo.png" alt="Logo">
-                  </a>
-                  <button class="navbar-toggler focus:outline-none block lg:hidden" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="toggler-icon"></span>
-                      <span class="toggler-icon"></span>
-                      <span class="toggler-icon"></span>
-                  </button>
-
-                  
-                  <div class="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                    <a class="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white" href="/logout">Logout</a>
-                  </div>
-                  
-              </nav>
-          </div>
-      </div>
-      <!-- Navbar End -->
-    </header>
+    <header id="header-wrap" class="relative"></header>
     <!-- Header Area wrapper End -->
 
+    <!-- Navbar Start -->      
+    <div class="container">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('student_menu') }}">
+            <img src="../../static/img/logo_index.png" alt="Logo">
+          </a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <form class="navbar-form navbar-right">
+            <a  class="btn btn-default" href="/logout">Cerrar sesión</a>
+          </form>
+          
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  <!-- Navbar End -->
+  </div>
 
-    <div >
-      <div >
+
+
         <div class="text-center">
           
           <!-- Feature Section Start -->
@@ -94,7 +102,7 @@
                       <div class="w-full sm:w-1/2 lg:w-1/3">
                         <div class="m-3">
                           <div class="icon text-4xl">
-                            <a href="#">
+                            <a href="{{ url_for('oferta') }}">
                               <i class="lni lni-apartment"></i> 
                             </a>
                           </div>
@@ -140,7 +148,7 @@
                       <div class="w-full sm:w-1/2 lg:w-1/4">
                         <div class="m-3">
                           <div class="icon text-4xl">
-                            <a href="{{ url_for('students_La') }}">
+                            <a href="{{ url_for('convalidaciones') }}">
                               <i class="lni lni-book"></i>
                             </a>
                           </div>
@@ -177,12 +185,8 @@
             </div>
           </div>
           <!-- Feature Section End -->
-    
-
         </div>
-      </div>
-    </div>
-    
+
     
 
     
@@ -216,5 +220,7 @@
     <script src="../../static/js/tiny-slider.js"></script>
     <script src="../../static/js/contact-form.js"></script>      
     <script src="../../static/js/main.js"></script>      
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -153,8 +153,31 @@ def students_La():
             flash('Su usuario no dispone de permiso para acceder a este url')
             return redirect(url_for('reg'))
 
+@app.route("/estudiante/menu/oferta_universidades")
+def oferta():
+    if 'logged_in' in session and session['username'] != "admin":
+        output = db.engine.execute('SELECT U.id, nombre, ubicacion, plazas1, plazas2, idioma, nivel, tipo FROM universidad U, titulo T, aux_titulo_universidad A WHERE U.id=A.id_universidad AND T.id = A.id_titulo ORDER BY U.id;').fetchall()
+        return render_template("Estudiante/oferta_universidades.html", result=output)
+    else:
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
     
-
+@app.route("/estudiante/menu/convalidaciones")
+def convalidaciones():
+    if 'logged_in' in session and session['username'] != "admin":
+        output = db.engine.execute('SELECT OD.id, O.nombre, o.codigo, D.nombre, D.codigo FROM asignatura_origen O, asignatura_destino D, asignatura_destino_asignatura_origen OD WHERE O.id = OD.id_asignatura_origen AND D.id = OD.id_asignatura_destino;').fetchall()
+        return render_template("Estudiante/convalidaciones.html", result=output)
+    else:
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
 
 '''
 ************************************************************
