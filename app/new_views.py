@@ -100,6 +100,11 @@ def preselection():
     # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/preseleccion.html")
 
+@app.route("/estudiante/menu/certificado_idiomas")
+def student_title_upload():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("Estudiante/upload_titulo.html")
+
 '''
 ********************
  ADMIN VIEWS
