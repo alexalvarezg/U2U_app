@@ -9,12 +9,29 @@ from sqlalchemy import text
 from flask import Flask,render_template,request,redirect,session,flash,url_for
 from functools import wraps
 
-
+'''
+************************************************************
+GENERIC VIEWS
+************************************************************
+'''
 
 @app.route("/")
 def welcome():
-   # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("index.html")
+
+
+@app.route('/reg',methods=['POST','GET'])
+def reg():
+    status=False
+    if request.method=='POST':
+        name=request.form["uname"]
+        email=request.form["email"]
+        pwd=request.form["upass"]
+        db.engine.execute("insert into users(nombre,password,email) values(%s,%s,%s)",(name,pwd,email))
+        db.session.commit()
+        flash('Registro correcto. Inicie sesión a continuación','success') 
+        return redirect(url_for('login'))
+    return render_template("register.html",status=status)
 
 
 @app.route('/login',methods=['POST','GET'])
@@ -27,7 +44,7 @@ def login():
         if data:
             session['logged_in']=True
             session['username']=data["nombre"]
-            session['user_id'] = 1 #SELECT ID FROM USERNAME!
+            #session['user_id'] = 1 #SELECT ID FROM USERNAME!
             flash('Login Successfully','success')
             if session['username'] == "admin":
                 return redirect('/main')
@@ -48,19 +65,6 @@ def is_logged_in(f):
 	return wrap
 
 
-@app.route('/reg',methods=['POST','GET'])
-def reg():
-    status=False
-    if request.method=='POST':
-        name=request.form["uname"]
-        email=request.form["email"]
-        pwd=request.form["upass"]
-        db.engine.execute("insert into users(nombre,password,email) values(%s,%s,%s)",(name,pwd,email))
-        db.session.commit()
-        flash('Registro correcto. Inicie sesión a continuación','success') 
-        return redirect(url_for('login'))
-    return render_template("register.html",status=status)
-
 #logout
 @app.route("/logout")
 def logout():
@@ -70,48 +74,92 @@ def logout():
 
 
 '''
-********************
+************************************************************
  STUDENT VIEWS
-*********************
+************************************************************
 '''
-# ------------ ESTA ES LA GENERICA PARA TODOS
-
 
 @app.route("/estudiante/menu")
 def student_menu():
-    return render_template("Estudiante/menu.html")
+    if 'logged_in' in session and session['username'] != "admin":
+        return render_template("Estudiante/menu.html")
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
 
 @app.route("/estudiante/menu/inscripcion")
 def forms():
-    return render_template("Estudiante/inscripcion_proceso.html")
-
-
+    if 'logged_in' in session and session['username'] != "admin":
+        return render_template("Estudiante/inscripcion_proceso.html")
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+    
 @app.route("/estudiante/menu/certificado_idiomas")
 def student_title_upload():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    return render_template("Estudiante/upload_titulo.html")
-
+    if 'logged_in' in session and session['username'] != "admin":
+        return render_template("Estudiante/upload_titulo.html")
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+    
 @app.route("/estudiante/menu/preseleccion")
 def preselection():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    return render_template("Estudiante/preseleccion.html")
-
+    if 'logged_in' in session and session['username'] != "admin":
+        return render_template("Estudiante/preseleccion.html")
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+    
 @app.route("/estudiante/menu/consulta_plaza")
 def plaza_uni():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    #output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
-    return render_template("Estudiante/plaza_asignada.html")
-
+    if 'logged_in' in session and session['username'] != "admin":
+        #output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
+        return render_template("Estudiante/plaza_asignada.html")
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+    
 @app.route("/estudiante/menu/LA")
 def students_La():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
-    return render_template('Estudiante/LA.html',result=output)
+    if 'logged_in' in session and session['username'] != "admin":
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
+        return render_template('Estudiante/LA.html',result=output)
+    else:
+        if session['username'] == "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
+
+    
+
 
 '''
-********************
+************************************************************
  ADMIN VIEWS
-*********************
+************************************************************
 '''
 
 @app.route("/main")
