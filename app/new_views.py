@@ -13,7 +13,8 @@ from functools import wraps
 
 @app.route("/")
 def welcome():
-   return "This is a flask app"
+   # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("index.html")
 
 
 @app.route('/login',methods=['POST','GET'])
@@ -28,7 +29,10 @@ def login():
             session['username']=data["nombre"]
             session['user_id'] = 1 #SELECT ID FROM USERNAME!
             flash('Login Successfully','success')
-            return redirect('/main')
+            if session['username'] == "admin":
+                return redirect('/main')
+            else:
+                return redirect('/estudiante/menu')
         else:
             flash('Email o contraseña incorrectos. Por favor, pruebe de nuevo','danger')
     return render_template("login.html")
@@ -72,17 +76,9 @@ def logout():
 '''
 # ------------ ESTA ES LA GENERICA PARA TODOS
 
-@app.route("/cliente") 
-def client():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    return render_template("Estudiante/index.html")
-
-
-
 
 @app.route("/estudiante/menu")
 def student_menu():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/menu.html")
 
 @app.route("/estudiante/menu/inscripcion")
