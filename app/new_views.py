@@ -116,7 +116,7 @@ def students_La():
 
 @app.route("/main")
 def index_prueba():
-    if 'logged_in' in session:
+    if 'logged_in' in session and session['username'] == "admin":
         output = []
         students = db.engine.execute('select count(id) from estudiantes;').fetchone()
         output.append(students[0])
@@ -154,10 +154,14 @@ def index_prueba():
         
         #print(output)
         return render_template("Admin/index.html", result=output)
-			
+
     else:
-        flash('Primero debe inciar sesión o registrarse','danger')
-        return redirect(url_for('login'))
+        if session['username'] != "admin":
+            flash('Su usuario no dispone de permiso para acceder a este url')
+            return redirect(url_for('reg'))
+        if 'logged_in' not in session: 
+            flash('Primero debe inciar sesión o registrarse','danger')
+            return redirect(url_for('login'))
         
     
 
