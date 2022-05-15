@@ -85,25 +85,21 @@ def student_menu():
     # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/menu.html")
 
-@app.route("/estudiante/new_menu")
-def student_new_menu():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    return render_template("Estudiante/new_menu.html")
-
 @app.route("/estudiante/menu/inscripcion")
 def forms():
     return render_template("Estudiante/inscripcion_proceso.html")
 
+
+@app.route("/estudiante/menu/certificado_idiomas")
+def student_title_upload():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("Estudiante/upload_titulo.html")
 
 @app.route("/estudiante/menu/preseleccion")
 def preselection():
     # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/preseleccion.html")
 
-@app.route("/estudiante/menu/certificado_idiomas")
-def student_title_upload():
-    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
-    return render_template("Estudiante/upload_titulo.html")
 
 '''
 ********************
