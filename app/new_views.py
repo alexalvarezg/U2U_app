@@ -714,8 +714,12 @@ def add_student_form():
     #    estudiantes = estudiante_schema.dump(get_estudiantes)
     #    # Estudiantes should have the object titles
        output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
-       return render_template('Admin/Estudiantes.html',result=output)
-       #return make_response(jsonify({"Estudiantes": estudiantes}))
+       if 'logged_in' in session and session['username'] == "admin":
+           flash('Inscripción realizada correctamente.','success') 
+           return render_template('Admin/Estudiantes.html',result=output)
+       if session['username'] != "admin":
+           flash('Inscripción realizada correctamente.','success')
+           return redirect(url_for('forms'))
 
     return render_template("Admin/Nuevo_Estudiante.html")
 

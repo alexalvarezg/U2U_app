@@ -18,6 +18,9 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/tiny-slider.css">
     <!-- Tailwind css -->
     <link rel="stylesheet" type="text/css" href="../../static/css/tailwind.css">
+    
+    
+    
   </head>
   <body>
 
@@ -25,9 +28,9 @@
     <header id="header-wrap" class="relative">
       <!-- Navbar Start -->      
       <div class="navigation fixed top-0 left-0 w-full z-30 duration-300">
-          <div class="container" href="{{ url_for('student_menu') }}">
+          <div class="container">
               <nav class="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
-                  <a class="navbar-brand">
+                  <a class="navbar-brand" href="{{ url_for('student_menu') }}">
                     <img src="../../static/img/logo.png" alt="Logo">
                   </a>
                   <button class="navbar-toggler focus:outline-none block lg:hidden" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +50,7 @@
       <!-- Navbar End -->
     </header>
     <!-- Header Area wrapper End -->
+    
 
 
     
@@ -58,11 +62,26 @@
           <h2 class="mb-12 text-4xl text-gray-700 font-bold tracking-wide wow fadeInDown" data-wow-delay="0.3s">Inscripción en el proceso de Movilidad</h2>
         </div>
 
+        <div class="text-center" role="alert">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <h3>{{ message }}</h3>
+                <br>
+                <br>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          
+          {% block body %}
+      
+          {% endblock %}
+        </div>
         <div class="flex flex-wrap contact-form-area wow fadeInUp" data-wow-delay="0.4s">  
           <div class="w-full md:w-1">        
             <div class="contact">
               <h2 class="uppercase font-bold text-xl text-gray-700 mb-5 ml-3">Información del Estudiante</h2>
-              <form id="StudentInfo" action="assets/contact.php">
+              <form id="StudentInfo" action="{{ url_for('add_student_form')}}" method="post">
                 <div class="flex flex-wrap">
                   <!-- FILA 1 -->
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
@@ -73,8 +92,8 @@
                   </div>
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
                     <div class="mx-3">
-                      <p> Apellido </p>
-                      <input type="text" class="form-input rounded-full" id="surname" name="name" placeholder="-" required data-error="Por favor introduzca sus apellidos">
+                      <p> Apellidos </p>
+                      <input type="text" class="form-input rounded-full" id="surname" name="surname" placeholder="-" required data-error="Por favor introduzca sus apellidos">
                     </div>                                 
                   </div>
 
@@ -82,7 +101,7 @@
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
                     <div class="mx-3">
                       <p> Curso </p>
-                      <select name="curso" id="curso" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                      <select name="grade" id="grade" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
                         <option value="-" class="option"> - </option>
                         <option value="3" class="option">3º</option>
                         <option value="4" class="option">4º</option>
@@ -95,15 +114,22 @@
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
                     <div class="mx-3">
                       <p> Grado </p>
-                      <select name="curso" id="grado" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                      <select name="degree" id="degree" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
                         <option value="-" class="option"> - </option>
-                        <option value="GIT" class="option">GIT</option>
-                        <option value="GAD" class="option">GAD</option>
-                        <option value="GAM" class="option">GAM</option>
-                        <option value="GMK" class="option">GMK</option>
-                        <option value="GID" class="option">GID</option>
-                        <option value="GNF" class="option">GNF</option>
-                        <option value="GEL" class="option">GEL</option>
+                        <option value="ARQ" class="option">Arquitectura</option>
+                        <option value="ARD" class="option">Arquitectura + Master Propio en Diseño de Interiores</option>
+                        <option value="ATD" class="option">Arte Digital</option>
+                        <option value="ATI" class="option">Arte Digital + Ingeniería en Tecnologías para la Animación y Videojuegos</option>
+                        <option value="IGB" class="option">Ingeniería Biomédica</option>
+                        <option value="IGB" class="option">Ingeniería Biomédica + Ingeniería en Sistemas de Telecomunicación</option>
+                        <option value="IGS" class="option">Ingeniería en Sistemas de la Información</option>
+                        <option value="IGA" class="option">Ingeniería en Sistemas de la Información + Administración y Dirección de Empresas</option>
+                        <option value="IGN" class="option">Ingeniería de Sistemas en la Nube</option>
+                        <option value="IST" class="option">Ingeniería en Sistemas de Telecomunicacion</option>
+                        <option value="ISS" class="option">Ingeniería en Sistemas de Telecomunicacion + Ingeniería de Sistemas de Información</option>
+                        <option value="ITA" class="option">Ingeniería en Tecnologías para Animación y videojuegos</option>
+                        <option value="ITM" class="option">	Ingeniería Matematica</option>
+
                       </select>
                     </div>                                 
                   </div>
@@ -113,28 +139,101 @@
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
                     <div class="mx-3">
                       <p> Idioma </p>
-                      <select name="curso" id="idioma" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
-                        <option value="-" class="option">-</option>
-                        <option value="Ingles" class="option">Inglés</option>
-                        <option value="Frances" class="option">Francés</option>
-                        <option value="Aleman" class="option">Alemán</option>
-                        <option value="Chino" class="option">Chino</option>
-                        <option value="Italiano" class="option">Italiano</option>
+                      <select name="title" id="title" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                        <option value="1" class="option">-</option>
+                <option value="2" class="option">Inglés Cambridge First (B2)</option>
+                <option value="3" class="option">Inglés Cambridge Advanced (C1)</option>
+                <option value="4" class="option">Inglés Cambridge Proficency (C2)</option>
+
+                <option value="5" class="option">Inglés Cambridge ESOL IELTS (B2) / (5.5 - 6.5)</option>
+                <option value="6" class="option">Inglés Cambridge ESOL IELTS (C1)) / (7 - 8)</option>
+                <option value="7" class="option">Inglés Cambridge ESOL IELTS (C2) / (8.5 - 9)</option>
+
+                <option value="8" class="option">Inglés Cambridge Linguaskill (B2)</option>
+                <option value="9" class="option">Inglés Cambridge Linguaskill (C1)</option>
+
+                <option value="10" class="option">Inglés TOEFL-iBT (B2) / (72 - 94)</option>
+                <option value="11" class="option">Inglés TOEFL-iBT (C1) / (95 - 120)</option>
+
+                <option value="12" class="option">Inglés TOEFL ITP (B2) / (543 - 626)</option>
+                <option value="13" class="option">Inglés TOEFL ITP (C1) / (627 - 677)</option>
+
+                <option value="14" class="option">Inglés TOEIC (B2)</option>
+                <option value="15" class="option">Inglés TOEIC (C1)</option>
+
+                <option value="16" class="option">Inglés Escuela Oficial de Idiomas (L.0.8/2013) (B2)</option>
+                <option value="17" class="option">Inglés Escuela Oficial de Idiomas (L.0.8/2013) (C1)</option>
+
+                <option value="18" class="option">Inglés Escuela Oficial de Idiomas (RD 1041/2017) (B2)</option>
+                <option value="19" class="option">Inglés Escuela Oficial de Idiomas (RD 1041/2017) (C1)</option>
+                <option value="20" class="option">Inglés Escuela Oficial de Idiomas (RD 1041/2017) (C2)</option>
+
+            
+                <option value="21" class="option">Inglés ACLES (B2 CERTACLES)</option>
+                <option value="22" class="option">Inglés ACLES (C1 CERTACLES)</option>
+                <option value="23" class="option">Inglés ACLES (C2 CERTACLES)</option>
+
+                <option value="24" class="option">Inglés APTIS (B2)</option>
+                <option value="25" class="option">Inglés APTIS (C1)</option>
+
+                <option value="26" class="option">Inglés Secondary Education (B2)</option>
+
+                <option value="27" class="option">Inglés International Baccalaureate (C1)</option>
+
+                <option value="28" class="option">Inglés Filología Inglesa</option>
+
+                <option value="29" class="option">Inglés Oxford Test of English (B2)</option>
+
+                <option value="30" class="option">Inglés London Test of English (LTE) (B2) / (Level 3)</option>
+                <option value="31" class="option">Inglés London Test of English (LTE) (C1) / (Level 4)</option>
+                <option value="32" class="option">Inglés London Test of English (LTE) (C2) / (Level 5)</option>
+
+                <option value="33" class="option">Inglés Pearson Test English (PTE) (B2) / (Level 3 / 59 - 75)</option>
+                <option value="34" class="option">Inglés Pearson Test English (PTE) (C1) / (Level 4 / 76 - 84)</option>
+                <option value="35" class="option">Inglés Pearson Test English (PTE) (C2) / (Level 5 / 85 or more)</option>
+
+                <option value="36" class="option">Inglés Anglia Ascentis ESOL Examinations (B2) / (General:Advanced / Business:Advanced)</option>
+                <option value="37" class="option">Inglés Anglia Ascentis ESOL Examinations (C1) / (General:Proficency/AcCEPT)</option>
+                <option value="38" class="option">Inglés Anglia Ascentis ESOL Examinations (C2) / (General:Masters / Busines:Proficency)</option>
+
+
+                <option value="39" class="option">Francés DELF (B2)</option>
+                <option value="40" class="option">Francés DALF (C1)</option>
+                <option value="41" class="option">Francés Estudios de Educación Secundaria (B2)</option>
+                <option value="42" class="option">Francés Estudios de Educación de Bachillerato (C1)</option>
+                <option value="43" class="option">Alemán Goethe-Zertifikat (B2)</option>
+                <option value="44" class="option">Alemán Test-DaF-Niveaustufe 3 (B2)</option>
+
+                <option value="45" class="option">Alemán Estudios de Educación Secundaria (B2)</option>
+                <option value="46" class="option">Alemán (ZDfB) Goethe-Zertifikat (C1)</option>
+                <option value="47" class="option">Alemán Test-DaF-Niveaustufe 4 (C1)</option>
+                <option value="48" class="option">Alemán Estudios de Bachillerato (C1)</option>
+
+                <option value="49" class="option">Italiano Título/Diploma Academia (B2)</option>
+                <option value="50" class="option">Italiano Título/Diploma Academia (C1)</option>
+                <option value="51" class="option">Italiano Título/Diploma Academia (C2)</option>
+
+                <option value="52" class="option">Portugués Título/Diploma Academia (B2)</option>
+                <option value="53" class="option">Portugués Título/Diploma Academia (C1)</option>
+                <option value="54" class="option">Portugués Título/Diploma Academia (C2)</option>
                       </select>
                     </div>                                 
+                  </div>
+                  
+                  <div class="text-center">
+                    <pre>Tenga en cuenta que, para poder inscribirse correctamente debe cumplir una serie de requisitos indicados a continuación</pre> 
+                    <br>
                   </div>
 
                   <div class="w-full sm:w-1/2 md:w-full lg:w-1/2">
                     <div class="mx-3">
-                      <p> Nivel </p>
-                      <select name="curso" id="nivel" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
+                      <p> Requisitos </p>
+                      <select name="requisitos" id="requisitos" class="form-input rounded-full" placeholder="hola" required data-error="Por favor introduzca sus apellidos">
                         <option value="-" class="option">-</option>
-                        <option value="A1" class="option">A1</option>
-                        <option value="A2" class="option">A2</option>
-                        <option value="B1" class="option">B1</option>
-                        <option value="B2" class="option">B2</option>
-                        <option value="C1" class="option">C1</option>
-                        <option value="C2" class="option">C2</option>
+                <option value="1" class="option">Superados más de X ECTS y dispongo de idioma</option>
+                <option value="2" class="option">Superados más de X ECTS pero no dispongo de idioma</option>
+                <option value="3" class="option">Superados más de X ECTS y dispongo de idioma pero con asignaturas pendientes</option>
+                <option value="4" class="option">Superados más de X ECTS y es mi segunda solicitud</option>
                       </select>
                     </div>                                 
                   </div>
@@ -187,6 +286,7 @@
     <!-- End Preloader -->
     
     <!-- All js Here -->
+    
     <script src="../../static/js/wow.js"></script>
     <script src="../../static/js/tiny-slider.js"></script>
     <script src="../../static/js/contact-form.js"></script>      
