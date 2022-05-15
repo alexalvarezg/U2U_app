@@ -11,8 +11,6 @@ The URI connection sintaxis looks like:
 
 app = Flask(__name__, template_folder='../templates/', static_folder='../static')
 
-#esto no me convence del todo
-
 path = "gitignore/config.json"
 with open(path, 'r') as f:
     conf = json.load(f)

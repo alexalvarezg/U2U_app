@@ -70,12 +70,35 @@ def logout():
  STUDENT VIEWS
 *********************
 '''
+# ------------ ESTA ES LA GENERICA PARA TODOS
 
-@app.route("/cliente")
+@app.route("/cliente") 
 def client():
     # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/index.html")
 
+
+
+
+@app.route("/estudiante/menu")
+def student_menu():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("Estudiante/menu.html")
+
+@app.route("/estudiante/new_menu")
+def student_new_menu():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("Estudiante/new_menu.html")
+
+@app.route("/estudiante/menu/inscripcion")
+def forms():
+    return render_template("Estudiante/inscripcion_proceso.html")
+
+
+@app.route("/estudiante/menu/preseleccion")
+def preselection():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    return render_template("Estudiante/preseleccion.html")
 
 '''
 ********************
@@ -98,19 +121,19 @@ def index_prueba():
         
         #selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
         #output.append(selecciones23[0])
-        output.append("selecciones totales")
+        output.append("0")
 
         # selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
         # output.append(selecciones_primercuatri[0])
-        output.append("selecciones primer cuatri")
+        output.append("0")
 
         # selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
         # output.append(selecciones_segundocuatri[0])
-        output.append("selecciones segundo cuatri")
+        output.append("0")
 
         # selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
         # output.append(selecciones_anual[0])
-        output.append("Movilidades anuales")
+        output.append("0")
         
         totalLAS = db.engine.execute('select count(id) from la;').fetchone()
         output.append(totalLAS[0])
