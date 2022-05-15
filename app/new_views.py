@@ -100,6 +100,17 @@ def preselection():
     # REDIRECT A localhost:5500 http://127.0.0.1:5500/
     return render_template("Estudiante/preseleccion.html")
 
+@app.route("/estudiante/menu/consulta_plaza")
+def plaza_uni():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    #output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
+    return render_template("Estudiante/plaza_asignada.html")
+
+@app.route("/estudiante/menu/LA")
+def students_La():
+    # REDIRECT A localhost:5500 http://127.0.0.1:5500/
+    output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante;').fetchall()
+    return render_template('Estudiante/LA.html',result=output)
 
 '''
 ********************
