@@ -131,7 +131,8 @@ ENTIDADES DIAGRAMA ENTIDAD RELACION
 class Titulo(db.Model):
     '''
     Clase: Titulo de idioma
-
+    Esta entidad recoge los idiomas y niveles que pueden ser presentados por un alumno y exigidos por la universidad de destino. 
+    
     Atributos:
         ID: Int, clave primaria
         idioma: Str, diferentes idiomas existentes como ingles, aleman etc. cada valor lleva asociado un idioma concreto
@@ -197,6 +198,7 @@ class Titulo_Schema(SQLAlchemyAutoSchema):
 class Titulacion(db.Model):
     '''
     Clase: Titulacion
+    Esta entidad hace referencia a la oferta académica que se puede encontrar en la Escuela Politécnica Superior del CEU asociada a los grados de ingeniería y arquitectura. 
 
     Atributos:
         ID: Int, clave primaria
@@ -250,6 +252,7 @@ class TitulacionSchema(SQLAlchemyAutoSchema):
 class Universidad(db.Model):
     '''
     Clase: Universidad
+    Esta entidad representa, como su nombre indica, a la universidad de destino a la cual se marcharía el alumno en el caso de haber completado el proceso de movilidad de manera satisfactoria. 
 
     Atributos:
         ID: Int, clave primaria
@@ -592,6 +595,7 @@ class SeleccionSchema(SQLAlchemyAutoSchema):
 class Asignatura_Origen(db.Model):
     '''
     Clase: Asignatura Origen
+    Esta entidad hace referencia a la asignatura que el alumno cursaría en la universidad CEU San Pablo si se quedase, y la cual estaría convalidando en el LA por otra(s) asignatura(s) en la universidad de destino. 
 
     Atributos:
         ID: Int, clave primaria
@@ -654,6 +658,7 @@ class Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
 class Asignatura_Destino(db.Model):
     '''
     Clase: Asignatura Destino
+    Esta entidad hace referencia a la asignatura que el alumno cursará en la universidad de destino en sustitución de la asignatura que cursaría en la universidad CEU San Pablo si se quedase. 
 
     Atributos:
         ID: Int, clave primaria
@@ -717,6 +722,7 @@ class Asignatura_DestinoSchema(SQLAlchemyAutoSchema):
 class Asignatura_Destino_Asignatura_Origen(db.Model):
     '''
     Clase: Asignatura_Destino_Asignatura_Origen
+    Esta entidad surge como consecuencia de una relación ternaria entre Asignatura de destino y asignatura de origen. 
 
     Atributos:
         ID: Int, clave primaria
@@ -775,6 +781,7 @@ class Asignatura_Destino_Asignatura_OrigenSchema(SQLAlchemyAutoSchema):
 class LA(db.Model):
     '''
     Clase: Learning Agreement
+    Esta entidad representa el acuerdo que se establece entre el alumno, la universidad de origen y la universidad de destino para cuadrar las asignaturas que el alumno cursará en la universidad de destino durante su proceso de movilidad y que quede constancia de ello y puedan ser convalidadas una vez regrese a su universidad de origen (y cumpla el resto de los requisitos establecidos, como la firma de la carta Erasmus etc.) 
 
     Atributos:
         ID: Int, clave primaria
@@ -921,6 +928,7 @@ class AsociacionLA_ASchema(SQLAlchemyAutoSchema):
 class EnlaceAD(db.Model):
     '''
     Clase: EnlaceAD
+    Esta entidad refleja un histórico de los posibles cambios que pueda experimentar una asignatura en la universidad de destino.
 
     Atributos:
         ID: Int, clave primaria
