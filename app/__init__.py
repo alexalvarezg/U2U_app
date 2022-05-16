@@ -28,13 +28,5 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-
-
-
-#views for models antiguo
-#from app import views
-
 from app import new_views
 
-
-#from .views import *
