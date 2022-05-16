@@ -1,12 +1,11 @@
-from winreg import QueryValue
+
 from . import app, db
 from .models import *
-from flask import redirect, jsonify, make_response, render_template, request, request_finished
+from flask import redirect, jsonify, make_response, render_template, request
 from flask import render_template
-from sqlalchemy import text
 
 #para el login y registration
-from flask import Flask,render_template,request,redirect,session,flash,url_for
+from flask import render_template,request,redirect,session,flash,url_for
 from functools import wraps
 
 '''
@@ -74,9 +73,9 @@ def logout():
 
 
 '''
-************************************************************
- STUDENT VIEWS
-************************************************************
+************************************************************************************************************************
+                                                                                                          STUDENT VIEWS
+************************************************************************************************************************
 '''
 
 @app.route("/estudiante/menu")
@@ -180,9 +179,9 @@ def convalidaciones():
             return redirect(url_for('reg'))
 
 '''
-************************************************************
- ADMIN VIEWS
-************************************************************
+************************************************************************************************************************
+                                                                                                ADMIN VIEWS AND QUERIES
+************************************************************************************************************************
 '''
 
 @app.route("/main")
@@ -198,21 +197,21 @@ def index_prueba():
         no_title = (output[0]-output[1]) #PROVISIONAL
         output.append(no_title)
         
-        #selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
-        #output.append(selecciones23[0])
-        output.append("10")
+        selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
+        output.append(selecciones23[0])
+        
 
-        # selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
-        # output.append(selecciones_primercuatri[0])
-        output.append("6")
+        selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
+        output.append(selecciones_primercuatri[0])
+        
 
-        # selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
-        # output.append(selecciones_segundocuatri[0])
-        output.append("3")
+        selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
+        output.append(selecciones_segundocuatri[0])
+        
 
-        # selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
-        # output.append(selecciones_anual[0])
-        output.append("1")
+        selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
+        output.append(selecciones_anual[0])
+        
         
         totalLAS = db.engine.execute('select count(id) from la;').fetchone()
         output.append(totalLAS[0])
@@ -235,14 +234,6 @@ def index_prueba():
             return redirect(url_for('reg'))
         
     
-
-
-
-'''
-********************
- QUERIES
-*********************
-'''
 
 @app.route("/estudiantes")
 def select_estudiantes():
@@ -363,6 +354,15 @@ def select_las():
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
 
+@app.route("/learningAgreements/<id_estudiante>", methods=["GET"])
+def select_las_id(id_estudiante):
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, L.id, L.aceptado_Coord, L.aceptado_RRII, L.fdo_Coord, L.fdo_RRII FROM estudiantes E, la L WHERE E.id = L.id_estudiante HAVING E.id='+str(id_estudiante)+';').fetchall()
+        return render_template('Admin/LearningAgreement.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
+
 @app.route("/Asociacion")
 def select_asociations():
     if 'logged_in' in session:
@@ -410,6 +410,18 @@ def select_selection_year_cuatri_vuelta(year, cuatri, vuelta):
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
+
+
+
+
+
+
+'''
+************************************************************************************************************************
+                                                                                               GET - POST - DELETE VIEWS
+************************************************************************************************************************
+'''
+
 
 # --------------------------------------------------------------------------------------------------------------------------- TITULO IDIOMA
 
