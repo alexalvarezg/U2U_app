@@ -65,9 +65,9 @@ class User(db.Model):
 
     Atributos:
         ID: Int, clave primaria
-        nombre: 
-        email: 
-        password
+        nombre: Str, nombre de usuario con el que quiere registrarse y posteriormente iniciar sesion 
+        email: Str, direccion de correo electronico asocida al usuario
+        password: Str, contraseña de acceso a la interfaz
 
     Funciones
         def create(self)
@@ -134,10 +134,10 @@ class Titulo(db.Model):
 
     Atributos:
         ID: Int, clave primaria
-        idioma: 
-        nivel: 
-        tipo: 
-        puntuacion: podemos permitir que la puntuacion sea un 0 si el titulo no lleva asociada puntuacion
+        idioma: Str, diferentes idiomas existentes como ingles, aleman etc. cada valor lleva asociado un idioma concreto
+        nivel: Str, diferentes niveles para cada idioma, cada valor lleva asociado un nivel concreto
+        tipo: Str, diferente tipo, cada valor lleva asociado un tipo concreto
+        puntuacion: Int, diferenciando entre 0, 10, 20 y 30 posibles puntos
         
     Funciones
         def create(self)
@@ -324,7 +324,7 @@ class Requisitos(db.Model):
 
     Atributos:
         ID: Int, clave primaria
-        nombre:
+        nombre: Str, descripcion del requisito en si
         
     Funciones
         def create(self)
@@ -380,11 +380,11 @@ class Estudiante(db.Model):
 
     Atributos:
         ID: Int, clave primaria
-        Nombre: Str(30)
-        Apellidos: Str(50)
-        Curso: Int (1-6)
-        Grado: Str(30) - Enum de grados?
-        Titulo: 
+        Nombre: Str(30), nombre del estudiante
+        Apellidos: Str(50), apellidos del estudiante
+        Curso: Int (1-6), curso academico en el que se encuentra el estudiante
+        Grado: Str(30), diferentes grados posibles
+        Titulo: certificado de idioma asociado al estudiante
         ID_requisitos
 
     Funciones
@@ -454,7 +454,10 @@ class PreSeleccion(db.Model):
     Clase: Pre Selecccion
     
     Atributos:
-        
+        id: Int, clave primaria
+        año: Int, año en el que se va a realizar la movilidad
+        orden: Str, orden de preferencia de las universidades de destino pre-seleccionadas
+        cuatri: Int, cuatrimestre que se marcharia
 
     Funciones
         def create(self)
@@ -519,7 +522,10 @@ class Seleccion(db.Model):
     Clase: Selecccion
     
     Atributos:
-        
+        id: Int, clave primaria
+        año: Int, año en el que realizaría el proceso de movilidad
+        cuatri: Int, cuatrimestre que se marcharia de movilidad
+        vuelta: Int, vuelta en la que escogio su plaza finalmente
 
     Funciones
         def create(self)
@@ -841,13 +847,13 @@ class AsociacionLA_A(db.Model):
     Atributos:
         ID: Int, clave primaria
         ID_reflexivo: su propio id como consecuencia de la relacion reflexiva (1,N) 
-        cancelado: 
-        fecha cancelacion
-        motivo: 
-        aceptado:
-        fecha aceptacion
-        id_La
-        id_asignatura_origen_destino
+        cancelado: Bool, indica si el LA ha sido o no cancelado
+        fecha cancelacion: Date, indica la fecha en la que ha sido cancelado
+        motivo: Str, motivo por el cual se ha cancelado
+        aceptado: Bool, indica si el La esta aceptado o no
+        fecha aceptacion: Date, fecha en la que se acepto el LA
+        id_La: clave foránea que representa el id del LA
+        id_asignatura_origen_destino: clave foránea que representa el id del conjunto asignatura destino - origen
 
     Funciones
         def create(self)
@@ -919,9 +925,9 @@ class EnlaceAD(db.Model):
     Atributos:
         ID: Int, clave primaria
         ID_Asignatura_destino: 
-        año: 
-        cuatri:
-        link: 
+        año: Int, año en el que se cursaria dicha asignatura
+        cuatri: Int, cuatrimestre en el que se cursaria dicha asignatura
+        link: Str, enlace a la guia docente de la asignatura
 
     Funciones
         def create(self)
