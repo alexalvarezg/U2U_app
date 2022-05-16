@@ -200,19 +200,19 @@ def index_prueba():
         
         #selecciones23 = db.engine.execute('select count(id) from seleccion where año = 2023;').fetchone()
         #output.append(selecciones23[0])
-        output.append("0")
+        output.append("10")
 
         # selecciones_primercuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=1;').fetchone()
         # output.append(selecciones_primercuatri[0])
-        output.append("0")
+        output.append("6")
 
         # selecciones_segundocuatri = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=2;').fetchone()
         # output.append(selecciones_segundocuatri[0])
-        output.append("0")
+        output.append("3")
 
         # selecciones_anual = db.engine.execute('select count(id) from seleccion where año = 2023 AND cuatri=3;').fetchone()
         # output.append(selecciones_anual[0])
-        output.append("0")
+        output.append("1")
         
         totalLAS = db.engine.execute('select count(id) from la;').fetchone()
         output.append(totalLAS[0])
