@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from ast import Index, dump
+
 from tkinter.tix import Tree
 from unicodedata import name
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
@@ -12,7 +12,7 @@ from . import db
 from sqlalchemy import UniqueConstraint
 
 from sqlalchemy import insert
-#from app import db
+
 
 
 
@@ -37,23 +37,6 @@ auxiliar_Titulo_Universidad = db.Table('aux_titulo_universidad',
     db.Column('id_titulo', db.Integer, db.ForeignKey('Titulo.id'), primary_key = True)
 )
 
-## (PRE SELECCION) ESTUDIANTE - UNIVERSIDAD DE DESTINO
-# auxiliar_pre_seleccion = db.Table('aux_pre_seleccion', 
-#     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-#     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-#     db.Column('año', db.Integer, nullable=True), 
-#     db.Column('cuatri', db.Integer, nullable=True), 
-#     db.Column('orden', db.Integer, nullable=True) # esto no puede ser un integer, deberia ser una lista o algo
-# )
-
-# ## (SELECCION) ESTUDIANTE - UNIVERSIDAD DESTINO
-# auxiliar_seleccion = db.Table('aux_seleccion', 
-#     db.Column('id_universidad', db.Integer, db.ForeignKey('Universidad.id'), primary_key=True), 
-#     db.Column('id_estudiante', db.Integer, db.ForeignKey('Estudiantes.id'), primary_key=True), 
-#     db.Column('año', db.Integer, nullable=False), 
-#     db.Column('cuatri', db.Integer, nullable=False), 
-#     db.Column('vuelta', db.Integer, nullable=False)
-# )
 
 ## TITULACIONES - UNIVERSIDAD DE DESTINO
 auxiliar_titulacion_universidad = db.Table('aux_titulacion_universidad', 
@@ -420,11 +403,6 @@ class Estudiante(db.Model):
     id_requisitos = db.Column(db.Integer, ForeignKey("Requisitos.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
     # asociado a la tabla auxiliar TITULO - ESTUDIANTE 
     titulo = db.relationship("Titulo", secondary=auxiliar_Titulo_Estudiantes, backref=backref('Estudiante', lazy='dynamic'), lazy='dynamic')
-
-    #asociado a la clase PRE-SELECCION
-    #pre_seleccion = db.relationship("PreSeleccion") 
-    #asociado a la tabla SELECCION
-    #seleccion = db.relationship("Universidad", secondary=auxiliar_seleccion, backref=backref('Estudiante_seleccion', lazy='dynamic'), lazy='dynamic')
 
 
     def create(self):
@@ -995,9 +973,6 @@ class EnlaceADSchema(SQLAlchemyAutoSchema):
         cuatri = fields.Number(required=True)
         link = fields.String(required=True)
 
-
-#las auxiliares estan en prueba.py
+#para pruebas
 db.drop_all()
-# aqui estaria bien meter algo de codigo para que se ejecutase el workflow de pruebas de postman
-# y despues los inserts a cada una de las tablas auxiliares
 db.create_all()
