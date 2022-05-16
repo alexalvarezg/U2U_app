@@ -11,8 +11,6 @@ The URI connection sintaxis looks like:
 
 app = Flask(__name__, template_folder='../templates/', static_folder='../static')
 
-#esto no me convence del todo
-
 path = "gitignore/config.json"
 with open(path, 'r') as f:
     conf = json.load(f)
@@ -30,8 +28,5 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+from app import new_views
 
-from app import views
-
-
-#from .views import *

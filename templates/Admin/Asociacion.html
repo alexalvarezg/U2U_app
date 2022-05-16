@@ -1,23 +1,27 @@
 <!DOCTYPE html>
     {% extends "Admin/index.html" %}
     {%block title%}
-        Universidad
+        Asociacion
     {%endblock%}
 
 
     {% block body%}
     <div class="text-center">
-        <h1>Universidades</h1>
+        <h1> Asociaciones LA y Asignaturas </h1>
     </div>
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>UBICACION</th>
-            <th>TITULACION</th>
-            <th>PLAZAS 1º CUATRI</th>
-            <th>PLAZAS 2º CUATRI</th>
+            <th>ID ESTUDIANTE</th>
+            <th>ID LA</th>
+            <th>ID CONJUNTO ASIGNATURAS</th>
+            <th>ACEPTADO</th>
+            <th>FECHA ACEPTACION</th>
+            <th>CANCELADO</th>
+            <th>FECHA CANCELACION</th>
+            <th>MOTIVO</th>
+
+
         </tr>
         </thead>
         <tbody>
@@ -29,8 +33,11 @@
                 <td> {{ item[3] }} </td>
                 <td> {{ item[4] }} </td>
                 <td> {{ item[5] }} </td>
+                <td> {{ item[6] }} </td>
+                <td> {{ item[7] }} </td>
+
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    {%endblock%} 
+    {%endblock%}

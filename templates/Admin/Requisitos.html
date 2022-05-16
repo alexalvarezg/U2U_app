@@ -1,23 +1,19 @@
 <!DOCTYPE html>
     {% extends "Admin/index.html" %}
     {%block title%}
-        Universidad
+        Asignaturas Destino
     {%endblock%}
 
 
     {% block body%}
     <div class="text-center">
-        <h1>Universidades</h1>
+        <h1>Requisitos</h1>
     </div>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
             <th>NOMBRE</th>
-            <th>UBICACION</th>
-            <th>TITULACION</th>
-            <th>PLAZAS 1º CUATRI</th>
-            <th>PLAZAS 2º CUATRI</th>
         </tr>
         </thead>
         <tbody>
@@ -25,12 +21,8 @@
             <tr>
                 <td> {{ item[0]}} </td>
                 <td> {{ item[1] }} </td>
-                <td> {{ item[2] }} </td>
-                <td> {{ item[3] }} </td>
-                <td> {{ item[4] }} </td>
-                <td> {{ item[5] }} </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    {%endblock%} 
+    {%endblock%}

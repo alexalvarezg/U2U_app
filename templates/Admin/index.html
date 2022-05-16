@@ -37,8 +37,7 @@
 					<ul class="dropdown-menu">
 					<li><a href="{{ url_for('select_estudiantes') }}">Estudiantes</a></li>
 					<li><a href="{{ url_for('select_estudiantes_idiomas') }}">Estudiantes con titulo de idioma</a></li>
-					<li><a href="">Estudiantes sin titulo de idioma (no funciona)</a></li>
-					<li><a href="{{ url_for('add_student_form') }}">Incorporar estudiante</a></li>
+					<li><a href="{{ url_for('add_student_form') }}">Incorporar estudiante</a></li> <!-- {{ url_for('add_student_form') }} -->
 					</ul>
 				</li>
 			</ul>
@@ -53,41 +52,49 @@
 				</li>
 			</ul>
 
-			<ul class="nav navbar-nav">
-				<li><a href="{{ url_for('select_titulos')}}">Titulos</a></li>
-			</ul>
-
+			
 			<ul class="nav navbar-nav ">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Asignaturas <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 					<li><a href="{{ url_for('select_asignaturasO') }}">Asignaturas Origen</a></li>
 					<li><a href="{{ url_for('select_asignaturasD') }}">Asignaturas Destino</a></li>
+					<li><a href="{{ url_for('select_enlaceAD') }}">Asignaturas Destino con enlace</a></li>
 					<li><a href="{{ url_for('select_asignaturasOD') }}">Equivalencias Asignaturas Origen y Destino</a></li>
 					</ul>
 				</li>
 			</ul>
 
-			<ul class="nav navbar-nav">
-				<li><a href="{{ url_for('select_las') }}">Learning Agreements</a></li>
+			
+			<ul class="nav navbar-nav ">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learning Agreements <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ url_for('select_las') }}">Learning Agreements</a></li>
+				<li><a href="{{ url_for('select_asociations') }}">Asociaciones</a></li>
+					</ul>
+				</li>
 			</ul>
+
 
 			<ul class="nav navbar-nav ">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Selección <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-					<li><a href="{{ url_for('select_selection') }}">Selección</a></li>
-					<li><a href="{{ url_for('add_selection_form') }}">Incorporar Selección </a></li>
+						<li><a href="{{ url_for('select_selection') }}">Selección</a></li>
 					</ul>
 				</li>
 			</ul>
 
+			
+
 			<ul class="nav navbar-nav ">
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estado Movilidad <span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Información <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-					<li><a href="">Movilidad con LA (no funciona) </a></li>
-					<li><a href="">Movilidad sin LA (no funciona) </a></li>
+					<li><a href="{{ url_for('select_titulos')}}">Titulos</a></li>
+					<li><a href="{{ url_for('select_titulations')}}">Titulaciones</a></li>
+					<li><a href="{{ url_for('select_requisites') }}">Requisitos</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -122,6 +129,7 @@
 					<th>Selecciones <br> 1º cuatri 2023</th>
 					<th>Selecciones <br> 2º cuatri 2023</th>
 					<th>Selecciones anuales 2023</th>
+					<th>Total Learning Agreements</th>
 					<th>Learning Agreements aceptados</th>
 					<th>Learning Agreements firmados</th>
 				</tr>
