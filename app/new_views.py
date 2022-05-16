@@ -222,7 +222,6 @@ def index_prueba():
         LAS_fdos = db.engine.execute('select count(id) from la where fdo_Coord=1 AND fdo_RRII=1;').fetchone()
         output.append(LAS_fdos[0])
         
-        #print(output)
         return render_template("Admin/index.html", result=output)
 
     else:
@@ -443,7 +442,6 @@ def add_titulo():
     score = request_data['puntuacion']
     
     nuevo_titulo = Titulo(idioma=language , nivel=level, tipo=type, puntuacion=score) 
-    #print(nuevo_titulo)
     db.session.add(nuevo_titulo)
     db.session.commit()
     return make_response(jsonify({"Status" : "Titulo added"}))
@@ -453,14 +451,12 @@ def add_titulo():
 @app.route('/postendpoint/titulos', methods = ['POST'])
 def add_titulos():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         language = request_data[i]['idioma']
         level = request_data[i]['nivel']
         type = request_data[i]['tipo']
         score = request_data[i]['puntuacion']
         nuevo_titulo = Titulo(idioma=language , nivel=level, tipo=type, puntuacion=score) 
-        #print(nuevo_estudiante)
         db.session.add(nuevo_titulo)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Titulos added"}))
@@ -484,7 +480,6 @@ def add_titulacion():
     code = request_data['codigo']
     
     nueva_titulacion = Titulacion(nombre=name, codigo=code)  
-    #print(nuevo_titulo)
     db.session.add(nueva_titulacion)
     db.session.commit()
     return make_response(jsonify({"Status" : "Titulacion added"}))
@@ -493,13 +488,11 @@ def add_titulacion():
 @app.route('/postendpoint/titulaciones', methods = ['POST'])
 def add_titulaciones():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         code = request_data[i]['codigo']
     
         nueva_titulacion = Titulacion(nombre=name, codigo=code)
-        #print(nuevo_estudiante)
         db.session.add(nueva_titulacion)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Titulaciones added"}))
@@ -601,7 +594,6 @@ def add_requisito():
 @app.route('/postendpoint/requisitos', methods = ['POST'])
 def add_requisitos():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
     
@@ -627,35 +619,27 @@ def students():
 @app.route('/postendpoint/estudiante', methods = ['POST'])
 def add_student():
     request_data = request.get_json()
-    print(request_data)
     name = request_data['nombre']
     surname = request_data['apellidos']
     grade = request_data['curso']
     degree = request_data['grado']
-    print("**************************")
 
     if "titulo" in request_data:
         title = request_data["titulo"][0]
         query_1 = db.session.query(Titulo).filter(Titulo.id == title)
         if "id_requisitos" in request_data:
-            print("HAY DE LOS DOS")
             requisite = request_data["id_requisitos"][0]
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
         else:
-            print("SOLO HAY TITULO Y NO HAY REQUISITO")
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
     else:
         if "id_requisitos" in request_data:
-            print("NO HAY TITULO Y SI HAY REQUISITO")
             requisite = request_data["id_requisitos"][0]
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
         else:
-            print("NO HAY NINUGNO") 
             nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
 
-    print(nuevo_estudiante)
     db.session.add(nuevo_estudiante)
-    print("Estudiante incorporado")
     db.session.commit()
     return make_response(jsonify({"Status" : "Sudent added"}))
 
@@ -665,7 +649,6 @@ def add_student():
 @app.route('/postendpoint/estudiantes', methods = ['POST'])
 def add_students():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         name = request_data[i]['nombre']
         surname = request_data[i]['apellidos']
@@ -676,24 +659,18 @@ def add_students():
             title = request_data[i]["titulo"][0]
             query_1 = db.session.query(Titulo).filter(Titulo.id == title)
             if "id_requisitos" in request_data[0]:
-                print("HAY DE LOS DOS")
                 
                 requisite = request_data[i]["id_requisitos"][0]
-                print(type(requisite))
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
             else:
-                print("SOLO HAY TITULO Y NO HAY REQUISITO")
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
         else:
             if "id_requisitos" in request_data[i]:
-                print("NO HAY TITULO Y SI HAY REQUISITO")
                 requisite = request_data[i]["id_requisitos"][0]
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
             else:
-                print("NO HAY NINUGNO") 
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
         
-        print(nuevo_estudiante)
         db.session.add(nuevo_estudiante)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Students added"}))
@@ -714,30 +691,22 @@ def add_student_form():
            title = request.form.get("title")
            query_1 = db.session.query(Titulo).filter(Titulo.id == title)
            if request.form.get("requisitos"):
-                print("HAY DE LOS DOS")
                 requisite = request.form.get("requisitos")
                 requisite = int(requisite)
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=requisite)
            else:
-                print("NO HAY NINUGNO") 
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=query_1, id_requisitos=[])
        except:
            if request.form.get("requisitos"):
                 requisite = request.form.get("requisitos")
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=requisite)
            else:
-                print("NO HAY NINUGNO") 
                 nuevo_estudiante = Estudiante(nombre=name , apellidos=surname, curso=grade, grado=degree, titulo=[], id_requisitos=[])
-        #    db.session.add(nuevo_estudiante)
-        #    db.session.commit()
+
        
        db.session.add(nuevo_estudiante)
-       print(nuevo_estudiante)
        db.session.commit()
-    #    get_estudiantes = Estudiante.query.all()
-    #    estudiante_schema = EstudianteSchema(many=True)
-    #    estudiantes = estudiante_schema.dump(get_estudiantes)
-    #    # Estudiantes should have the object titles
+
        output = db.engine.execute('SELECT * FROM estudiantes;').fetchall()
        if 'logged_in' in session and session['username'] == "admin":
            flash('Inscripción realizada correctamente.','success') 
@@ -767,7 +736,6 @@ def add_subject():
     grade = request_data['curso']
     if "titulaciones" in request_data:
         titulation = request_data["titulaciones"][0]
-        print(titulation)
         query_1 = db.session.query(Titulacion).filter(Titulacion.codigo == titulation)
         nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=query_1)
     else: 
@@ -788,7 +756,6 @@ def add_subjects():
         grade = request_data[i]['curso']
         if "titulaciones" in request_data[i]:
             titulation = request_data[i]["titulaciones"][0]
-            print(titulation)
             query_1 = db.session.query(Titulacion).filter(Titulacion.codigo == titulation)
             nueva_asignatura = Asignatura_Origen(nombre=name, codigo=code, curso=grade, titulaciones=query_1)
         else: 
@@ -844,7 +811,6 @@ def add_subjects_abroad():
 @app.route('/aods', methods = ['GET'])
 def Aods():
     get_aod_subjects = Asignatura_Destino_Asignatura_Origen.query.all()
-    print(get_aod_subjects)
     AOD_schema = Asignatura_Destino_Asignatura_OrigenSchema(many=True)
     aod = AOD_schema.dump(get_aod_subjects)
     return make_response(jsonify({"Relacion(es) Asignaturas Origen y Destino": aod}))
@@ -857,8 +823,6 @@ def add_origin_and_destiny_subject():
     origin_subject_id = request_data["id_asignatura_origen"]
     destiny_subject_id = request_data["id_asignatura_destino"]
     nuevas_asignaturas = Asignatura_Destino_Asignatura_Origen(id_asignatura_destino=destiny_subject_id, id_asignatura_origen=origin_subject_id,)
-    #print("nuevo AOD añadido \n")
-    #print(nuevas_asignaturas)
     db.session.add(nuevas_asignaturas)
     db.session.commit()
     return make_response(jsonify({"Status" : "AOD added"}))
@@ -897,7 +861,6 @@ def add_LA():
     RRII_sign = request_data["fdo_RRII"]
     coord_sign = request_data["fdo_Coord"]
     nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
-    print("incorporado LA")
     db.session.add(nuevo_LA)
     db.session.commit()
     return make_response(jsonify({"Status" : "LA added"}))
@@ -908,7 +871,6 @@ def add_LA():
 @app.route('/postendpoint/LAs', methods = ['POST'])
 def add_LAs():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         student_id = request_data[i]['id_estudiante']
         RRII_accept = request_data[i]["aceptado_RRII"]
@@ -916,7 +878,6 @@ def add_LAs():
         RRII_sign = request_data[i]["fdo_RRII"]
         coord_sign = request_data[i]["fdo_Coord"]
         nuevo_LA = LA(id_estudiante=student_id, aceptado_RRII=RRII_accept, aceptado_Coord=coord_accept, fdo_RRII=RRII_sign, fdo_Coord=coord_sign)
-        print("incorporado LA SIN asignaturas OD")
         db.session.add(nuevo_LA)
         db.session.commit()
     return make_response(jsonify({"Status" : "Varios LA Añadidos"}))
@@ -945,7 +906,6 @@ def add_AsociacionLA_a():
     subjects_id = request_data['id_asignatura_OD']
 
     nuevo_AsociacionLA_a = AsociacionLA_A(cancelado=cancellation, fecha_cancelacion=cancellation_date, motivo=reason, aceptado=accepted, fecha_aceptacion=accepted_date, id_LA=la_id, id_asignatura_OD=subjects_id)
-    print("incorporado AsociacionLA_A")
     db.session.add(nuevo_AsociacionLA_a)
     db.session.commit()
     return make_response(jsonify({"Status" : "ASociacionLA_A added"}))
@@ -956,7 +916,6 @@ def add_AsociacionLA_a():
 @app.route('/postendpoint/asociacionesLA_a', methods = ['POST'])
 def add_AsociacionLA_as():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         cancellation = request_data[i]['cancelado']
         cancellation_date = request_data[i]["fecha_cancelacion"]
@@ -966,7 +925,6 @@ def add_AsociacionLA_as():
         la_id = request_data[i]['id_LA']
         subjects_id = request_data[i]['id_asignatura_OD']
         nuevo_AsociacionLA_a = AsociacionLA_A(cancelado=cancellation, fecha_cancelacion=cancellation_date, motivo=reason, aceptado=accepted, fecha_aceptacion=accepted_date, id_LA=la_id, id_asignatura_OD=subjects_id)
-        print("incorporado AsociacionLA_A")
         db.session.add(nuevo_AsociacionLA_a)
         db.session.commit()
     return make_response(jsonify({"Status" : "Varios ASociacionLA_A Añadidos"}))
@@ -993,7 +951,6 @@ def add_enlaceAD():
     subject_id = request_data["id_asignatura_destino"]
    
     nuevo_EnlaceAD = EnlaceAD(año=year, link=web_link, cuatri=term, id_asignatura_destino=subject_id)
-    print("incorporado nuevo_EnlaceAD")
     db.session.add(nuevo_EnlaceAD)
     db.session.commit()
     return make_response(jsonify({"Status" : "nuevo_EnlaceAD added"}))
@@ -1012,7 +969,6 @@ def add_enlacesAD():
         subject_id = request_data[i]["id_asignatura_destino"]
     
         nuevo_EnlaceAD = EnlaceAD(año=year, link=web_link, cuatri=term, id_asignatura_destino=subject_id)
-        print("incorporado nuevo_EnlaceAD")
         db.session.add(nuevo_EnlaceAD)
         db.session.commit()
     return make_response(jsonify({"Status" : "Nuevos EnlaceAD added"}))
@@ -1025,7 +981,6 @@ def add_enlacesAD():
 @app.route('/Seleccion', methods = ['GET'])
 def Selection():
     get_Seleccion = Seleccion.query.all()
-    #print(get_Seleccion)
     Selection_schema = SeleccionSchema(many=True)
     seleccion = Selection_schema.dump(get_Seleccion)
     return make_response(jsonify({"Seleccion(es)": seleccion}))
@@ -1042,11 +997,8 @@ def add_selection():
         estudiante = request_data["estudiantes"][0]
         if "universidades" in request_data:
             id_uni = request_data["universidades"][0]
-            print(id_uni)
             nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=estudiante, id_universidad=id_uni)
-    print(nuevo_seleccion)
     db.session.add(nuevo_seleccion)
-    print("Seleccion incorporado")
     
     db.session.commit()
     return make_response(jsonify({"Status" : "Selection added"}))
@@ -1056,7 +1008,6 @@ def add_selection():
 @app.route('/postendpoint/selecciones', methods = ['POST'])
 def add_selecciones():
     request_data = request.get_json()
-    #print(request_data)
     for i in range(0, len(request_data)):
         term = request_data[i]['cuatri']
         year = request_data[i]["año"]
@@ -1075,7 +1026,6 @@ def add_selecciones():
                 nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=[], id_universidad=id_uni)
             else:
                 nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=[], id_universidad=[])
-        print(nuevo_seleccion)
         db.session.add(nuevo_seleccion)
         db.session.commit()
     return make_response(jsonify({"Status" : "Various Selections added"}))
@@ -1086,11 +1036,8 @@ def add_selecciones():
 @app.route('/deleteAllSelecciones', methods=["DELETE"])
 def erase_all_selections():
     get_selections = Seleccion.query.all()
-    #print("\n Las Selecciones disponibles son: \n")
-    #print(get_selections)
-    #print("\n")
+
     for i in get_selections:
-        #print("Selecciones que se van a eliminar: " + str(i))
         db.session.delete(i)
         db.session.commit()
     return make_response(jsonify({"Status" : "All Selections erased"}))
