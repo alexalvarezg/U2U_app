@@ -374,52 +374,42 @@ def select_asociations():
 
 
 
-
-
 @app.route("/seleccion")
 def select_selection():
     if 'logged_in' in session:
-        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, S.id_universidad FROM estudiantes E, seleccion S WHERE E.id=S.id_estudiante;').fetchall()
         return render_template('Admin/Seleccion.html',result=output)
     else:
         flash('Primero debe inciar sesión o registrarse','danger')
         return redirect(url_for('login'))
 
-# (B.1_PRUEBA) POST: INCORPORAR UNA SELECCION FORMULARIO
-@app.route('/seleccion_form', methods = ['GET','POST'])
-def add_selection_form():
-    if request.method == "POST":
-        # getting input with name = fname in HTML form
-       year = request.form.get("year")
-       # getting input with name = lname in HTML form 
-       term = request.form.get("duracion") 
-       round = request.form.get("round") 
-       confirmation = request.form.get("conf_uni") 
-       try:
-           students = request.form.get("estudiantes")
-           # ARREGLAR ESTA PARTE DE AQUI
-           nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=students)
-           print("seleccion incorporada sin estudiantes")
 
-       except:
-           nueva_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, confirmacion=confirmation, estudiantes=[])
-           print("seleccion incorporada con estudiantes")
-       
-       
-       db.session.add(nueva_seleccion)
-       db.session.commit()
-       get_selecciones = Seleccion.query.all()
-       seleccion_schema = SeleccionSchema(many=True)
-       selecciones = seleccion_schema.dump(get_selecciones)
-        # Estudiantes should have the object titles
-       output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, U.nombre FROM estudiantes E, seleccion S, aux_estudiante_seleccion A, universidad U WHERE E.id=A.id_estudiante AND S.id=A.id_seleccion AND U.id=S.confirmacion;').fetchall()
-       return render_template('Seleccion.html',result=output)
+@app.route("/seleccion/year/<year>", methods=["GET"])
+def select_selection_year(year):
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, S.id_universidad FROM estudiantes E, seleccion S WHERE E.id=S.id_estudiante and S.año = '+str(year)+';').fetchall()
+        return render_template('Admin/Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
-    return render_template("Admin/Nueva_Seleccion.html")
+@app.route("/seleccion/year/<year>/<cuatri>", methods=["GET"])
+def select_selection_year_cuatri(year, cuatri):
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, S.id_universidad FROM estudiantes E, seleccion S WHERE E.id=S.id_estudiante and S.año = '+str(year)+' AND S.cuatri='+str(cuatri)+';').fetchall()
+        return render_template('Admin/Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
-
-
-
+@app.route("/seleccion/year/<year>/<cuatri>/<vuelta>", methods=["GET"])
+def select_selection_year_cuatri_vuelta(year, cuatri, vuelta):
+    if 'logged_in' in session:
+        output = db.engine.execute('SELECT E.id, E.nombre, E.apellidos, E.curso, E.grado, S.año, S.cuatri, S.vuelta, S.id_universidad FROM estudiantes E, seleccion S WHERE E.id=S.id_estudiante and S.año = '+str(year)+' AND S.cuatri='+str(cuatri)+'AND S.vuelta='+str(vuelta)+';').fetchall()        
+        return render_template('Admin/Seleccion.html',result=output)
+    else:
+        flash('Primero debe inciar sesión o registrarse','danger')
+        return redirect(url_for('login'))
 
 # --------------------------------------------------------------------------------------------------------------------------- TITULO IDIOMA
 
@@ -1015,3 +1005,80 @@ def add_enlacesAD():
         db.session.commit()
     return make_response(jsonify({"Status" : "Nuevos EnlaceAD added"}))
 
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------- SELECCION
+# A) GET: MOSTRAR TODAS LAS SELECCIONES
+@app.route('/Seleccion', methods = ['GET'])
+def Selection():
+    get_Seleccion = Seleccion.query.all()
+    #print(get_Seleccion)
+    Selection_schema = SeleccionSchema(many=True)
+    seleccion = Selection_schema.dump(get_Seleccion)
+    return make_response(jsonify({"Seleccion(es)": seleccion}))
+
+
+# B.1) POST: INCORPORAR UNA SELECCION
+@app.route('/postendpoint/seleccion', methods = ['POST'])
+def add_selection():
+    request_data = request.get_json()
+    term = request_data['cuatri']
+    year = request_data["año"]
+    round = request_data["vuelta"]
+    if "estudiantes" in request_data:
+        estudiante = request_data["estudiantes"][0]
+        if "universidades" in request_data:
+            id_uni = request_data["universidades"][0]
+            print(id_uni)
+            nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=estudiante, id_universidad=id_uni)
+    print(nuevo_seleccion)
+    db.session.add(nuevo_seleccion)
+    print("Seleccion incorporado")
+    
+    db.session.commit()
+    return make_response(jsonify({"Status" : "Selection added"}))
+
+
+# B.2) POST: INCORPORAR VARIAS SELECCIONES
+@app.route('/postendpoint/selecciones', methods = ['POST'])
+def add_selecciones():
+    request_data = request.get_json()
+    #print(request_data)
+    for i in range(0, len(request_data)):
+        term = request_data[i]['cuatri']
+        year = request_data[i]["año"]
+        round = request_data[i]["vuelta"]
+
+        if "estudiantes" in request_data[i]:
+            estudiante = request_data[i]["estudiantes"][0]
+            if "universidades" in request_data[0]:
+                id_uni = request_data[i]["universidades"][0]
+                nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=estudiante, id_universidad=id_uni)
+            else:
+                nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=estudiante, id_universidad=[])
+        else:
+            if "universidades" in request_data[i]:
+                id_uni = request_data[i]["universidades"][0]
+                nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=[], id_universidad=id_uni)
+            else:
+                nuevo_seleccion = Seleccion(cuatri=term, año=year, vuelta=round, id_estudiante=[], id_universidad=[])
+        print(nuevo_seleccion)
+        db.session.add(nuevo_seleccion)
+        db.session.commit()
+    return make_response(jsonify({"Status" : "Various Selections added"}))
+
+
+
+# C.3) DELETE: ELIMINAR TODOS LAS SELECCIONES  
+@app.route('/deleteAllSelecciones', methods=["DELETE"])
+def erase_all_selections():
+    get_selections = Seleccion.query.all()
+    #print("\n Las Selecciones disponibles son: \n")
+    #print(get_selections)
+    #print("\n")
+    for i in get_selections:
+        #print("Selecciones que se van a eliminar: " + str(i))
+        db.session.delete(i)
+        db.session.commit()
+    return make_response(jsonify({"Status" : "All Selections erased"}))
