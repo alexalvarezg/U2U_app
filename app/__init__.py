@@ -27,6 +27,5 @@ app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://' + user + ':' + password
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 db = SQLAlchemy(app)
 
-
 from app import new_views
 

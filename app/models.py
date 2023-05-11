@@ -75,7 +75,7 @@ class User(db.Model):
         def __repr__
         def json(self)
     '''
-    __tablename__ = "Users"
+    __tablename__ = "users"
     __table_args__ = (
         db.UniqueConstraint('email'),
     )
@@ -988,5 +988,5 @@ class EnlaceADSchema(SQLAlchemyAutoSchema):
         link = fields.String(required=True)
 
 #para pruebas
-db.drop_all()
-db.create_all()
+#db.drop_all()
+#db.create_all()

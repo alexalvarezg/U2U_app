@@ -7,7 +7,7 @@ from flask import render_template
 #para el login y registration
 from flask import render_template,request,redirect,session,flash,url_for
 from functools import wraps
-
+from sqlalchemy import text, insert
 '''
 ************************************************************
 GENERIC VIEWS
@@ -26,11 +26,26 @@ def reg():
         name=request.form["uname"]
         email=request.form["email"]
         pwd=request.form["upass"]
-        db.engine.execute("insert into users(nombre,password,email) values(%s,%s,%s)",(name,pwd,email))
+        try:
+            with db.engine.connect() as conn:
+                stmt = insert(User).values(nombre=name, password=pwd, email=email)
+                result = conn.execute(stmt)
+                conn.commit()
+        except Exception as e:
+            return '<h1>Something is broken.</h1>' + str(e)
+            #return render_template("error.html",status=status)
         db.session.commit()
         flash('Registro correcto. Inicie sesión a continuación','success') 
         return redirect(url_for('login'))
     return render_template("register.html",status=status)
+
+
+@app.route('/error',methods=['GET'])
+def error():
+    return render_template("register.html",status=status)
+
+
+
 
 
 @app.route('/login',methods=['POST','GET'])
